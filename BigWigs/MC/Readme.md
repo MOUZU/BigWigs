@@ -51,3 +51,5 @@
 - Wrath of Ragnaros(Knockback)
 - Hammer of Ragnars(Ranged Knockback)
 - counters on how many adds in p2 are dead(?)
+
+(NOTE: check https://www.youtube.com/watch?v=tX65FOyWCiY for more footage)

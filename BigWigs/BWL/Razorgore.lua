@@ -219,8 +219,8 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 			self:TriggerEvent("BigWigs_Message", L["start_message"], "Attention")
 		end
 		if self.db.profile.mobs then
-			self:TriggerEvent("BigWigs_StartBar", self, L["mobs_bar"], 29, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
-			self:ScheduleEvent("BigWigs_Message", 24, L["mobs_soon"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["mobs_bar"], 46, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
+			self:ScheduleEvent("BigWigs_Message", 41, L["mobs_soon"], "Important")
 		end
 	elseif msg == L["phase2_trigger"] then
 		self:CancelScheduledEvent("destroyegg_check")

@@ -15,8 +15,8 @@ L:RegisterTranslations("enUS", function() return {
 	adrenaline_trigger = "^(.+) (.+) afflicted by Burning Adrenaline\.",
 	start_trigger = "afflicted by Essence of the Red",
 	flamebreath_trigger = "Vaelastrasz the Corrupt begins to cast Flame Breath\.",
-	yell1 = "^Too late, friends",
-	yell2 = "^I beg you, mortals",
+	yell1 = "^Too late...friends",
+	yell2 = "^I beg you Mortals",
 	yell3 = "^FLAME! DEATH! DESTRUCTION!",
 	start_bar = "Start",
 	tankburn_bar = "Tank Burn",
@@ -169,13 +169,13 @@ end
 
 function BigWigsVaelastrasz:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["yell1"]) and self.db.profile.start then
-		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 36, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
+		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 38, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
 		barstarted = true
 	elseif string.find(msg, L["yell2"]) and self.db.profile.start and not barstarted then
-		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 26, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
+		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 28, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
 		barstarted = true
 	elseif string.find(msg, L["yell3"]) and self.db.profile.start and not barstarted then
-		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 10, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
+		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 12, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
 	end
 end
 

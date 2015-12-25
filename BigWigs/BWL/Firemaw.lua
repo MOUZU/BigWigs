@@ -26,6 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	wingbuffet_bar = "Next Wing Buffet",
 	wingbuffet1_bar = "Initial Wing Buffet",
 	shadowflame_bar = "Shadow Flame",
+	shadowflame_Nextbar = "Next Shadow Flame",
 	flamebuffet_bar = "Flame Buffet",
 
 	cmd = "Firemaw",
@@ -60,6 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	wingbuffet_bar = "N\195\164chster Fl\195\188gelsto\195\159",
 	wingbuffet1_bar = "Erster Fl\195\188gelsto\195\159",
 	shadowflame_bar = "Schattenflamme",
+	shadowflame_Nextbar = "Nächste Schattenflamme",
 	flamebuffet_bar = "Flammenpuffer",
 
 	cmd = "Firemaw",
@@ -130,8 +132,8 @@ function BigWigsFiremaw:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "FiremawStart" then
 		started = true
 		if self.db.profile.wingbuffet then
-			self:ScheduleEvent("BigWigs_Message", 13, L["wingbuffet_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 18, "Interface\\Icons\\INV_Misc_MonsterScales_14")
+			self:ScheduleEvent("BigWigs_Message", 25, L["wingbuffet_warning"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 30, "Interface\\Icons\\INV_Misc_MonsterScales_14")
 		end
 	elseif sync == "FiremawWingBuffetX" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
@@ -141,6 +143,7 @@ function BigWigsFiremaw:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "FiremawShadowflameX" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar"], 2, "Interface\\Icons\\Spell_Fire_Incinerate")
+        self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_Nextbar"], 14, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "FiremawFirstBuffet" and self.db.profile.flamebuffet then
 		self:TriggerEvent("BigWigs_StartBar", self, L["flamebuffet_bar"], 4.8, "Interface\\Icons\\Spell_Fire_Fireball", true, "White")
 	end
