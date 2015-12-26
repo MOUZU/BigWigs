@@ -2,15 +2,19 @@
 
 <br \><br \>
 # Razorgore the Untamed
-- First Wave bar&warning adjusted from 29s to 46s
+- (QA) First Wave, adjusted Bar and its Warning from 29s to 46s
+- (DG) Control Orb, is the timer correct?
+- (DG) Mindcontrol, is the timer correct?
+- (DG) Conflagration, seems to be RNG
+- (DG) Fireball Volley, seems to be RNG
 
 # Vaelastrasz the Corrupt
-- adjusted enUS locales to trigger combat
-- adjusted combat timers from 36/26/10 to 38/28/12
+- (QA) Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 / adjusted enUS locales to trigger combat
+- (100%) Burning Adrenaline, seems to be correct
 
 # Broodlord Lashlayer
-- increased the timer for the first Blast Wave and its warning from 12 to 17s (NOT 100% ACCURATE)
-- TODO: gather more information on MS and BW timers, BW seems about min 25s cooldown / MS about 26s
+- (QA) Blast Wave, increased the timer for the one and its warning from 12 to 17s (CAN NOT BE 100% ACCURATE)
+- TODO: gather more information on MS and BW timers, BW seems about min 25s cooldown / MS about 26s - probably both RNG
 
 # Firemaw
 - (100%) Flame Buffet
