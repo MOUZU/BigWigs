@@ -33,7 +33,7 @@
 - Blink
 
 # Sulfuron Harbringer
-- ?
+- Heal?
 
 # Golemagg the Incinerator
 - Magma Splash(?)
@@ -52,4 +52,9 @@
 - Hammer of Ragnars(Ranged Knockback)
 - counters on how many adds in p2 are dead(?)
 
-(NOTE: check https://www.youtube.com/watch?v=tX65FOyWCiY for more footage)
+<br \><br \>
+##### Prefix legend
+- <b>(100%)</b>  = it's working flawless
+- <b>(99%)</b>   = it's working as good as it can be (from my research)
+- <b>(QA)</b>    = <b>Q</b>uality <b>A</b>ssurance (need to test its modified state)
+- <b>(DG)</b>    = <b>D</b>ata <b>G</b>athering (need to gather more data regarding this matter)

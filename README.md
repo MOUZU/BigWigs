@@ -12,6 +12,6 @@ The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \
 <li><a href="BigWigs/BWL/">Blackwing Lair</a></li>
 <li><a href="BigWigs/ZG/">Zul'Gurub</a></li>
 <li><a href="BigWigs/AQ20/">Ruins of Ahn'Qiraj</a></li>
-<li><a href="BigWigs/AQ40/">Ahn'Qiraj</a></li>
+<li><a href="BigWigs/AQ40/">Temple of Ahn'Qiraj</a></li>
 <li><a href="BigWigs/Naxxramas/">Naxxramas</a></li>
 </ul>
