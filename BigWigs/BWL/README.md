@@ -11,7 +11,7 @@
 - <b>(DG)</b> Fireball Volley, seems to be RNG
 
 ## Vaelastrasz the Corrupt
-- <b>(QA)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 / adjusted enUS locales to trigger combat
+- <b>(QA)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 AND adjusted enUS locales to trigger combat
 - <b>(100%)</b> Burning Adrenaline, seems to be correct
 
 ## Broodlord Lashlayer
