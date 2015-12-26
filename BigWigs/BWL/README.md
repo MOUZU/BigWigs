@@ -1,22 +1,41 @@
 <b><a href="https://github.com/MOUZU/BigWigs"> Return to the Overview </a></b>
 
 <br \><br \>
-# Razorgore the Untamed
-- (QA) First Wave, adjusted Bar and its Warning from 29s to 46s
-- (DG) Control Orb, is the timer correct?
-- (DG) Mindcontrol, is the timer correct?
-- (DG) Conflagration, seems to be RNG
-- (DG) Fireball Volley, seems to be RNG
+# Blackwing Lair
 
-# Vaelastrasz the Corrupt
-- (QA) Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 / adjusted enUS locales to trigger combat
-- (100%) Burning Adrenaline, seems to be correct
+## Razorgore the Untamed
+- <b>(QA)</b> First Wave, adjusted Bar and its Warning from 29s to 46s
+- <b>(DG)</b> Control Orb, is the timer correct?
+- <b>(DG)</b> Mindcontrol, is the timer correct?
+- <b>(DG)</b> Conflagration, seems to be RNG
+- <b>(DG)</b> Fireball Volley, seems to be RNG
 
-# Broodlord Lashlayer
-- (QA) Blast Wave, increased the timer for the one and its warning from 12 to 17s (CAN NOT BE 100% ACCURATE)
-- TODO: gather more information on MS and BW timers, BW seems about min 25s cooldown / MS about 26s - probably both RNG
+## Vaelastrasz the Corrupt
+- <b>(QA)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 / adjusted enUS locales to trigger combat
+- <b>(100%)</b> Burning Adrenaline, seems to be correct
 
-# Firemaw
-- (100%) Flame Buffet
-- (QA) Wing Buffet, adjusted first timer from 18 to 30s
-- (QA) Shadow Flame, added 'Next' timer with 14s
+## Broodlord Lashlayer
+- <b>(QA)</b> Blast Wave, increased the timer for the one and its warning from 12 to 17s (CAN NOT BE 100% ACCURATE)
+- <b>(DG)</b> Mortal Strike, seems to have a 26s cooldown, seems not to be a timed cast
+- <b>(DG)</b> Blastwave, seems to have a 25s cooldown, seems not to be a timed cast
+
+## Firemaw
+- <b>(100%)</b> Flame Buffet
+- <b>(QA)</b> Wing Buffet, adjusted first timer from 18 to 30s
+- <b>(QA)</b> Shadow Flame, added 'Next' timer with 14s
+ 
+## Ebonroc
+
+## Flamegor
+
+## Chromaggus
+
+## Nefarian
+
+
+<br \><br \>
+##### Prefix legend
+- <b>(100%)</b>  = it's working flawless
+- <b>(99%)</b>   = it's working as good as it can be (from my research)
+- <b>(QA)</b>    = <b>Q</b>uality <b>A</b>ssurance (need to test its modified state)
+- <b>(DG)</b>    = <b>D</b>ata <b>G</b>athering (need to gather more data regarding this matter)
