@@ -1,5 +1,5 @@
 # BigWigs
-BigWigs is a World of Warcraft AddOn to predict certain KI behaviour to improve the players performance.<br \>
+BigWigs is a World of Warcraft AddOn to predict certain AI behaviour to improve the players performance.<br \>
 This Modification is build for Patch 1.12.1 and its content for usage on the <b>NostalriusBegins</b> private Server.
 
 The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \>
