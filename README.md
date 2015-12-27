@@ -21,4 +21,4 @@ TBA
 
 # How to install
 <b>a)</b> If you choose to download the .rar file all you have to do is extract the archive in your /World of Warcraft/Interface/AddOns/ directory.<br />
-<b>b)</b> If you download the raw code from GitHub you'll have to open the downloaded 'BigWigs-master' folder and copy the two folders('BigWigs_CommonAuras' and 'BigWigs') in it to your /World of Warcraft/Interface/AddOns/ directory.
+<b>b)</b> If you download the raw code from GitHub you'll have to open the downloaded 'BigWigs-master' folder and copy the two folders in it ('BigWigs_CommonAuras' and 'BigWigs') to your /World of Warcraft/Interface/AddOns/ directory.
