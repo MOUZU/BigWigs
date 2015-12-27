@@ -15,3 +15,10 @@ The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \
 <li><a href="BigWigs/AQ40/">Temple of Ahn'Qiraj</a></li>
 <li><a href="BigWigs/Naxxramas/">Naxxramas</a></li>
 </ul>
+
+# Download
+TBA
+
+# How to install
+<b>a)</b> If you choose to download the .rar file all you have to do is extract the archive in your /World of Warcraft/Interface/AddOns/ directory.
+<b>b)</b> If you download the raw code from GitHub you'll have to open the downloaded 'BigWigs-master' folder and copy the two folders('BigWigs_CommonAuras' and 'BigWigs') in it to your /World of Warcraft/Interface/AddOns/ directory.
