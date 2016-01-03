@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Chromaggus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local lastFrenzy = 0
 
 ----------------------------
 --      Localization      --
@@ -66,6 +67,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	castingbar = "Cast %s",
 	frenzy_bar = "Frenzy",
+    frenzy_Nextbar = "Next Frenzy",
 	first_bar = "First Breath",
 	second_bar = "Second Breath",
 	
@@ -132,6 +134,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	castingbar = "Wirkt %s",
 	frenzy_bar = "Raserei",
+    frenzy_Nextbar = "Nächste Raserei",
 	first_bar = "Erster Atem",
 	second_bar = "Zweite Atem",
 	
@@ -213,20 +216,26 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BossEngaged" and rest == "Chromaggus" and not started then
 		started = true
 		if self.db.profile.breath then
-			self:ScheduleEvent("BigWigs_Message", 25, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["first_bar"], 30, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
-			self:ScheduleEvent("BigWigs_Message", 55, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["second_bar"], 60, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
+			self:ScheduleEvent("BigWigs_Message", 23.5, L["firstbreaths_warning"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["first_bar"], 28.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
+			self:ScheduleEvent("BigWigs_Message", 53.5, L["firstbreaths_warning"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["second_bar"], 58.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
 		end
+        if self.db.profile.frenzy then
+            self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], 13, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white") 
+        end
 		self:TriggerEvent("BigWigs_SendSync", "ChromaggusEngage")
 	elseif sync == "ChromaggusEngage" and not started then
 		started = true
 		if self.db.profile.breath then
-			self:ScheduleEvent("BigWigs_Message", 24.9, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["first_bar"], 29.9, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
-			self:ScheduleEvent("BigWigs_Message", 54.9, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["second_bar"], 59.9, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
+			self:ScheduleEvent("BigWigs_Message", 23.5, L["firstbreaths_warning"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["first_bar"], 28.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
+			self:ScheduleEvent("BigWigs_Message", 53.5, L["firstbreaths_warning"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["second_bar"], 58.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
 		end
+        if self.db.profile.frenzy then
+            self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], 13, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white") 
+        end
 	elseif sync == "ChromaggusBreath" and self.db.profile.breath then
 		local spellName = L:HasTranslation("breath"..rest) and L["breath"..rest] or nil
 		if not spellName then return end
@@ -240,9 +249,14 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
 		end
 		frenzied = true
+        lastFrenzy = GetTime()
 	elseif sync == "ChromaggusFrenzyStop" then
 		if self.db.profile.frenzy and frenzied then
 			self:TriggerEvent("BigWigs_StopBar", self, L["frenzy_bar"])
+            if lastFrenzy ~= 0 then
+                local NextTime = (lastFrenzy + 15) - GetTime()
+                self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], NextTime, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
+            end
 		end
 		frenzied = nil
 	end

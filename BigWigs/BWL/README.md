@@ -25,10 +25,18 @@
 - <b>(QA)</b> Shadow Flame, added 'Next' timer with 14s
  
 ## Ebonroc
+- <b>(QA)</b> Shadow of Ebonroc, added first timer with 8s
+- <b>(QA)</b> Shadow Flame, added 'Next' timer with 14s
+- <b>(QA)</b> Wing Buffet, adjusted first timer from 18 to 29s
 
 ## Flamegor
+- <b>(QA)</b> Wing Buffet, adjusted first timer from 18 to 28s
+- <b>(QA)</b> Shadow Flame, added 'Next' timer with 14s
+- <b>(QA)</b> Frenzy, added 'Next' timer with 10s, added a second trigger since it seemed that BigWigs didn't catch it 100%
 
 ## Chromaggus
+- <b>(QA)</b> First & Second Breath, adjusted from 60 and 30 to 58.5s and 28.5s
+- <b>(QA)</b> Frenzy, added 'Next' timer with 15s
 
 ## Nefarian
 

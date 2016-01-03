@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Flamegor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local lastFrenzy = 0
 
 ----------------------------
 --      Localization      --
@@ -13,6 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 	wingbuffet_trigger = "Flamegor begins to cast Wing Buffet.",
 	shadowflame_trigger = "Flamegor begins to cast Shadow Flame.",
 	frenzygain_trigger = "Flamegor gains Frenzy.",
+	frenzygain_trigger2 = "Flamegor goes into a frenzy!",
 	frenzyend_trigger = "Frenzy fades from Flamegor.",
 
 	wingbuffet_message = "Wing Buffet! Next one in 30 seconds!",
@@ -20,11 +22,13 @@ L:RegisterTranslations("enUS", function() return {
 	shadowflame_warning = "Shadow Flame incoming!",
 	frenzy_message = "Frenzy! Tranq now!",
 	frenzy_bar = "Frenzy",
+    frenzy_Nextbar = "Next Frenzy",
 
 	wingbuffetcast_bar = "Wing Buffet",
 	wingbuffet_bar = "Next Wing Buffet",
 	wingbuffet1_bar = "Initial Wing Buffet",
 	shadowflame_bar = "Shadow Flame",
+	shadowflame_Nextbar = "Next Shadow Flame",
 
 	cmd = "Flamegor",
 
@@ -52,11 +56,13 @@ L:RegisterTranslations("deDE", function() return {
 	shadowflame_warning = "Schattenflamme bald!",
 	frenzy_message = "Wutanfall! Tranq jetzt!",
 	frenzy_bar = "Wutanfall",
+    frenzy_Nextbar = "Nächster Wutanfall",
 
 	wingbuffetcast_bar = "Fl\195\188gelsto\195\159",
 	wingbuffet_bar = "N\195\164chster Fl\195\188gelsto\195\159",
 	wingbuffet1_bar = "Erster Fl\195\188gelsto\195\159",
 	shadowflame_bar = "Schattenflamme",
+	shadowflame_Nextbar = "Nächste Schattenflamme",
 
 	cmd = "Flamegor",
 
@@ -92,6 +98,7 @@ function BigWigsFlamegor:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER", "Event")
+    self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -123,6 +130,12 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("BigWigs_Message", 23, L["wingbuffet_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 28, "Interface\\Icons\\INV_Misc_MonsterScales_14")
 		end
+        if self.db.profile.shadowflame then
+            self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_Nextbar"], 15, "Interface\\Icons\\Spell_Fire_Incinerate")
+        end
+        if self.db.profile.frenzy then
+            self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white") 
+        end
 	elseif sync == "FlamegorWingBuffetX" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 25, L["wingbuffet_warning"], "Attention")
@@ -131,11 +144,18 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "FlamegorShadowflameX" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar"], 2, "Interface\\Icons\\Spell_Fire_Incinerate", true, "red")
+        self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_Nextbar"], 14, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "FlamegorFrenzyStart" and self.db.profile.frenzy then
+        if lastFrenzy ~= 0 and (GetTime() - lastFrenzy) < 9 then return end -- double check for my second frenzy trigger to prevent multiple bars from being shown
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important", nil, true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
+        lastFrenzy = GetTime()
 	elseif sync == "FlamegorFrenzyEnd" and self.db.profile.frenzy then
         self:TriggerEvent("BigWigs_StopBar", self, L["frenzy_bar"])
+        if lastFrenzy ~= 0 then
+            local NextTime = (lastFrenzy + 10) - GetTime()
+            self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], NextTime, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
+        end
 	end
 end
 
@@ -144,5 +164,7 @@ function BigWigsFlamegor:Event(msg)
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorFrenzyStart")
 	elseif msg == L["frenzyend_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorFrenzyEnd")
+    elseif msg == L["frenzygain_trigger2"] then
+        self:TriggerEvent("BigWigs_SendSync", "FlamegorFrenzyStart")
 	end
 end

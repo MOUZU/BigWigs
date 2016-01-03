@@ -24,7 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 	wingbuffet_bar = "Next Wing Buffet",
 	wingbuffet1_bar = "Initial Wing Buffet",
 	shadowflame_bar = "Shadow Flame",
+	shadowflame_Nextbar = "Next Shadow Flame",
 	shadowcurse_bar = "%s - Shadow of Ebonroc",
+    shadowcurse_Firstbar = "Initial Shadow of Ebonroc",
 
 	cmd = "Ebonroc",
 
@@ -56,7 +58,9 @@ L:RegisterTranslations("deDE", function() return {
 	wingbuffet_bar = "N\195\164chster Fl\195\188gelsto\195\159",
 	wingbuffet1_bar = "Erster Fl\195\188gelsto\195\159",
 	shadowflame_bar = "Schattenflamme",
+	shadowflame_Nextbar = "Nächste Schattenflamme",
 	shadowcurse_bar = "%s - Schattenschwinges Schatten",
+    shadowcurse_Firstbar = "Erster Schattenschwinges Schatten",
 
 	cmd = "Ebonroc",
 
@@ -121,9 +125,15 @@ function BigWigsEbonroc:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "EbonrocStart" then
 		started = true
 		if self.db.profile.wingbuffet then
-			self:ScheduleEvent("BigWigs_Message", 13, L["wingbuffet_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 18, "Interface\\Icons\\INV_Misc_MonsterScales_14")
+			self:ScheduleEvent("BigWigs_Message", 14, L["wingbuffet_warning"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 29, "Interface\\Icons\\INV_Misc_MonsterScales_14")
 		end
+        if self.db.profile.curse then
+            self:TriggerEvent("BigWigs_StartBar", self, L["shadowcurse_Firstbar"], 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", true, "white")
+        end
+        if self.db.profile.shadowflame then
+            self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_Nextbar"], 15, "Interface\\Icons\\Spell_Fire_Incinerate")
+        end
 	elseif sync == "EbonrocWingBuffetX" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 25, L["wingbuffet_warning"], "Attention")
@@ -132,6 +142,7 @@ function BigWigsEbonroc:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "EbonrocShadowflameX" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar"], 2, "Interface\\Icons\\Spell_Fire_Incinerate", true, "red")
+        self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_Nextbar"], 14, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "EbonrocShadowX" and self.db.profile.curse then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], rest), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", true, "white")
 	end

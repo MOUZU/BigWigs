@@ -135,7 +135,9 @@ function BigWigsFiremaw:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("BigWigs_Message", 25, L["wingbuffet_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 30, "Interface\\Icons\\INV_Misc_MonsterScales_14")
 		end
-        self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_Nextbar"], 16, "Interface\\Icons\\Spell_Fire_Incinerate")
+        if self.db.profile.shadowflame then
+            self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_Nextbar"], 15, "Interface\\Icons\\Spell_Fire_Incinerate")
+        end
 	elseif sync == "FiremawWingBuffetX" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 25, L["wingbuffet_warning"], "Attention")
