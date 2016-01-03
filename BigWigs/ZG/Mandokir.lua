@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -19,6 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 	gazeafflictother = "(.+) is afflicted by Threatening Gaze\.",
 	gazeendyou = "Threatening Gaze fades from you\.",
 	gazeendother = "Threatening Gaze fades from (.+)\.",
+    gazecast = "Incoming Threatening Gaze!",
 	gazewatchedbar = "Threatening Gaze: %s",
 	enragegain = "Bloodlord Mandokir gains Enrage\.",
 	enragefade = "Enrage fades from Bloodlord Mandokir\.",
@@ -66,6 +67,7 @@ L:RegisterTranslations("deDE", function() return {
 	gazeafflictother = "(.+) ist von Bedrohlicher Blick betroffen\.",
 	gazeendyou = "\'Bedrohlicher Blick\' schwindet von Euch\.",
 	gazeendother = "Bedrohlicher Blick schwindet von (.+)\.",
+    gazecast = "Bedrohlicher Blick kommt!",
 	gazewatchedbar = "Bedrohlicher Blick: %s",
 	enragegain = "Bloodlord Mandokir bekommt \'Wutanfall\'\.",
 	enragefade = "Wutanfall schwindet von Bloodlord Mandokir\.",
