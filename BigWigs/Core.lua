@@ -498,6 +498,11 @@ function BigWigs.modulePrototype:IsRegistered()
 	return self.registered
 end
 
+function BigWigs.modulePrototype:HasTimer(name)
+    -- LYQ: this should return a boolean if a Timer with 'name' is already being displayed for the module calling
+    return self:IsCandyBarRegistered(name)
+end
+
 ------------------------------
 --      Initialization      --
 ------------------------------
