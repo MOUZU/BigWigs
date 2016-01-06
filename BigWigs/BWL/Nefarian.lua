@@ -14,7 +14,7 @@ local warnpairs = nil
 L:RegisterTranslations("enUS", function() return {
 	landing_soon_trigger = "Let the games begin!",
 	landing_trigger = "Enough! Now you",
-    landingNOW_trigger = "Well done, my minions."
+    landingNOW_trigger = "Well done, my minions.",
 	zerg_trigger = "Impossible! Rise my",
 	fear_trigger = "Nefarian begins to cast Bellowing Roar",
 	shadowflame_trigger = "Nefarian begins to cast Shadow Flame",
