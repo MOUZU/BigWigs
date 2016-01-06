@@ -1,4 +1,4 @@
-﻿
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
@@ -185,6 +185,7 @@ function BigWigsTest:BigWigs_Test()
 	self:ScheduleEvent("BigWigs_Message", 5, L["OMG Bear!"], "Important", true, "Alert")
 	self:ScheduleEvent("BigWigs_Message", 10, L["*RAWR*"], "Urgent", true, "Alarm")
 	self:ScheduleEvent("BigWigs_Message", 15, L["Victory!"], "Bosskill", true, "Victory")
+    self.test = "HELLO WORLD"
 
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 2"], 10, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 3"], 5, "Interface\\Icons\\Spell_Nature_ResistNature")

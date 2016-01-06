@@ -118,10 +118,10 @@ BigWigsVaelastrasz.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsVaelastrasz:OnEnable()
-	barstarted = false
-	started = false
-	announcedadrenaline = false
-	tankburnannounced = false
+	self.barstarted = false
+	self.started = false
+	self.announcedadrenaline = false
+	self.tankburnannounced = false
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -170,11 +170,11 @@ end
 function BigWigsVaelastrasz:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["yell1"]) and self.db.profile.start then
 		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 38, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
-		barstarted = true
-	elseif string.find(msg, L["yell2"]) and self.db.profile.start and not barstarted then
+		self.barstarted = true
+	elseif string.find(msg, L["yell2"]) and self.db.profile.start and not self.barstarted then
 		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 28, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
-		barstarted = true
-	elseif string.find(msg, L["yell3"]) and self.db.profile.start and not barstarted then
+		self.barstarted = true
+	elseif string.find(msg, L["yell3"]) and self.db.profile.start and not self.barstarted then
 		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 12, "Interface\\Icons\\Spell_Holy_PrayerOfHealing", true, "Cyan")
 	end
 end
@@ -186,7 +186,7 @@ function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "VaelDead" and rest and rest ~= "" and self.db.profile.adrenaline then
 			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["adrenaline_bar"], rest))
 	elseif sync == "VaelAdrenaline" and rest and rest ~= "" then
-		if not announcedadrenaline then
+		if not self.announcedadrenaline then
 			if self.db.profile.whisper then
 				if rest ~= UnitName("player") then
 					self:TriggerEvent("BigWigs_SendTell", rest, L["adrenaline_message_you"])
@@ -205,23 +205,23 @@ function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
 				self:TriggerEvent("BigWigs_SetRaidIcon", rest)
 			end
 		end
-		announcedadrenaline = false
+		self.announcedadrenaline = false
 	elseif sync == "VaelStart" then
-		if not started then
+		if not self.started then
 			if self.db.profile.tankburn then
 				self:TriggerEvent("BigWigs_StartBar", self, L["tankburn_bar"], 44.9, "Interface\\Icons\\INV_Gauntlets_03", true, "Black")
 				self:ScheduleEvent("BigWigs_Message", 39.9, L["tankburnsoon"], "Urgent")
 			end
 		end
-		started = true
+		self.started = true
 	elseif sync == "VaelTankBurn" then
-		if not tankburnannounced then
+		if not self.tankburnannounced then
 			if self.db.profile.tankburn then
 				self:TriggerEvent("BigWigs_StartBar", self, L["tankburn_bar"], 44.9, "Interface\\Icons\\INV_Gauntlets_03", true, "Black")
 				self:ScheduleEvent("BigWigs_Message", 39.9, L["tankburnsoon"], "Urgent")
 			end
 		end
-		tankburnannounced = false
+		self.tankburnannounced = false
 	end
 end
 
@@ -231,11 +231,11 @@ function BigWigsVaelastrasz:Event(msg)
 		if detect == L["are"] then
 			name = UnitName("player")
 		else
-			if self.db.profile.whisper and not announcedadrenaline then
+			if self.db.profile.whisper and not self.announcedadrenaline then
 				self:TriggerEvent("BigWigs_SendTell", name, L["adrenaline_message_you"])
 			end
 		end
-		if self.db.profile.adrenaline and not announcedadrenaline then
+		if self.db.profile.adrenaline and not self.announcedadrenaline then
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["adrenaline_bar"], name), 20, "Interface\\Icons\\INV_Gauntlets_03", true, "White")
 			self:SetCandyBarOnClick("BigWigsBar "..string.format(L["adrenaline_bar"], name), function(name, button, extra) TargetByName(extra, true) end, name)
 			if name == UnitName("player") then
@@ -244,29 +244,29 @@ function BigWigsVaelastrasz:Event(msg)
 				self:TriggerEvent("BigWigs_Message", string.format(L["adrenaline_message"], name), "Urgent")
 			end
 		end
-		if self.db.profile.icon and not announcedadrenaline then
+		if self.db.profile.icon and not self.announcedadrenaline then
 			self:TriggerEvent("BigWigs_SetRaidIcon", name)
 		end
-		announcedadrenaline = true
+		self.announcedadrenaline = true
 		self:TriggerEvent("BigWigs_SendSync", "VaelAdrenaline "..name)
 		for i = 1, GetNumRaidMembers() do
 			if UnitExists("raid"..i.."target") and UnitName("raid"..i.."target") == boss and UnitExists("raid"..i.."targettarget") and UnitName("raid"..i.."targettarget") == name then
-				if self.db.profile.tankburn and not tankburnannounced then
+				if self.db.profile.tankburn and not self.tankburnannounced then
 					self:TriggerEvent("BigWigs_StartBar", self, L["tankburn_bar"], 44.9, "Interface\\Icons\\INV_Gauntlets_03", true, "Black")
 					self:ScheduleEvent("BigWigs_Message", 39.9, L["tankburnsoon"], "Urgent")
 				end
-				tankburnannounced = true
+				self.tankburnannounced = true
 				self:TriggerEvent("BigWigs_SendSync", "VaelTankBurn")
 				break
 			end
 		end
 	end
-	if not started and string.find(msg, L["start_trigger"]) then
+	if not self.started and string.find(msg, L["start_trigger"]) then
 		if self.db.profile.tankburn then
 			self:TriggerEvent("BigWigs_StartBar", self, L["tankburn_bar"], 45, "Interface\\Icons\\INV_Gauntlets_03", true, "Black")
 			self:ScheduleEvent("BigWigs_Message", 40, L["tankburnsoon"], "Urgent")
 		end
-		started = true
+		self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "VaelStart")
 	end
 end

@@ -187,8 +187,8 @@ BigWigsRazorgore.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 ------------------------------
 
 function BigWigsRazorgore:OnEnable()
-	previousorb = nil
-	eggs = 0
+	self.previousorb = nil
+	self.eggs = 0
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF", "Events")
@@ -214,7 +214,8 @@ end
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["start_trigger"]) then
-		eggs = 0
+        self.started = true
+		self.eggs = 0
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["start_message"], "Attention")
 		end
@@ -225,8 +226,8 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["phase2_trigger"] then
 		self:CancelScheduledEvent("destroyegg_check")
 		self:CancelScheduledEvent("orbcontrol_check")
-		if previousorb ~= nil and self.db.profile.orb then
-			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], previousorb))
+		if self.previousorb ~= nil and self.db.profile.orb then
+			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], self.previousorb))
 		end
 		if self.db.profile.eggs then
 			self:TriggerEvent("BigWigs_StopBar", self, L["egg_bar"])
@@ -238,7 +239,7 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 			klhtm.net.clearraidthreat()
 		end
 	elseif msg == L["destroyegg_yell1"] or msg == L["destroyegg_yell2"] or msg == L["destroyegg_yell3"] then
-		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(eggs + 1))
+		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
 	end
 end
 
@@ -349,10 +350,10 @@ end
 function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "RazorgoreEgg" then
 		rest = tonumber(rest)
-		if rest == (eggs + 1) then
-			eggs = eggs + 1
+		if rest == (self.eggs + 1) then
+			self.eggs = self.eggs + 1
 			if self.db.profile.eggs then
-				self:TriggerEvent("BigWigs_Message", string.format(L["egg_message"], eggs), "Positive")
+				self:TriggerEvent("BigWigs_Message", string.format(L["egg_message"], self.eggs), "Positive")
 			end
 		end
 	elseif sync == "RazorgoreEggStart" then
@@ -366,19 +367,19 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
 		self:CancelScheduledEvent("destroyegg_check")
 		self:CancelScheduledEvent("orbcontrol_check")
 		if self.db.profile.orb then
-			if previousorb ~= nil then
-				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], previousorb))
+			if self.previousorb ~= nil then
+				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], self.previousorb))
 			end
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["orb_bar"], rest), 90, "Interface\\Icons\\INV_Misc_Gem_Pearl_03", true, "white")
 			self:SetCandyBarOnClick("BigWigsBar "..string.format(L["orb_bar"], rest), function(name, button, extra) TargetByName(extra, true) end, rest)
 		end
 		self:ScheduleEvent("orbcontrol_check", self.OrbControlCheck, 1, self)
-		previousorb = rest
+		self.previousorb = rest
 	elseif string.find(sync, "RazorgoreOrbStop_") then
 		self:CancelScheduledEvent("destroyegg_check")
 		self:CancelScheduledEvent("orbcontrol_check")
-		if self.db.profile.orb and previousorb then
-			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], previousorb))
+		if self.db.profile.orb and self.previousorb then
+			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], self.previousorb))
 		end
 		if self.db.profile.fireballvolley then
 			self:TriggerEvent("BigWigs_StopBar", self, L["volley_bar"])
@@ -400,7 +401,7 @@ function BigWigsRazorgore:OrbControlCheck()
 	if bosscontrol then
 		self:ScheduleEvent("orbcontrol_check", self.OrbControlCheck, 1, self)
 	elseif GetRealZoneText() == "Blackwing Lair" then
-		self:TriggerEvent("BigWigs_SendSync", "RazorgoreOrbStop_"..previousorb)
+		self:TriggerEvent("BigWigs_SendSync", "RazorgoreOrbStop_"..self.previousorb)
 	end
 end
 
@@ -413,6 +414,6 @@ function BigWigsRazorgore:DestroyEggCheck()
 		end
 	end
 	if bosscontrol then
-		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(eggs + 1))
+		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
 	end
 end
