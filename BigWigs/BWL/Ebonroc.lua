@@ -92,7 +92,7 @@ BigWigsEbonroc.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 ------------------------------
 
 function BigWigsEbonroc:OnEnable()
-	started = nil
+	self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -120,10 +120,10 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsEbonroc:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Ebonroc" and not started then
+	if sync == "BossEngaged" and rest == "Ebonroc" and not self.started then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocStart")
-	elseif sync == "EbonrocStart" then
-		started = true
+	elseif sync == "EbonrocStart" and not self.started then
+		self.started = true
 		if self.db.profile.wingbuffet then
 			self:ScheduleEvent("BigWigs_Message", 14, L["wingbuffet_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 29, "Interface\\Icons\\INV_Misc_MonsterScales_14")

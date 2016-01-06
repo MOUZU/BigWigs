@@ -94,7 +94,7 @@ BigWigsFlamegor.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsFlamegor:OnEnable()
-	started = nil
+	self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER", "Event")
@@ -122,10 +122,10 @@ function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Flamegor" and not started then
+	if sync == "BossEngaged" and rest == "Flamegor" and not self.started then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorStart")
-	elseif sync == "FlamegorStart" then
-		started = true
+	elseif sync == "FlamegorStart" and not self.started then
+		self.started = true
 		if self.db.profile.wingbuffet then
 			self:ScheduleEvent("BigWigs_Message", 23, L["wingbuffet_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 28, "Interface\\Icons\\INV_Misc_MonsterScales_14")
@@ -146,7 +146,6 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar"], 2, "Interface\\Icons\\Spell_Fire_Incinerate", true, "red")
         self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_Nextbar"], 14, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "FlamegorFrenzyStart" and self.db.profile.frenzy then
-        if lastFrenzy ~= 0 and (GetTime() - lastFrenzy) < 9 then return end -- double check for my second frenzy trigger to prevent multiple bars from being shown
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important", nil, true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
         lastFrenzy = GetTime()
@@ -161,7 +160,7 @@ end
 
 function BigWigsFlamegor:Event(msg)
 	if msg == L["frenzygain_trigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "FlamegorFrenzyStart")
+		-- self:TriggerEvent("BigWigs_SendSync", "FlamegorFrenzyStart")
 	elseif msg == L["frenzyend_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorFrenzyEnd")
     elseif msg == L["frenzygain_trigger2"] then

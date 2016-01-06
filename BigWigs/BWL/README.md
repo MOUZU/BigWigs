@@ -39,6 +39,10 @@
 - <b>(QA)</b> Frenzy, added 'Next' timer with 15s
 
 ## Nefarian
+- <b>(QA)</b> Nefarian Landing, added a locale and a seperate Timer 'Landing NOW!' which has 13s and on the 14th second Nefarian is already on position and the tank should be too
+- <b>(QA)</b> Class call, added first 'Possible Class call' (Not 100% accurate) with 27s, lowered the regular class call from 30s to 27s
+- <b>(QA)</b> Fear, added first 'Possible Fear' (not 100% accurate) with 27s, increased regular fear from 23.5 to 27s. Changed the title of the casting fear from 'Possible Fear' to 'Fear NOW!'
+- <b>(QA)</b> Shadow Flame, added first 'Possible Shadow Flame' (not 100% accurate) with 20s. The regular Shadow Flame comes around ~22s after the last(2s cast included) should I add a timer for that?
 
 
 <br \><br \>

@@ -187,6 +187,7 @@ BigWigsRazorgore.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 ------------------------------
 
 function BigWigsRazorgore:OnEnable()
+    self.started = nil
 	self.previousorb = nil
 	self.eggs = 0
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -213,7 +214,7 @@ end
 ------------------------------
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L["start_trigger"]) then
+	if string.find(msg, L["start_trigger"]) and not self.started then
         self.started = true
 		self.eggs = 0
 		if self.db.profile.phase then

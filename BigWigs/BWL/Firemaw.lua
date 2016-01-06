@@ -94,7 +94,7 @@ BigWigsFiremaw.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsFiremaw:OnEnable()
-	started = nil
+	self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
@@ -126,11 +126,11 @@ function BigWigsFiremaw:Event(msg)
 end
 
 function BigWigsFiremaw:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Firemaw" and not started then
+	if sync == "BossEngaged" and rest == "Firemaw" and not self.started then
 		self:TriggerEvent("BigWigs_SendSync", "FiremawStart")
 		self:TriggerEvent("BigWigs_SendSync", "FiremawFirstBuffet")
-	elseif sync == "FiremawStart" then
-		started = true
+	elseif sync == "FiremawStart" and not self.started then
+		self.started = true
 		if self.db.profile.wingbuffet then
 			self:ScheduleEvent("BigWigs_Message", 25, L["wingbuffet_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 30, "Interface\\Icons\\INV_Misc_MonsterScales_14")

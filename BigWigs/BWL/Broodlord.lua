@@ -76,7 +76,8 @@ BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsBroodlord:OnEnable()
-	lastbw = 0
+    self.started = nil
+	self.lastbw = 0
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -102,11 +103,11 @@ function BigWigsBroodlord:Event(msg)
 			self:SetCandyBarOnClick("BigWigsBar "..string.format(L["ms_bar"], name), function(name, button, extra) TargetByName(extra, true) end, name)
 		end
 	elseif string.find(msg, L["bw_trigger"]) and self.db.profile.bw then
-		if GetTime() - lastbw > 5 then
+		if GetTime() - self.lastbw > 5 then
 			self:TriggerEvent("BigWigs_StartBar", self, L["bw_bar"], 8, "Interface\\Icons\\Spell_Holy_Excorcism_02", true, "Red")
 			self:ScheduleEvent("BigWigs_Message", 5, L["bw_warn"], "Urgent", true, "Alert")
 		end
-		lastbw = GetTime()
+		self.lastbw = GetTime()
 	end
 end
 
@@ -122,8 +123,9 @@ end
 
 function BigWigsBroodlord:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.bw then return end
-	if string.find(msg, L["engage_trigger"]) then
+	if string.find(msg, L["engage_trigger"]) and not self.started then
 		self:TriggerEvent("BigWigs_StartBar", self, L["bw_bar"], 17, "Interface\\Icons\\Spell_Holy_Excorcism_02", true, "Red")
 		self:ScheduleEvent("BigWigs_Message", 12, L["bw_warn"], "Urgent", true, "Alert")
+        self.started = true
 	end
 end
