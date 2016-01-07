@@ -5,18 +5,21 @@
 - Respawn Timers(?)
 
 # Lucifron
-- Lucifron's Curse
-- Impending Doom
-- Dominate Mind
+- <b>(QA)</b> Lucifron's Curse, changed the regular timer from 20 to 15s
+- <b>(100%)</b> Impending Doom
+- <b>(100%)</b> Dominate Mind, I don't think it's necessary to implement a timer for the next mc and the normal one works fine
+- <b>(DG)</b> Shadow Shock, Idk idc tbh
 
 # Magmadar
-- Lava Breath
-- AoE Fear
-- Lava Bomb
+- <b>(QA)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones
+- <b>(QA)</b> Frenzy, added timer for first one with 29s - the others are kinda RNG between 16-21s
+- <b>(QA)</b> Lava Bomb, added timer for first one with 12s and regular ones with 10s
+TODO: clean up the code
 
 # Gehennas
-- Gehennas' Curse
-- Rain of Fire(?)
+- <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
+- <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 3.5s for that
+- <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s after the last but I'm missing something to trigger that correctly
 
 # Garr
 - Magma Shackles(?)

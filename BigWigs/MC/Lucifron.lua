@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -204,13 +204,13 @@ function BigWigsLucifron:BigWigs_RecvSync(sync)
 		end
 		self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
 	elseif sync == "LucifronCurseRep" and self.db.profile.curse then
-		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 15, L["warn1"], "Attention")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_BlackPlague")
+		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 10, L["warn1"], "Attention")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 	elseif sync == "LucifronCurseIni" then
 		firstcurse = 1
 		if self.db.profile.curse then
-			self:ScheduleEvent("messagewarn4", "BigWigs_Message", 15, L["warn1"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_BlackPlague")
+			self:ScheduleEvent("messagewarn4", "BigWigs_Message", 10, L["warn1"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		end
 	elseif sync == "LucifronDoomIni" then
 		firstdoom = 1

@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -127,6 +127,7 @@ function BigWigsGehennas:BigWigs_RecvSync(sync)
 		if firstshadowbolt == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "GehennasShadowboltIni")
 		end
+        self:TriggerEvent("BigWigs_StartBar", self, "Next Rain", 10, "Interface\\Icons\\Spell_Shadow_RainOfFire")
 	elseif sync == "GehennasCurse" and self.db.profile.curse then
 		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 26, L["warn1"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 31, "Interface\\Icons\\Spell_Shadow_BlackPlague")
@@ -136,15 +137,14 @@ function BigWigsGehennas:BigWigs_RecvSync(sync)
 			self:ScheduleEvent("messagewarn2", "BigWigs_Message", 7, L["warn1"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 12, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		end
-	elseif sync == "GehennasShadowbolt" and self.db.profile.shadowbolt then
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 4, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
 	elseif sync == "GehennasShadowboltIni" then
 		firstshadowbolt = 1
 		if self.db.profile.shadowbolt then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 4, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
 		end
 	elseif sync == "GehennasShadowboltCast" and self.db.profile.shadowbolt then
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 0.5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
+        self:ScheduleEvent("BigWigs_StartBar", 0.5, self, L["bar3text"], 3.5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
 	elseif sync == "GehennasAddDead" then
 		flamewaker = flamewaker + 1
 		if self.db.profile.adds then
