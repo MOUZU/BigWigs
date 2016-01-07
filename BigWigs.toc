@@ -15,10 +15,10 @@
 ## X-AceForum: 1222
 ## X-FlySpray: 1
 
-## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct, SpellStatusLib, SpellCacheLib, GratuityLib, Deformat
+## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct, SpellStatusLib, SpellCacheLib, GratuityLib, Deformat, SpecialEventsEmbed
 ## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib
 
-## SavedVariables: BigWigsDB, BigWigsFubarDB, BigWigsCommonAurasDB
+## SavedVariables: BigWigsDB, BigWigsFubarDB, BigWigsCommonAurasDB, BigWigsZombieFoodDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
 
 Libs\AceLibrary\AceLibrary.lua
@@ -47,6 +47,7 @@ Libs\Deformat-2.0\Deformat-2.0.lua
 Libs\Gratuity-2.0\Gratuity-2.0.lua
 Libs\SpellCache-1.0\SpellCache-1.0.lua
 Libs\SpellStatus-1.0\SpellStatus-1.0.lua
+Libs\SpecialEvents-Aura-2.0\SpecialEvents-Aura-2.0.lua
 
 LoadOnDemand.lua
 Core.lua
@@ -67,6 +68,8 @@ Plugins\Version.lua
 Plugins\Test.lua
 Plugins\CustomBar.lua
 Plugins\Tranq.lua
+Plugins\ZombieFood.lua
+Plugins\LoathebTactical.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
