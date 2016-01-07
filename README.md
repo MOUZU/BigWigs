@@ -7,13 +7,13 @@ The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \
 
 # Adjustments listed seperately
 <ul>
-<li><a href="MC/">Molten Core</a></li>
-<li><a href="Onyxia/">Onyxia</a></li>
-<li><a href="BWL/">Blackwing Lair</a></li>
-<li><a href="ZG/">Zul'Gurub</a></li>
-<li><a href="AQ20/">Ruins of Ahn'Qiraj</a></li>
-<li><a href="AQ40/">Temple of Ahn'Qiraj</a></li>
-<li><a href="Naxxramas/">Naxxramas</a></li>
+<li><a href="Raids/MC/">Molten Core</a></li>
+<li><a href="Raids/Onyxia/">Onyxia</a></li>
+<li><a href="Raids/BWL/">Blackwing Lair</a></li>
+<li><a href="Raids/ZG/">Zul'Gurub</a></li>
+<li><a href="Raids/AQ20/">Ruins of Ahn'Qiraj</a></li>
+<li><a href="Raids/AQ40/">Temple of Ahn'Qiraj</a></li>
+<li><a href="Raids/Naxxramas/">Naxxramas</a></li>
 </ul>
 
 # Download
