@@ -1,7 +1,7 @@
 ## Interface: 11200
 
-## Title: Big Wigs |cff7fff7f -NOSTALRIUS-|r
-## Title-zhCN: |cff7fff7f-NOSTALRIUS-|r Big Wigs 
+## Title: Big Wigs |cff7fff7fNOSTALRIUS|r
+## Title-zhCN: |cff7fff7fNOSTALRIUS|r Big Wigs 
 ## Notes: Boss Mods with Timer bars.
 ## Notes-zhCN: 团队首领战信息提示插件，带有计时条。
 ## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
@@ -15,10 +15,10 @@
 ## X-AceForum: 1222
 ## X-FlySpray: 1
 
-## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct
+## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct, SpellStatusLib, SpellCacheLib, GratuityLib, Deformat
 ## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib
 
-## SavedVariables: BigWigsDB, BigWigsFubarDB
+## SavedVariables: BigWigsDB, BigWigsFubarDB, BigWigsCommonAurasDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
 
 Libs\AceLibrary\AceLibrary.lua
@@ -43,6 +43,10 @@ Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
 Libs\PaintChips-2.0\PaintChips-2.0.lua
 Libs\CandyBar-2.0\CandyBar-2.0.lua
 Libs\Surface-1.0\Surface-1.0.lua
+Libs\Deformat-2.0\Deformat-2.0.lua
+Libs\Gratuity-2.0\Gratuity-2.0.lua
+Libs\SpellCache-1.0\SpellCache-1.0.lua
+Libs\SpellStatus-1.0\SpellStatus-1.0.lua
 
 LoadOnDemand.lua
 Core.lua
@@ -58,11 +62,11 @@ Plugins\RaidWarn.lua
 Plugins\BossBlock.lua
 Plugins\RaidIcon.lua
 Plugins\Range.lua
+Plugins\CommonAuras.lua
 Plugins\Version.lua
 Plugins\Test.lua
-
-Extras\CustomBar.lua
-Extras\Tranq.lua
+Plugins\CustomBar.lua
+Plugins\Tranq.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
