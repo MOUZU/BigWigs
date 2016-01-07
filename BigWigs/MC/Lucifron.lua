@@ -132,10 +132,9 @@ BigWigsLucifron.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsLucifron:OnEnable()
-	protector = 0
-	lucifrondead = 0
-	firstdoom = 0
-	firstcurse = 0
+    self.started = nil
+	self.protector = 0
+	self.lucifrondead = nil
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -155,10 +154,8 @@ function BigWigsLucifron:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronMC_(.*)", 0.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronMCEnd_(.*)", 0.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronCurseRep", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronCurseIni", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronShock", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronDoomRep", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronDoomIni", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronAddDead", 0.7)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronAllDead", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronLucifronDead", 3)
@@ -194,30 +191,22 @@ function BigWigsLucifron:Event(msg)
 end
 
 function BigWigsLucifron:BigWigs_RecvSync(sync)
-	--DEFAULT_CHAT_FRAME:AddMessage("Received sync: "..sync)
-	if sync == self:GetEngageSync("Lucifron") then
-		if firstcurse == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "LucifronCurseIni")
+	if sync == self:GetEngageSync("Lucifron") or sync == "LucifronEngage" and not self.started then
+        self.started = true
+        if sync ~= "LucifronEngage" then self:TriggerEvent("BigWigs_SendSync", "LucifronEngage") end
+        
+        if self.db.profile.curse then
+			self:ScheduleEvent("messagewarn4", "BigWigs_Message", 10, L["warn1"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		end
-		if firstdoom == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "LucifronDoomIni")
+        if self.db.profile.doom then
+			self:ScheduleEvent("messagewarn3", "BigWigs_Message", 5, L["warn3"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 10, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
 		end
 		self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
 	elseif sync == "LucifronCurseRep" and self.db.profile.curse then
 		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 10, L["warn1"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
-	elseif sync == "LucifronCurseIni" then
-		firstcurse = 1
-		if self.db.profile.curse then
-			self:ScheduleEvent("messagewarn4", "BigWigs_Message", 10, L["warn1"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
-		end
-	elseif sync == "LucifronDoomIni" then
-		firstdoom = 1
-		if self.db.profile.doom then
-			self:ScheduleEvent("messagewarn3", "BigWigs_Message", 5, L["warn3"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 10, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
-		end
 	elseif sync == "LucifronDoomRep" and self.db.profile.doom then
 		self:ScheduleEvent("messagewarn2", "BigWigs_Message", 15, L["warn3"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
@@ -240,11 +229,11 @@ function BigWigsLucifron:BigWigs_RecvSync(sync)
 			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["mindcontrol_bar"], luckyone))
 		end
 	elseif sync == "LucifronAddDead" then
-		protector = protector + 1
+		self.protector = self.protector + 1
 		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], protector), "Positive")
+			self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.protector), "Positive")
 		end
-		if ((protector == 2) and (lucifrondead == 1)) then
+		if ((self.protector == 2) and self.lucifrondead then
 			self:TriggerEvent("BigWigs_SendSync", "LucifronAllDead")
 		end
 	elseif sync == "LucifronLucifronDead" then
@@ -255,11 +244,11 @@ function BigWigsLucifron:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_StopBar", self, L["bar1text"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["bar2text"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])
-		lucifrondead = 1
+		self.lucifrondead = true
 		if self.db.profile.bosskill then
 			self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory")
 		end
-		if ((protector == 2) and (lucifrondead == 1)) then
+		if self.protector == 2 then
 			self:TriggerEvent("BigWigs_SendSync", "LucifronAllDead")
 		end
 	elseif sync == "LucifronAllDead" then
