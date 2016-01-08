@@ -76,7 +76,6 @@ function BigWigsZombieFood:OnEnable()
 end
 
 function BigWigsZombieFood:SpecialEvents_UnitDebuffGained(unitid, debuffName, applications, debuffType, texture)
-    if not BigWigs.enabled then return end
 	if unitid and UnitIsFriend("player", unitid) and UnitIsPlayer(unitid) and debuffName == L["Dazed"] then
 		local unitName = UnitName(unitid)
 		if unitName and (not times[unitName] or (times[unitName] + 5) < GetTime()) then

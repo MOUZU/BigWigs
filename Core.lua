@@ -522,7 +522,6 @@ function BigWigs:OnEnable()
 	else
 		self:RegisterEvent("AceEvent_FullyInitialized")
 	end
-    self.enabled = true
 end
 
 function BigWigs:AceEvent_FullyInitialized()
@@ -557,7 +556,6 @@ function BigWigs:OnDisable()
 	for name, module in self:IterateModules() do
 		self:ToggleModuleActive(module, false)
 	end
-    self.enabled = false
 
 	self:TriggerEvent("BigWigs_CoreDisabled")
 end
