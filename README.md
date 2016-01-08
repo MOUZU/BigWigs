@@ -8,10 +8,10 @@ The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \
 ## Included AddOns
 I've included several other BigWigs AddOns in this repository, so you only need to download and use the 'BigWigs' folder from this repository. If you happen to have any of the listed AddOns seperately I suggest removing them - in case I adjusted some of those in this repository as well.
 <ul>
-    <li>BigWigs_CommonAuras - keeps track of certain Buffs eg. Fear Ward and Tank cooldowns</li>
-    <li>BigWigs_NefCount - improved mechanism for Nefarian phase 1, keeps track of the Adds killed since that triggers phase 2</li>
-    <li>BigWigs_ZombieFood - announces if a player is getting dazed</li>
-    <li>BigWigs_LoathebTactical - Spore and Consumable warnings for Loatheb.</li>
+    <li><b>BigWigs_CommonAuras</b> <br \>  ( keeps track of certain Buffs eg. Fear Ward and Tank cooldowns )</li>
+    <li><b>BigWigs_NefCount</b> <br \>  ( improved mechanism for Nefarian phase 1, keeps track of the Adds killed since that triggers phase 2 )</li>
+    <li><b>BigWigs_ZombieFood</b> <br \>  ( announces if a player is getting dazed )</li>
+    <li><b>BigWigs_LoathebTactical</b> <br \>  ( Spore and Consumable warnings for Loatheb )</li>
 </ul>
 
 ## Adjustments listed seperately
