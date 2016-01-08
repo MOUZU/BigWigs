@@ -3,7 +3,7 @@ BigWigs is a World of Warcraft AddOn to predict certain AI behaviour to improve 
 This Modification is build for Patch 1.12.1 and its content for use on the <b>NostalriusBegins</b> private Server.
 
 The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \>
-<a href="github.com/MOUZU/BigWigs">Please refer to this repository for more information.</a>
+<b><a href="github.com/MOUZU/BigWigs">Please refer to this repository for more information.</a></b>
 
 ## Included AddOns
 I've included several other BigWigs AddOns in this repository, so you only need to download and use the 'BigWigs' folder from this repository. If you happen to have any of the listed AddOns seperately I suggest removing them - in case I adjusted some of those in this repository as well.
