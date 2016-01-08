@@ -70,6 +70,8 @@ Plugins\CustomBar.lua
 Plugins\Tranq.lua
 Plugins\ZombieFood.lua
 Plugins\LoathebTactical.lua
+Plugins\CounterBars.lua
+Plugins\NefCount.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
