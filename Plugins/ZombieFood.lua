@@ -78,7 +78,7 @@ end
 function BigWigsZombieFood:SpecialEvents_UnitDebuffGained(unitid, debuffName, applications, debuffType, texture)
     local modulesLoaded = false
     for name, module in self.core:IterateModules() do
-        if module:IsBossModule() and deuce.core:IsModuleActive(module) then
+        if module:IsBossModule() and self.core:IsModuleActive(module) then
             modulesLoaded = true
             break
         end
