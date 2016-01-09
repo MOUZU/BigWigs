@@ -70,6 +70,7 @@ L:RegisterTranslations("enUS", function() return {
     frenzy_Nextbar = "Next Frenzy",
 	first_bar = "First Breath",
 	second_bar = "Second Breath",
+    vuln_bar = "%s Vulnerability",
 	
 	fire = "Fire",
 	frost = "Frost",
@@ -137,6 +138,7 @@ L:RegisterTranslations("deDE", function() return {
     frenzy_Nextbar = "Nächste Raserei",
 	first_bar = "Erster Atem",
 	second_bar = "Zweite Atem",
+    vuln_bar = "%s Verwundbarkeit",
 	
 	fire = "Feuer",
 	frost = "Frost",
@@ -169,6 +171,7 @@ function BigWigsChromaggus:OnEnable()
 	self.twenty = nil
 	self.started = nil
 	self.frenzied = nil
+    self.lastVuln = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
@@ -273,7 +276,12 @@ function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE(msg)
 	elseif string.find(msg, L["vulnerability_trigger"]) then
 		if self.db.profile.vulnerability then
 			self:TriggerEvent("BigWigs_Message", L["vulnerability_warning"], "Positive")
+            if self.vulnerability then
+                self:TriggerEvent("BigWigs_StopBar", self, format(L["vuln_bar"], self.vulnerability))
+            end
+            self:TriggerEvent("BigWigs_StartBar", self, format(L["vuln_bar"], "???"), 45, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		end
+        self.lastVuln = GetTime()
 		self.vulnerability = nil
 	end
 end
@@ -296,62 +304,52 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 			if school == L["arcane"] then
 				if partial and partial ~= "" then
 					if tonumber(dmg)+tonumber(partial) >= 250 then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				else
 					if tonumber(dmg) >= 250 then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				end
 			elseif school == L["fire"] and not string.find(userspell, L["ignite"]) then
 				if partial and partial ~= "" then
 					if tonumber(dmg)+tonumber(partial) >= 400 then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				else
 					if tonumber(dmg) >= 400 then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				end
 			elseif school == L["nature"] then
 				if partial and partial ~= "" then
 					if tonumber(dmg)+tonumber(partial) >= 300 then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				else
 					if tonumber(dmg) >= 300 then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				end
 			elseif school == L["shadow"] then
 				if string.find(userspell, L["curseofdoom"]) then
 					if partial and partial ~= "" then
 						if tonumber(dmg)+tonumber(partial) >= 3000 then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					else
 						if tonumber(dmg) >= 3000 then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					end
 				else
 					if partial and partial ~= "" then
 						if tonumber(dmg)+tonumber(partial) >= 500 then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					else
 						if tonumber(dmg) >= 500 then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					end
 				end
@@ -373,91 +371,88 @@ function BigWigsChromaggus:PlayerDamageEvents(msg)
 				if string.find(userspell, L["starfire"]) then
 					if partial and partial ~= "" then
 						if (tonumber(dmg)+tonumber(partial) >= 800 and stype == L["hit"]) or (tonumber(dmg)+tonumber(partial) >= 1200 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					else
 						if (tonumber(dmg) >= 800 and stype == L["hit"]) or (tonumber(dmg) >= 1200 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					end
 				else
 					if partial and partial ~= "" then
 						if (tonumber(dmg)+tonumber(partial) >= 600 and stype == L["hit"]) or (tonumber(dmg)+tonumber(partial) >= 1200 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					else
 						if (tonumber(dmg) >= 600 and stype == L["hit"]) or (tonumber(dmg) >= 1200 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					end
 				end
 			elseif school == L["fire"] then
 				if partial and partial ~= "" then
 					if (tonumber(dmg)+tonumber(partial) >= 1300 and stype == L["hit"]) or (tonumber(dmg)+tonumber(partial) >= 2600 and stype == L["crit"]) then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				else
 					if (tonumber(dmg) >= 1300 and stype == L["hit"]) or (tonumber(dmg) >= 2600 and stype == L["crit"]) then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				end
 			elseif school == L["frost"] then
 				if partial and partial ~= "" then
 					if (tonumber(dmg)+tonumber(partial) >= 800 and stype == L["hit"])	or (tonumber(dmg)+tonumber(partial) >= 1600 and stype == L["crit"]) then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				else
 					if (tonumber(dmg) >= 800 and stype == L["hit"]) or (tonumber(dmg) >= 1600 and stype == L["crit"]) then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				end
 			elseif school == L["nature"] then
 				if string.find(userspell, L["thunderfury"]) then
 					if partial and partial ~= "" then
 						if (tonumber(dmg)+tonumber(partial) >= 800 and stype == L["hit"]) or (tonumber(dmg)+tonumber(partial) >= 1200 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					else
 						if (tonumber(dmg) >= 800 and stype == L["hit"]) or (tonumber(dmg) >= 1200 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					end
 				else
 					if partial and partial ~= "" then
 						if (tonumber(dmg)+tonumber(partial) >= 900 and stype == L["hit"]) or (tonumber(dmg)+tonumber(partial) >= 1800 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					else
 						if (tonumber(dmg) >= 900 and stype == L["hit"]) or (tonumber(dmg)>= 1800 and stype == L["crit"]) then
-							self.vulnerability = school
-							self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+							self:IdentifyVulnerability(school)
 						end
 					end
 				end
 			elseif school == L["shadow"] then
 				if partial and partial ~= "" then
 					if (tonumber(dmg)+tonumber(partial) >= 1700 and stype == L["hit"]) or (tonumber(dmg)+tonumber(partial) >= 3400 and stype == L["crit"]) then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				else
 					if (tonumber(dmg) >= 1700 and stype == L["hit"]) or (tonumber(dmg) >= 3400 and stype == L["crit"]) then
-						self.vulnerability = school
-						self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+						self:IdentifyVulnerability(school)
 					end
 				end
 			end
 		end
 	end
  end
+
+function BigWigsChromaggus:IdentifyVulnerability(school)
+    if not self.db.profile.vulnerability or not type(school) == "string" then return end
+    
+    self.vulnerability = school
+    self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")
+    if self.lastVuln then
+        self:TriggerEvent("BigWigs_StopBar", self, format(L["vuln_bar"], "???"))
+        self:TriggerEvent("BigWigs_StartBar", self, format(L["vuln_bar"], school), (self.lastVuln + 45) - GetTime(), "Interface\\Icons\\Spell_Shadow_BlackPlague")
+    end
+end
