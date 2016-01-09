@@ -18,7 +18,7 @@
 ## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct, SpellStatusLib, SpellCacheLib, GratuityLib, Deformat, SpecialEventsEmbed
 ## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib
 
-## SavedVariables: BigWigsDB, BigWigsFubarDB, BigWigsCommonAurasDB, BigWigsZombieFoodDB
+## SavedVariables: BigWigsDB, BigWigsFubarDB, BigWigsCommonAurasDB, BigWigsZombieFoodDB, BigWigsRespawnTimersDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
 
 Libs\AceLibrary\AceLibrary.lua
@@ -72,6 +72,7 @@ Plugins\ZombieFood.lua
 Plugins\LoathebTactical.lua
 Plugins\CounterBars.lua
 Plugins\NefCount.lua
+Plugins\RespawnTimers.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
