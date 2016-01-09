@@ -68,7 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["respawntimers"] = "respawntimers",
 	["Respawn Timers"] = "Respawn Timer",
-	["Respawn timer bars and warnings for trash mobs."] = "Respawn Timerbalken und Warnungen für Trashmobs",
+	["Respawn timer bars and warnings for trash mobs."] = "Respawn Timerbalken und Warnungen fÃ¼r Trashmobs",
 	["bars"] = "bars",
 	["Bars"] = "Balken",
 	["Toggles showing bars for respawn times."] = "Zeige Balken",
@@ -85,7 +85,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Lava Annihilator"] = "Lavavernichter",
 	["Lava Surger"] = "Lavawoger",
 	["Firelord"] = "Feuerlord",
-	["Firewalker"] = "Feuergänger", -- Lava Pack
+	["Firewalker"] = "FeuergÃ¤nger", -- Lava Pack
 	["%s collapses and begins to smolder."] = "%s bricht zusammen und beginnt zu glimmen.", -- Hound Pack, emote.
 	-- Molten Core Messages
 	["Corehound"] =  "Kernhund",
@@ -96,17 +96,17 @@ L:RegisterTranslations("deDE", function() return {
 	["Houndpack"] = "Kernhundpack",
 
 	-- AQ Triggers
-	["Obsidian Eradicator"] = "Obsidianzerstörer",
-	["Anubisath Sentinel"] = "Wächter des Anubisath",
+	["Obsidian Eradicator"] = "ObsidianzerstÃ¶rer",
+	["Anubisath Sentinel"] = "WÃ¤chter des Anubisath",
 	-- AQ Messages
-	["Eradicator"] = "Zerstörer",
-	["Sentinel"] = "Wächter",
+	["Eradicator"] = "ZerstÃ¶rer",
+	["Sentinel"] = "WÃ¤chter",
 
 	-- BWL Triggers
-	["Death Talon Hatcher"] = "Brutwächter der Todeskrallen",
+	["Death Talon Hatcher"] = "BrutwÃ¤chter der Todeskrallen",
 	["Blackwing Taskmaster"] = "Zuchtmeister der Pechschwingen",
 	-- BWL Messages
-	["Death Talon"] = "Brutwächter",
+	["Death Talon"] = "BrutwÃ¤chter",
 	["Taskmaster"] = "Zuchtmeister",
 } end )
 
@@ -244,4 +244,3 @@ function BigWigsRespawnTimers:StartRespawnTimer(message, timer, icon, throttle)
 		end)
 	end
 end
-
