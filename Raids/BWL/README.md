@@ -4,9 +4,11 @@
 # Blackwing Lair
 
 ## Razorgore the Untamed
-- <b>(QA)</b> First Wave, adjusted Bar and its Warning from 29s to 46s
-- <b>(DG)</b> Control Orb, is the timer correct?
+- <b>(100%)</b> First Wave, adjusted Bar and its Warning from 29s to 46s
+- <b>(100%)</b> Control Orb
 - <b>(DG)</b> Mindcontrol, is the timer correct?
+- <b>(DG)</b> Polymorph, is the timer correct?
+- <b>(DG)</b> Egg Counter, is it counting correctly?
 - <b>(DG)</b> Conflagration, seems to be RNG
 - <b>(DG)</b> Fireball Volley, seems to be RNG
 
@@ -35,7 +37,7 @@
 - <b>(QA)</b> Frenzy, added 'Next' timer with 10s, added a second trigger since it seemed that BigWigs didn't catch it 100%
 
 ## Chromaggus
-- <b>(QA)</b> First & Second Breath, adjusted from 60 and 30 to 58.5s and 28.5s
+- <b>(QA)</b> First & Second Breath, adjusted from 60 and 30 to 58.5s and 28.5s. The timer for the following breaths shall only start upon completing cast now.
 - <b>(QA)</b> Frenzy, added 'Next' timer with 15s
 
 ## Nefarian

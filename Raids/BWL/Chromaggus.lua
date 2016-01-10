@@ -245,7 +245,7 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon"..rest])
 		self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Important")
 		self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 55, string.format(L["breath_warning"], spellName), "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..rest], true, L["breathcolor"..rest])
+		self:ScheduleEvent("BigWigs_StartBar", 2, self, spellName, 58, L["icon"..rest], true, L["breathcolor"..rest])
 	elseif sync == "ChromaggusFrenzyStart" then
 		if self.db.profile.frenzy and not self.frenzied then
 			self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Attention")
