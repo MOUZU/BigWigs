@@ -130,7 +130,6 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 		if string.find(msg, i) then
 			if v[2] then
 				if self.db.profile.classcall then
-                    self:TriggerEvent("BigWigs_StopBar", self, "Possible Class call")
 					self:TriggerEvent("BigWigs_Message", v[1], "Important")
 					self:ScheduleEvent("BigWigs_Message", 23, L["classcall_warning"], "Important", true, "Alarm")
 					self:TriggerEvent("BigWigs_StartBar", self, L["classcall_bar"], 28, "Interface\\Icons\\Spell_Shadow_Charm")
@@ -143,7 +142,7 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 					self:ScheduleEvent("BigWigs_Message", 105, L["landing_soon_warning"], "Important", true, "Alarm")
 					self:ScheduleEvent("BigWigs_Message", 125, L["landing_very_soon"], "Important", true, "Long")
 				elseif self.db.profile.otherwarn and string.find(msg, L["landing_trigger"]) then 
-					self:TriggerEvent("BigWigs_Message", v[1], "Important", true, "Long")
+					--self:TriggerEvent("BigWigs_Message", v[1], "Important", true, "Long")
 				elseif self.db.profile.otherwarn and string.find(msg, L["zerg_trigger"]) then 
 					self:TriggerEvent("BigWigs_Message", v[1], "Important", true, "Long")
 				end
@@ -163,27 +162,18 @@ end
 
 function BigWigsNefarian:BigWigs_RecvSync( sync )
 	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
-        self:TriggerEvent("BigWigs_StopBar", self, "Possible Shadow Flame")
 		self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar"], 2, "Interface\\Icons\\Spell_Fire_Incinerate")
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
+		self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_bar"], 20, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "NefarianFear" and self.db.profile.fear then
         self:TriggerEvent("BigWigs_StopBar", self, L["fear_bar"])
 		self:TriggerEvent("BigWigs_Message", L["fear_warning"], "Important", true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, "Fear NOW!", 1.5, "Interface\\Icons\\Spell_Shadow_Charm")
-		self:ScheduleEvent("BigWigs_StartBar", 1.5, self, L["fear_bar"], 27, "Interface\\Icons\\Spell_Shadow_Charm")
+		self:ScheduleEvent("BigWigs_StartBar", 1.5, self, L["fear_bar"], 25, "Interface\\Icons\\Spell_Shadow_Charm")
     elseif sync == "NefarianLandingNOW" and not self.phase2 then
         self.phase2 = true
         self:TriggerEvent("BigWigs_StopBar", self, L["land"])
         self:TriggerEvent("BigWigs_StartBar", self, "Landing NOW!", 13, "Interface\\Icons\\INV_Misc_Head_Dragon_Black")
         self:TriggerEvent("BigWigs_Message", L["landing_warning"], "Important")
-        
-        -- possible first timers
-        if self.db.profile.fear then
-            self:ScheduleEvent("BigWigs_StartBar", 13, self, L["fear_bar"], 14, "Interface\\Icons\\Spell_Shadow_Charm")
-        end
-        if self.db.profile.classcall then
-            self:ScheduleEvent("BigWigs_StartBar", 13, self, "Possible Class call", 14, "Interface\\Icons\\Spell_Shadow_Charm")
-        end
-        self:ScheduleEvent("BigWigs_StartBar", 13, self, "Possible Shadow Flame", 7, "Interface\\Icons\\Spell_Fire_Incinerate")
 	end
 end
