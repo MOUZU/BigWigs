@@ -296,11 +296,13 @@ function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "VenoxisAddDead" then
 		cobra = cobra + 1
-		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], cobra), "Positive")
-		end
-		if ((cobra == 4) and (venoxisdead == 1)) then
-			self:TriggerEvent("BigWigs_SendSync", "VenoxisAllDead")
+		if cobra < 5 then
+			if self.db.profile.adds then
+				self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], cobra), "Positive")
+			end
+			if ((cobra == 4) and (venoxisdead == 1)) then
+				self:TriggerEvent("BigWigs_SendSync", "VenoxisAllDead")
+			end
 		end
 	elseif sync == "VenoxisVenoxisDead" then
 		venoxisdead = 1
