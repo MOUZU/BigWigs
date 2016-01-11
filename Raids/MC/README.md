@@ -50,10 +50,9 @@ TODO: clean up the code
 - Pyroblast, seems to be every 4s - should I create a timer for that?
 
 # Majordomo Executus
-- counters on how many mobs are dead(?)
-- Spellreflect shield timer(?)
-- Teleport(?)
-- Blast Wave(?)
+- <b>(100%)</b> Addcount
+- <b>(QA)</b> Spell/Damage-reflect Shields, changed timer to every 30s. Timers for the next may only appear after the timer of the current shield is gone.
+- <b>(TODO)</b> add big Icon for which shield is active at the time
 
 # Ragnaros
 - <b>(QA)</b> Combat start, added timer 65s prior to start and added an enUS locale triggering that

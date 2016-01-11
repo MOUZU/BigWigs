@@ -11,6 +11,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	disabletrigger = "Impossible",
+    trigger = "Reckless mortals, none may challenge the sons of the living flame!",
 
 	trigger1 = "gains Magic Reflection",
 	trigger2 = "gains Damage Shield",
@@ -50,6 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	disabletrigger = "Impossible",
+    trigger = "Reckless mortals, none may challenge the sons of the living flame!",
 
 	trigger1 = "bekommt \'Magiereflexion'",
 	trigger2 = "bekommt \'Schadensschild'",
@@ -103,6 +105,7 @@ BigWigsMajordomo.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 ------------------------------
 
 function BigWigsMajordomo:OnEnable()
+    self.started = nil
 	hdead = 0
 	edead = 0
 	firstshield = 0
@@ -135,6 +138,8 @@ function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self.core:ToggleModuleActive(self, false)
+    elseif string.find(msg, L["trigger"]) then
+        self:TriggerEvent("BigWigs_SendSync", "DomoPull")
 	end
 end
 
@@ -157,7 +162,13 @@ end
 function BigWigsMajordomo:BigWigs_RecvSync(sync)
 	if sync == self:GetEngageSync() and (UnitName("target") == "Majordomo Executus" or UnitName("target") == "Flamewaker Elite" or UnitName("target") == "Flamewaker Healer") then
 		if firstshield == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "DomoPull")
+			self:TriggerEvent("BigWigs_SendSync", "DomoCombatStart")
+		end
+    elseif sync == "DomoPull" and not self.started then
+        self.started = true
+        if self.db.profile.magic or self.db.profile.dmg then
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
+			self:ScheduleEvent("BigWigs_Message", 27, L["warn3"], "Urgent")
 		end
 	elseif sync == "DomoHealerDead" and self.db.profile.adds then
 		hdead = hdead + 1
@@ -171,8 +182,8 @@ function BigWigsMajordomo:BigWigs_RecvSync(sync)
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Frost_FrostShock")
 		end
 		if (self.db.profile.magic or self.db.profile.dmg) then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 15, "Interface\\Icons\\Spell_Frost_Wisp")
-			self:ScheduleEvent("BigWigs_Message", 12, L["warn3"], "Urgent")
+			self:ScheduleEvent("BigWigs_StartBar", 10, self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
+			self:ScheduleEvent("BigWigs_Message", 27, L["warn3"], "Urgent")
 		end
 	elseif sync == "DomoAuraDamage" then
 		if self.db.profile.dmg then
@@ -180,14 +191,8 @@ function BigWigsMajordomo:BigWigs_RecvSync(sync)
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 10, "Interface\\Icons\\Spell_Shadow_AntiShadow")
 		end
 		if (self.db.profile.magic or self.db.profile.dmg) then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 15, "Interface\\Icons\\Spell_Frost_Wisp")
-			self:ScheduleEvent("BigWigs_Message", 12, L["warn3"], "Urgent")
-		end
-	elseif sync == "DomoPull" then
-		firstshield = 1
-		if self.db.profile.magic or self.db.profile.dmg then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 15, "Interface\\Icons\\Spell_Frost_Wisp")
-			self:ScheduleEvent("BigWigs_Message", 12, L["warn3"], "Urgent")
+			self:ScheduleEvent("BigWigs_StartBar", 10, self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
+			self:ScheduleEvent("BigWigs_Message", 27, L["warn3"], "Urgent")
 		end
 	end
 end
