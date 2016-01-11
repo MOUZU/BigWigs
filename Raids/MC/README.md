@@ -1,8 +1,6 @@
 <b><a href="https://github.com/MOUZU/BigWigs"> Return to the Overview </a></b>
 
 <br \><br \>
-# Trashmobs
-- Respawn Timers(?)
 
 # Lucifron
 - <b>(QA)</b> Lucifron's Curse, changed the regular timer from 20 to 15s
