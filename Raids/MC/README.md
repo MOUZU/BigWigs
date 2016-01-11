@@ -26,9 +26,10 @@ TODO: clean up the code
 - Magma Shckles and Antimagnetic Pulse are RNG and can not be accurately predicted from my research
 
 # Baron Geddon
-- Living Bomb
-- Inferno
-- Ignite Mana
+- removed a lot of code in the Inferno section to begin with.
+- <b>(QA)</b> Inferno, increased duration from 8 to 9s. Changed first Inferno from 30 to 15s. Changed timer to appear after the current inferno has faded - the next will follow 17s after
+- <b>(QA)</b> Mana Ignite, changed the timer to every 30s
+- <b>(QA)</b> Living Bomb, changed the timer to appear after the current bomb is exploded - the next will follow 7s after
 
 # Shazzrah
 - Shazzrah's Curse

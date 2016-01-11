@@ -146,12 +146,14 @@ BigWigsBaronGeddon.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsBaronGeddon:OnEnable()
+    self.started = nil
 	firstinferno = 0
 	firstbomb = 0
 	firstignite = 0
 	bombt = 0
 	ignitestart = 0
 	bombstart = 0
+    
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -235,7 +237,8 @@ function BigWigsBaronGeddon:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function BigWigsBaronGeddon:BigWigs_RecvSync(sync)
-	if sync == self:GetEngageSync() and UnitName("target") == "Baron Geddon" then
+	if sync == self:GetEngageSync() and UnitName("target") == "Baron Geddon" and not self.started then
+        self.started = true
 		if firstinferno == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "GeddonInfernoFirst")
 		end
@@ -248,68 +251,31 @@ function BigWigsBaronGeddon:BigWigs_RecvSync(sync)
 	elseif sync == "GeddonBombX" then
 		bombstart = GetTime()
 	elseif sync == "GeddonInfernoX" then
-		if (GetTime() - bombstart) <5 then
-			if self.db.profile.bomb then
-				self:TriggerEvent("BigWigs_StopBar", self, L["nextbomb_bar"])
-				self:TriggerEvent("BigWigs_StartBar", self, L["nextbomb_bar"], 17.3, "Interface\\Icons\\Inv_Enchant_EssenceAstralSmall")
-			end
-		else
-			if self.db.profile.bomb then
-				self:TriggerEvent("BigWigs_StopBar", self, L["nextbomb_bar"])
-				self:TriggerEvent("BigWigs_StartBar", self, L["nextbomb_bar"], 11.3, "Interface\\Icons\\Inv_Enchant_EssenceAstralSmall")
-			end
-		end
-		if (GetTime() - ignitestart) <1.7 then
-			if self.db.profile.mana then
-				self:TriggerEvent("BigWigs_StopBar", self, L["ignite_bar"])
-				self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 15.5, "Interface\\Icons\\Spell_Fire_Incinerate")
-			end
-		elseif ((GetTime() - ignitestart) >=1.7 and (GetTime() - ignitestart) <3.5) then
-			if self.db.profile.mana then
-				self:TriggerEvent("BigWigs_StopBar", self, L["ignite_bar"])
-				self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 13.5, "Interface\\Icons\\Spell_Fire_Incinerate")
-			end
-		elseif ((GetTime() - ignitestart) >=3.5 and (GetTime() - ignitestart) <7.4) then
-			if self.db.profile.mana then
-				self:TriggerEvent("BigWigs_StopBar", self, L["ignite_bar"])
-				self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 11.1, "Interface\\Icons\\Spell_Fire_Incinerate")
-			end
-		elseif ((GetTime() - ignitestart) >=7.4 and (GetTime() - ignitestart) <9) then
-			if self.db.profile.mana then
-				self:TriggerEvent("BigWigs_StopBar", self, L["ignite_bar"])
-				self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 9.3, "Interface\\Icons\\Spell_Fire_Incinerate")
-			end
-		elseif (GetTime() - ignitestart) >=9 then
-			if self.db.profile.mana then
-				self:TriggerEvent("BigWigs_StopBar", self, L["ignite_bar"])
-				self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 13.8, "Interface\\Icons\\Spell_Fire_Incinerate")
-			end
-		end
 		if self.db.profile.inferno then
 			self:TriggerEvent("BigWigs_Message", L["inferno_message"], "Important")
-			self:ScheduleEvent("BigWigs_Message", 35.5, L["nextinferno_message"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["inferno_channel"], 8, "Interface\\Icons\\Spell_Fire_Incinerate")
-			self:TriggerEvent("BigWigs_StartBar", self, L["inferno_bar"], 38.5, "Interface\\Icons\\Spell_Fire_Incinerate")
+			self:ScheduleEvent("BigWigs_Message", 23, L["nextinferno_message"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["inferno_channel"], 9, "Interface\\Icons\\Spell_Fire_Incinerate")
+			self:ScheduleEvent("BigWigs_StartBar", 9, self, L["inferno_bar"], 17, "Interface\\Icons\\Spell_Fire_Incinerate")
 		end
 	elseif sync == "GeddonInfernoFirst" then
 		firstinferno = 1
 		if self.db.profile.inferno then
-			self:ScheduleEvent("BigWigs_Message", 27, L["nextinferno_message"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["inferno_bar"], 30, "Interface\\Icons\\Spell_Fire_Incinerate")
+			self:ScheduleEvent("BigWigs_Message", 12, L["nextinferno_message"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["inferno_bar"], 15, "Interface\\Icons\\Spell_Fire_Incinerate")
 		end
 	elseif sync == "GeddonManaIgniteFirst" then 
 		firstignite = 1
 		if self.db.profile.mana then
-			self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 10, "Interface\\Icons\\Spell_Fire_Incinerate")
+			self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 30, "Interface\\Icons\\Spell_Fire_Incinerate")
 		end
 	elseif sync == "GeddonManaIgniteX" and self.db.profile.mana then
 		ignitestart = GetTime()
 		self:TriggerEvent("BigWigs_Message", L["ignite_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 9, "Interface\\Icons\\Spell_Fire_Incinerate")
+		self:TriggerEvent("BigWigs_StartBar", self, L["ignite_bar"], 30, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "GeddonBombStop" and self.db.profile.bomb then
 		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["bomb_bar"], bombt))
 	elseif sync == "GeddonBombNext" and self.db.profile.bomb then
-		self:TriggerEvent("BigWigs_StartBar", self, L["nextbomb_bar"], 12, "Interface\\Icons\\Inv_Enchant_EssenceAstralSmall")
+		self:ScheduleEvent("BigWigs_StartBar", 8, self, L["nextbomb_bar"], 7, "Interface\\Icons\\Inv_Enchant_EssenceAstralSmall")
 	elseif sync == "GeddonBombFirst" then
 		firstbomb = 1
 		if self.db.profile.bomb then
