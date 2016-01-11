@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -161,8 +161,8 @@ function BigWigsSulfuron:BigWigs_RecvSync( sync )
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Attention", true, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["healbar"], 2 , "Interface\\Icons\\Spell_Shadow_ChillTouch")
 	elseif sync == "SulfuronKnockback" and self.db.profile.knockback then
-		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 6.5, L["knockbackannounce"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 9.5 , "Interface\\Icons\\Spell_Fire_Fireball")
+		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 10.5, L["knockbackannounce"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 13.5 , "Interface\\Icons\\Spell_Fire_Fireball")
 	elseif sync == "SulfuronKnockbackIni" then
 		firstknockback = 1
 		if self.db.profile.knockback then

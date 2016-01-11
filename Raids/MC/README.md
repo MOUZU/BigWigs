@@ -22,7 +22,8 @@ TODO: clean up the code
 - <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s after the last but I'm missing something to trigger that correctly
 
 # Garr
-- Magma Shackles(?)
+- <b>(100%)</b> Addcount
+- Magma Shckles and Antimagnetic Pulse are RNG and can not be accurately predicted from my research
 
 # Baron Geddon
 - Living Bomb
@@ -36,7 +37,9 @@ TODO: clean up the code
 - Blink
 
 # Sulfuron Harbringer
-- Heal?
+- <b>(QA)</b> Knockback, increased the timer from 9.5 to 13.5s
+- <b>(DG)</b> Flame Spear, comes every 13s but I don't yet know how to trigger - gotta check the combatlog
+- <b>(TODO)</b> add big healicons
 
 # Golemagg the Incinerator
 - Magma Splash(?)
@@ -49,11 +52,11 @@ TODO: clean up the code
 - Blast Wave(?)
 
 # Ragnaros
-- Phaseswitch
-- Fight start timer
-- Wrath of Ragnaros(Knockback)
-- Hammer of Ragnars(Ranged Knockback)
-- counters on how many adds in p2 are dead(?)
+- <b>(QA)</b> Combat start, added timer 65s prior to start and added an enUS locale triggering that
+- <b>(QA)</b> Knockback, increased the timer from 25s to 29s
+- <b>(QA)</b> Hammer of Ragnaros (Caster Knockback), added timer with 25s
+- <b>(100%)</b> Submerge/Emerge timer
+- <b>(100%)</b> Addcount
 
 <br \><br \>
 ##### Prefix legend

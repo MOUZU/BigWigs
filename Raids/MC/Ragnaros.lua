@@ -1,4 +1,4 @@
-﻿
+
 ------------------------------
 --      Event Handlers      --
 --      Are you local?      --
@@ -15,6 +15,8 @@ L:RegisterTranslations("enUS", function() return {
 	knockback_trigger = "^TASTE",
 	submerge_trigger = "^COME FORTH,",
 	engage_trigger = "^NOW FOR YOU",
+    engage_soon_trigger = "Imprudent whelps!",
+    hammer_trigger = "^BY FIRE BE PURGED!",
 
 	knockback_message = "Knockback!",
 	knockback_soon_message = "5 sec to knockback!",
@@ -56,6 +58,8 @@ L:RegisterTranslations("deDE", function() return {
 	knockback_trigger = "^TASTE",
 	submerge_trigger = "^COME FORTH,",
 	engage_trigger = "^NOW FOR YOU",
+    engage_soon_trigger = "Imprudent whelps!",
+    hammer_trigger = "^BY FIRE BE PURGED!",
 
 	knockback_message = "R\195\188cksto\195\159!",
 	knockback_soon_message = "5 Sekunden bis R\195\188cksto\195\159!",
@@ -149,20 +153,24 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
 			sonsdead = 0 -- reset counter
 		end
 	elseif sync == "RagnarosKnockback" then
-		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 22, L["knockback_soon_message"], "Urgent", true, "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 25, "Interface\\Icons\\Spell_Fire_SoulBurn")
+		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 24, L["knockback_soon_message"], "Urgent", true, "Alarm")
+		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 29, "Interface\\Icons\\Spell_Fire_SoulBurn")
 	end
 end
 
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["knockback_trigger"]) and self.db.profile.aoeknock then
 		self:TriggerEvent("BigWigs_Message", L["knockback_message"], "Important")
-		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 22, L["knockback_soon_message"], "Urgent", true, "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 25, "Interface\\Icons\\Spell_Fire_SoulBurn")
+		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 24, L["knockback_soon_message"], "Urgent", true, "Alarm")
+		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 29, "Interface\\Icons\\Spell_Fire_SoulBurn")
 	elseif string.find(msg, L["submerge_trigger"]) then
 		self:Submerge()
 	elseif string.find(msg, L["engage_trigger"]) then
 		self:Emerge()
+    elseif string.find(msg,L["engage_soon_trigger"]) then
+        self:TriggerEvent("BigWigs_StartBar", self, "Combat", 65, "Interface\\Icons\\Inv_Hammer_Unique_Sulfuras")
+    elseif string.find(msg,L["hammer_trigger"]) then
+        self:TriggerEvent("BigWigs_StartBar", self, "Hammer of Ragnaros", 25, "Interface\\Icons\\Spell_Fire_Incinerate")
 	end
 end
 
