@@ -141,11 +141,13 @@ function BigWigsSulfuron:BigWigs_RecvSync( sync )
 		end
 	elseif sync == "SulfuronAddDead" then
 		deadpriests = deadpriests + 1
-		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], deadpriests), "Positive")
-		end
-		if ((deadpriests == 4) and (sulfurondead == 1)) then
-			self:TriggerEvent("BigWigs_SendSync", "SulfuronAllDead")
+        if deadpriests < 5 then
+            if self.db.profile.adds then
+                self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], deadpriests), "Positive")
+            end
+            if ((deadpriests == 4) and (sulfurondead == 1)) then
+                self:TriggerEvent("BigWigs_SendSync", "SulfuronAllDead")
+            end
 		end
 	elseif sync == "SulfuronSulfuronDead" then
 		self:CancelScheduledEvent("messagewarn1")

@@ -37,6 +37,7 @@ TODO: clean up the code
 - Blink
 
 # Sulfuron Harbringer
+- <b>(100%)</b> Addcount
 - <b>(QA)</b> Knockback, increased the timer from 9.5 to 13.5s
 - <b>(DG)</b> Flame Spear, comes every 13s but I don't yet know how to trigger - gotta check the combatlog
 - <b>(TODO)</b> add big healicons
