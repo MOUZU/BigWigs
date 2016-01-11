@@ -23,7 +23,7 @@ TODO: clean up the code
 
 # Garr
 - <b>(100%)</b> Addcount
-- Magma Shckles and Antimagnetic Pulse are RNG and can not be accurately predicted from my research
+- Magma Shackles and Antimagnetic Pulse are RNG and can not be accurately predicted from my research
 
 # Baron Geddon
 - removed a lot of code in the Inferno section to begin with.
@@ -32,10 +32,12 @@ TODO: clean up the code
 - <b>(QA)</b> Living Bomb, changed the timer to appear after the current bomb is exploded - the next will follow 7s after
 
 # Shazzrah
-- Shazzrah's Curse
-- Magic Grounding
-- Counterspell
-- Blink
+- I noticed all timers for shazzrah are WORKAROUNDS, they don't use triggers - they simply schedule the next bars, which makes it inaccurate especially on longer fights or fights with lagspikes
+- <b>(TODO)</b> log combatlog to find own triggers
+- <b>(QA)</b> Shazzrah's Curse, increased the timer for the ones after the first from 20 to 23s
+- <b>(QA)</b> Counterspell, lowered the first one from 15 to 14s. others from 17.5 to 16.5s
+- <b>(QA)</b> Blink, changed first from 30.3 to 29s.
+- <b>(QA)</b> Deaden Magic, added timer for the first one after 24s
 
 # Sulfuron Harbringer
 - <b>(100%)</b> Addcount
@@ -44,8 +46,8 @@ TODO: clean up the code
 - <b>(TODO)</b> add big healicons
 
 # Golemagg the Incinerator
-- Magma Splash(?)
-- Pyroblast(?)
+- Magma Splash, should I create an alert if the player is reaching x stacks?
+- Pyroblast, seems to be every 4s - should I create a timer for that?
 
 # Majordomo Executus
 - counters on how many mobs are dead(?)
