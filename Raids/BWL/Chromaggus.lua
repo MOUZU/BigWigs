@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Chromaggus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local lastFrenzy = 0
+local _, playerClass = UnitClass("player")
 
 ----------------------------
 --      Localization      --
@@ -251,6 +252,9 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
 		end
+        if playerClass == "HUNTER" then
+            self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 8, true)
+        end
 		self.frenzied = true
         lastFrenzy = GetTime()
 	elseif sync == "ChromaggusFrenzyStop" then
@@ -261,6 +265,7 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
                 self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], NextTime, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
             end
 		end
+        self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Nature_Drowsy")
 		self.frenzied = nil
 	end
 end

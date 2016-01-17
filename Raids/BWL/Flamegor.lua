@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Flamegor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local lastFrenzy = 0
+local _, playerClass = UnitClass("player")
 
 ----------------------------
 --      Localization      --
@@ -148,9 +149,13 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "FlamegorFrenzyStart" and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important", nil, true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
+        if playerClass == "HUNTER" then
+            self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 10, true)
+        end
         lastFrenzy = GetTime()
 	elseif sync == "FlamegorFrenzyEnd" and self.db.profile.frenzy then
         self:TriggerEvent("BigWigs_StopBar", self, L["frenzy_bar"])
+        self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Nature_Drowsy")
         if lastFrenzy ~= 0 then
             local NextTime = (lastFrenzy + 10) - GetTime()
             self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], NextTime, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")

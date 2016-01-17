@@ -9,15 +9,17 @@
 - <b>(DG)</b> Shadow Shock, Idk idc tbh
 
 # Magmadar
-- <b>(QA)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones
-- <b>(QA)</b> Frenzy, added timer for first one with 29s - the others are kinda RNG between 16-21s
-- <b>(QA)</b> Lava Bomb, added timer for first one with 12s and regular ones with 10s
+- <b>(100%)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones
+- <b>(100%)</b> Frenzy, added timer for first one with 29s (the others are kinda RNG between 16-21s, so no timer)
+- <b>(QA)</b> Lava Bomb, added timer for first one with 12s and regular ones with 11s
+- <b>(QA)</b> WarnIcon, Tranq Icon will appear for Hunters when Frenzy is up
 TODO: clean up the code
 
 # Gehennas
 - <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
 - <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 3.5s for that
 - <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s after the last but I'm missing something to trigger that correctly
+- <b>(QA)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
 
 # Garr
 - <b>(100%)</b> Addcount
@@ -25,9 +27,11 @@ TODO: clean up the code
 
 # Baron Geddon
 - removed a lot of code in the Inferno section to begin with.
-- <b>(QA)</b> Inferno, increased duration from 8 to 9s. Changed first Inferno from 30 to 15s. Changed timer to appear after the current inferno has faded - the next will follow 17s after
-- <b>(QA)</b> Mana Ignite, changed the timer to every 30s
-- <b>(QA)</b> Living Bomb, changed the timer to appear after the current bomb is exploded - the next will follow 7s after
+- <b>(100%)</b> Inferno, increased duration from 8 to 9s. Changed first Inferno from 30 to 15s. Changed timer to appear after the current inferno has faded - the next will follow 16s after
+- <b>(100%)</b> Mana Ignite, changed the timer to every 30s
+- <b>(100%)</b> Living Bomb, from my research the bomb does not come regularly but it has a cooldown of 7s - removed the 'Next' timer
+- <b>(QA)</b> WarnIcon, Living Bomb Icon appears when you're the bomb
+- TODO cleanup code
 
 # Shazzrah
 - I noticed all timers for shazzrah are WORKAROUNDS, they don't use triggers - they simply schedule the next bars, which makes it inaccurate especially on longer fights or fights with lagspikes
@@ -58,6 +62,7 @@ TODO: clean up the code
 - <b>(QA)</b> Hammer of Ragnaros (Caster Knockback), added timer with 25s
 - <b>(100%)</b> Submerge/Emerge timer
 - <b>(100%)</b> Addcount
+- <b>(QA)</b> WarnIcon, Sprint Icon appears 5 seconds prior to Knockback
 
 <br \><br \>
 ##### Prefix legend

@@ -397,3 +397,5 @@ function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+
+-- shall I add an WarnIcon for pulling another pet Interface\\Icons\\Ability_Hunter_Pet_windSerpent ?

@@ -35,10 +35,12 @@
 - <b>(100%)</b> Wing Buffet, adjusted first timer from 18 to 28s
 - <b>(100%)</b> Shadow Flame, added 'Next' timer with 14s
 - <b>(100%)</b> Frenzy, added 'Next' timer with 10s, added a second trigger since it seemed that BigWigs didn't catch it 100%
+- <b>(QA)</b> WarnIcon, Tranq Icon will appear for Hunters when Frenzy is up
 
 ## Chromaggus
 - <b>(100%)</b> First & Second Breath, adjusted from 60 and 30 to 58.5s and 28.5s. The timer for the following breaths shall only start upon completing cast now.
 - <b>(QA)</b> Frenzy, added 'Next' timer with 15s
+- <b>(QA)</b> WarnIcon, Tranq Icon will appear for Hunters when Frenzy is up
 
 ## Nefarian
 - <b>(100%)</b> Nefarian Landing, added a locale and a seperate Timer 'Landing NOW!' which has 13s and on the 14th second Nefarian is already on position and the tank should be too

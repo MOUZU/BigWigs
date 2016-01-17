@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Magmadar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local _, playerClass = UnitClass("player")
 
 ----------------------------
 --      Localization      --
@@ -129,11 +130,15 @@ function BigWigsMagmadar:BigWigs_RecvSync(sync)
 	elseif sync == "MagmadarFrenzyStart" and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzyann"], "Important", true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar")
+        if playerClass == "HUNTER" then
+            self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 8, true)
+        end
 	elseif sync == "MagmadarFrenzyStop" and self.db.profile.frenzy then
         self:TriggerEvent("BigWigs_StopBar", self, L["frenzy_bar"])
+        self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Nature_Drowsy")
     elseif sync == "MagmadarLavaBomb" then
-        self:TriggerEvent("BigWigs_StartBar", self, "Lava Bomb", 10, "Interface\\Icons\\Spell_Fire_SelfDestruct")
-        self:ScheduleEvent("BigWigs_SendSync", 10, "MagmadarLavaBomb")
+        self:TriggerEvent("BigWigs_StartBar", self, "Lava Bomb", 11, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+        self:ScheduleEvent("BigWigs_SendSync", 11, "MagmadarLavaBomb")
 	end
 end
 

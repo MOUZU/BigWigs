@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -10,6 +10,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
+    combat_trigger = "grant me wings of v",
 	swarmbat_name = "Bloodseeker Bat",
 	bombbat_name = "Frenzied Bloodseeker Bat",
 	swarm_trigger = "Bloodseeker Bat gains Hover\.",
@@ -85,6 +86,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+    combat_trigger = "grant me wings of v",
 	swarmbat_name = "Bloodseeker Bat",
 	bombbat_name = "Frenzied Bloodseeker Bat",
 	swarm_trigger = "Bloodseeker Bat bekommt \'Schweben\'\.",

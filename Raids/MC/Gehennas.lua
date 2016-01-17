@@ -101,6 +101,7 @@ function BigWigsGehennas:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+    self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -174,14 +175,21 @@ end
 
 
 function BigWigsGehennas:Event(msg)
-	if ((string.find(msg, L["trigger1"])) or (string.find(msg, L["trigger4"]))) then
+    if ((string.find(msg, L["trigger1"])) or (string.find(msg, L["trigger4"]))) then
 		self:TriggerEvent("BigWigs_SendSync", "GehennasCurse")
 	elseif (string.find(msg, L["trigger2"])) then
 		self:TriggerEvent("BigWigs_SendSync", "GehennasShadowboltCast")
 		self:TriggerEvent("BigWigs_SendSync", "GehennasShadowbolt")
 	elseif (string.find(msg, L["trigger3"])) then
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_RainOfFire", 6)
 	end
+end
+
+function BigWigsGehennas:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+    if string.find(msg,"Rain of Fire") then
+        self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Shadow_RainOfFire")
+    end
 end
 
 function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
