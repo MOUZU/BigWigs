@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shazzrah"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local _, playerClass = UnitClass("player")
 
 ----------------------------
 --      Localization      --
@@ -175,8 +176,14 @@ function BigWigsShazzrah:BigWigs_RecvSync(sync)
 	elseif sync == "ShazzrahDeadenMagicOn" and self.db.profile.deaden then
 		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 30, "Interface\\Icons\\Spell_Holy_SealOfSalvation")
+        if playerClass == "SHAMAN" or playerClass == "PRIEST" then
+            self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Holy_SealOfSalvation", 30)
+        end
 	elseif sync == "ShazzrahDeadenMagicOff" and self.db.profile.deaden then
 		self:TriggerEvent("BigWigs_StopBar", self, L["bar2text"])
+        if playerClass == "SHAMAN" or playerClass == "PRIEST" then
+            self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Holy_SealOfSalvation")
+        end
 	elseif sync == "ShazzrahCurseX" and self.db.profile.curse then
 		self:TriggerEvent("BigWigs_Message", L["warn4"], "Attention", "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 23, "Interface\\Icons\\Spell_Shadow_AntiShadow")

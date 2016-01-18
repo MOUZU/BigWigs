@@ -9,18 +9,16 @@
 - <b>(100%)</b> Dominate Mind, I don't think it's necessary to implement a timer for the next mc and the normal one works fine
 - <b>(DG)</b> Shadow Shock, Idk idc tbh
 
-<<<<<<< HEAD
 # Magmadar
 - <b>(100%)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones
 - <b>(100%)</b> Frenzy, added timer for first one with 29s (the others are kinda RNG between 16-21s, so no timer)
 - <b>(QA)</b> Lava Bomb, added timer for first one with 12s and regular ones with 11s
 - <b>(QA)</b> WarnIcon, Tranq Icon will appear for Hunters when Frenzy is up
-=======
+
 ## Magmadar
 - <b>(QA)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones
 - <b>(QA)</b> Frenzy, added timer for first one with 29s - the others are kinda RNG between 16-21s
 - <b>(QA)</b> Lava Bomb, added timer for first one with 12s and regular ones with 10s
->>>>>>> origin/master
 TODO: clean up the code
 
 ## Gehennas
@@ -48,6 +46,7 @@ TODO: clean up the code
 - <b>(QA)</b> Counterspell, lowered the first one from 15 to 14s. others from 17.5 to 16.5s
 - <b>(QA)</b> Blink, changed first from 30.3 to 29s.
 - <b>(QA)</b> Deaden Magic, added timer for the first one after 24s
+- <b>(QA)</b> WarnIcon, Deaden Magic icon appears for players who can purge it
 
 ## Sulfuron Harbringer
 - <b>(100%)</b> Addcount
