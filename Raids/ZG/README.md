@@ -20,6 +20,7 @@
 ## Gahz'ranka
 
 ## Hakkar the Soulflayer
+- <b>(QA)</b> Mind Control
 
 ## Edge of Madness
 

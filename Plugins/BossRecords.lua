@@ -17,6 +17,15 @@ local c = {
 ----------------------------
 --      Localization      --
 ----------------------------
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossRecords")
+L:RegisterTranslations("enUS", function() return {
+    boss_engaged        = "%s engaged. Good luck and have fun! :)",
+    
+    DBM_CORE_BOSS_DOWN					= "%s down after %s!",
+    DBM_CORE_BOSS_DOWN_I				= "%s down! You have %d total victories.",
+    DBM_CORE_BOSS_DOWN_L				= "%s down after %s! Your last kill took %s and your fastest kill took %s. You have %d total victories.",
+    DBM_CORE_BOSS_DOWN_NR				= "%s down after %s! This is a new record! (Old record was %s). You have %d total victories.",
+} end)
 
 ----------------------------------
 --      Module Declaration      --
@@ -42,6 +51,7 @@ function BigWigsBossRecords:BigWigs_RecvSync()
         c.name      = rest
         c.startTime = GetTime()
         -- todo engage chat message
+        SendChat("BigWigsBossRecords TEST - "..rest.." ENGAGED!")
     end
 end
 
@@ -49,6 +59,7 @@ function BigWigsBossRecords:BigWigs_BossDeath(name)
     -- just to be sure that we're not calculating/tracking bullshit
     if c.name == name then
         local timeSpent = GetTime() - c.startTime
+        SendChat("BigWigsBossRecords TEST - "..name.." KILLED!")
         -- todo bossdeath chat message
         -- todo fill savedvariables
         -- todo load from savedvariables and compare time - check if it's the fastest kill, if not display the fastest
