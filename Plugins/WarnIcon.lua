@@ -76,9 +76,10 @@ function BigWigsWarnIcon:BigWigs_ShowIcon(texturePath, duration, force)
     end
 end
 
-function BigWigsWarnIcon:BigWigs_HideIcon(texturePath)
+function BigWigsWarnIcon:BigWigs_HideIcon(texturePath, forceHide)
     -- will only work if texturePath is still the icon displayed, this might not be the case when an icon gets forced
-    if c.texture == texturePath then
+    -- forceHide is used upon BossDeath to hide no matter what is being displayed
+    if forceHide or c.texture == texturePath then
         c.texture   = "";
         BigWigsWarnIcon.frame:Hide()
         BigWigsWarnIcon.frame:SetScript('OnUpdate', nil)
