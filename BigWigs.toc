@@ -71,7 +71,7 @@ Plugins\Tranq.lua
 Plugins\ZombieFood.lua
 Plugins\LoathebTactical.lua
 Plugins\CounterBars.lua
-Plugins\NefCount.lua
+# Plugins\NefCount.lua
 Plugins\RespawnTimers.lua
 Plugins\WarnIcon.lua
 
