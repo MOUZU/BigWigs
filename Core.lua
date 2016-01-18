@@ -386,6 +386,7 @@ function BigWigs.modulePrototype:GenericBossDeath(msg)
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
         self:TriggerEvent("BigWigs_HideIcon", "", true)
+        self:TriggerEvent("BigWigs_BossDeath", self:ToString())
 		if self.core:IsDebugging() then
 			self.core:LevelDebug(1, "Boss dead, disabling module ["..self:ToString().."].")
 		end

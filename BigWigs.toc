@@ -74,6 +74,7 @@ Plugins\CounterBars.lua
 # Plugins\NefCount.lua
 Plugins\RespawnTimers.lua
 Plugins\WarnIcon.lua
+Plugins\BossRecords.lua
 
 Raids\ZG\Arlokk.lua
 Raids\ZG\Jeklik.lua

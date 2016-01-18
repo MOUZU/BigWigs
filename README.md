@@ -15,6 +15,7 @@ I've included several other BigWigs AddOns in this repository, so you only need 
     <li><b>BigWigs_LoathebTactical</b> <br>  ( Spore and Consumable warnings for Loatheb )</li>
     <li><b>BigWigs_RespawnTimers</b> <br>  ( Trash respawn timers )</li>
     <li><b>WarnIcon</b> <br> <i>own development</i> <br> ( Displays important SpellIcons in the center of your screen. Eg. if you're standing in Rain of Fire at Gehennas or if you're a Hunter and Magmadar/Flamegor/Chromaggus is Frenzied and you need to Tranq )</li>
+    <li><b>BossRecords</b> <br> <i>own development</i> <br> ( This Plugin will keep record of your time used in bossfights and compare it to your fastest )</li>
 </ul>
 
 ## Adjustments listed seperately
