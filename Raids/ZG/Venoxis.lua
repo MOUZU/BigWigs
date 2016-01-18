@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -178,7 +178,7 @@ function BigWigsVenoxis:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisHolyFireStart", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisHolyFireStop", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisEnrage", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisAddDead", 0.7)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisAddDead", 1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisVenoxisDead", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisAllDead", 3)
 end
