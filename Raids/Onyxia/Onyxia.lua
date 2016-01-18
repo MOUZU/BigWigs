@@ -210,14 +210,14 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StartBar", self, L["fireball_cast"], 3, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "red")
 	elseif sync == "OnyBellowingRoar" and self.db.profile.onyfear then 
 		self:TriggerEvent("BigWigs_Message", L["feartext"], "Important", "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["fear_cast"], 1.5, "Interface\\Icons\\Spell_Fire_Fire", true, "white")
-		self:ScheduleEvent("BigWigs_StartBar", 1.5, self, L["fear_next"], 28.5, "Interface\\Icons\\Spell_Fire_Fire")
+		self:TriggerEvent("BigWigs_StartBar", self, L["fear_cast"], 1.5, "Interface\\Icons\\Spell_Shadow_Possession", true, "white")
+		self:ScheduleEvent("BigWigs_StartBar", 1.5, self, L["fear_next"], 28.5, "Interface\\Icons\\Spell_Shadow_Possession")
         self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_Possession", 5)
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-    if string.find(msg,"Fear") then
+    if string.find(msg,"Bellowing Roar") then
         self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Shadow_Possession")
     end
 end

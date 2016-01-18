@@ -7,10 +7,11 @@
 ## Trashmobs
 
 ## Onyxia
-- <b>(QA)</b> Fear, added a timer for the next Fear with 30s.
+- <b>(100%)</b> Fear, added a timer for the next Fear with 30s.
 - <b>(QA)</b> Flame Breath, added a timer for phase 3 with ~18s
 - <b>(QA)</b> Deep Breath, added a big icon to make it more obvious that Deep Breath is being casted
-- <b>(QA)</b> WarnIcon, Fear icon appears when Ony starts casting Fear
+- <b>(100%)</b> WarnIcon, Fear icon appears when Ony starts casting Fear
+- <b>(QA)</b> WarnIcon, Heart of Fire icon appears when Ony starts casting Deep Breath
 
 <br \><br \>
 ##### Prefix legend
