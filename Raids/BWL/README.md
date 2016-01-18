@@ -11,15 +11,19 @@
 - <b>(DG)</b> Egg Counter, is it counting correctly?
 - <b>(DG)</b> Conflagration, seems to be RNG
 - <b>(DG)</b> Fireball Volley, seems to be RNG
+- <b>(QA)</b> WarnIcon, Fireball Volley cast is announced via Fireball/Meteorstorm icon
+- <b>(TO RETHINK)</b> WarnIcon, for player with conflag on? (less priority than Volley)
 
 ## Vaelastrasz the Corrupt
 - <b>(100%)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 AND adjusted enUS locales to trigger combat
 - <b>(100%)</b> Burning Adrenaline, seems to be correct
+- <b>(QA)</b> WarnIcon, Burning Adrenaline icon appears when it's on you
 
 ## Broodlord Lashlayer
 - <b>(QA)</b> Blast Wave, increased the timer for the first one and its warning from 12 to 17s (CAN NOT BE 100% ACCURATE)
 - <b>(DG)</b> Mortal Strike, seems to have a 26s cooldown, seems not to be a timed cast
 - <b>(DG)</b> Blastwave, seems to have a 25s cooldown, seems not to be a timed cast
+- <b>(QA)</b> WarnIcon, Mortal Strike icon appears if your target has Mortal Strike active AND if it's up on you
 
 ## Firemaw
 - <b>(100%)</b> Flame Buffet
@@ -30,6 +34,7 @@
 - <b>(100%)</b> Shadow of Ebonroc, added first timer with 8s
 - <b>(100%)</b> Shadow Flame, added 'Next' timer with 14s
 - <b>(100%)</b> Wing Buffet, adjusted first timer from 18 to 29s
+- <b>(QA)</b> WarnIcon, Shadow of Ebonroc icon appears when it's on you
 
 ## Flamegor
 - <b>(100%)</b> Wing Buffet, adjusted first timer from 18 to 28s
@@ -48,6 +53,8 @@
 - <b>(99%)</b> Fear, increased from 23.5 to 25s. Changed the title of the casting fear from 'Possible Fear' to 'Fear NOW!'
 - <b>(QA)</b> Shadow Flame, added a timer for the ones following the first one with 22s (2s casttime included)
 - <b>(TODO)</b> revisit NefCount Plugin (the count is so fucked up you shouldn't even use it)
+- <b>(100%)</b> WarnIcon, Fear icon appears when Nef starts casting Fear
+- <b>(TO RETHINK)</b> WarnIcons for specific classcalls? Priest eg?
 
 
 <br \><br \>

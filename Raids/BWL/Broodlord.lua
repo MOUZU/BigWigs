@@ -78,10 +78,13 @@ BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 function BigWigsBroodlord:OnEnable()
     self.started = nil
 	self.lastbw = 0
+    self.lastMS = 0
+    self.MS = ""
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    self:RegisterEvent("PLAYER_TARGET_CHANGED")
 	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -93,10 +96,13 @@ end
 function BigWigsBroodlord:Event(msg)
 	local _, _, name, detect = string.find(msg, L["ms_trigger"])
 	if name and detect and self.db.profile.ms then
+        self.MS = name
+        self.lastMS = GetTime()
 		if detect == L["are"] then
 			self:TriggerEvent("BigWigs_Message", L["ms_warn_you"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["ms_bar"], UnitName("player")), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow", true, "Black")
 			self:SetCandyBarOnClick("BigWigsBar "..string.format(L["ms_bar"], UnitName("player")), function(name, button, extra) TargetByName(extra, true) end, UnitName("player"))
+            self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Ability_Warrior_SavageBlow", 5)
 		else
 			self:TriggerEvent("BigWigs_Message", string.format(L["ms_warn_other"], name), "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["ms_bar"], name), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow", true, "Black")
@@ -128,4 +134,12 @@ function BigWigsBroodlord:CHAT_MSG_MONSTER_YELL(msg)
 		self:ScheduleEvent("BigWigs_Message", 12, L["bw_warn"], "Urgent", true, "Alert")
         self.started = true
 	end
+end
+
+function BigWigsBroodlord:PLAYER_TARGET_CHANGED()
+    if (self.lastMS + 5) > GetTime() and UnitName("target") == self.MS then
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Ability_Warrior_SavageBlow", (self.lastMS + 5) - GetTime())
+    else
+        self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Ability_Warrior_SavageBlow")
+    end
 end
