@@ -36,6 +36,7 @@ BigWigsWarnIcon = BigWigs:NewModule("WarnIcon")
 function BigWigsWarnIcon:OnEnable()
     self:RegisterEvent("BigWigs_ShowIcon")
     self:RegisterEvent("BigWigs_HideIcon")
+    self:RegisterEvent("PLAYER_DEAD")
 end
 
 BigWigsWarnIcon.frame = CreateFrame("Frame", nil, UIParent)
@@ -84,4 +85,9 @@ function BigWigsWarnIcon:BigWigs_HideIcon(texturePath, forceHide)
         BigWigsWarnIcon.frame:Hide()
         BigWigsWarnIcon.frame:SetScript('OnUpdate', nil)
     end
+end
+
+function BigWigsWarnIcon:PLAYER_DEAD()
+    -- this should hide all Icons upon your own death
+     self:BigWigs_HideIcon("", true)
 end
