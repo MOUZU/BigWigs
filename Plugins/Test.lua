@@ -175,6 +175,12 @@ function BigWigsTest:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "TestSync" then
 		self:TriggerEvent("BigWigs_Message", L["Testing Sync"], "Positive")
 		self:TriggerEvent("BigWigs_StartBar", self, L["Testing Sync"], 10, "Interface\\Icons\\Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
+    elseif sync == "TestNumber" and rest then
+        --SendChat(rest)
+        rest = tonumber(rest)
+        if type(rest) == "number" then
+            --SendChat(rest * 2) 
+        end
 	end
 end
 
@@ -188,7 +194,8 @@ function BigWigsTest:BigWigs_Test()
     self.test = "HELLO WORLD"
     self:TriggerEvent("BigWigs_StartBar", self, "Combat", 25, "Interface\\Icons\\Inv_Hammer_Unique_Sulfuras")
     self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Inv_Hammer_Unique_Sulfuras", 5)
-
+    self:TriggerEvent("BigWigs_SendSync", "TestNumber 5")
+    
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 2"], 10, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 3"], 5, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 4"], 3, "Interface\\Icons\\Spell_Nature_ResistNature", true, "black")

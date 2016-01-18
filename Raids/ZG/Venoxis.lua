@@ -147,7 +147,7 @@ BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 ------------------------------
 
 function BigWigsVenoxis:OnEnable()
-	cobra = 0
+	self.cobra = 0
 	venoxisdead = 0
 	castingholyfire = 0
 	holyfiretime = 0
@@ -178,7 +178,7 @@ function BigWigsVenoxis:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisHolyFireStart", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisHolyFireStop", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisEnrage", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisAddDead", 1)
+	--self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisAddDead", 1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisVenoxisDead", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VenoxisAllDead", 3)
 end
@@ -247,7 +247,8 @@ end
 
 function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["deadaddtrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "VenoxisAddDead")
+        self.cobra = self.cobra + 1
+		self:TriggerEvent("BigWigs_SendSync", "VenoxisAddDead "..self.cobra)
 	elseif string.find(msg, L["deadbosstrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "VenoxisVenoxisDead")
 	end
@@ -294,8 +295,18 @@ function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["enrage_message"], "Attention")
 		end
-	elseif sync == "VenoxisAddDead" then
-		cobra = cobra + 1
+	elseif sync == "VenoxisAddDead" and rest and rest ~= "" then
+        rest = tonumber(rest)
+        if type(rest) == "number" and rest < 5 then
+            self.cobra = rest
+            if rest == 4 then
+                self:TriggerEvent("BigWigs_SendSync", "VenoxisAllDead")
+            else
+                self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.cobra), "Positive")
+            end
+        end
+        --[[
+		self.cobra = self.cobra + 1
 		if cobra < 5 then
 			if self.db.profile.adds then
 				self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], cobra), "Positive")
@@ -304,13 +315,11 @@ function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
 				self:TriggerEvent("BigWigs_SendSync", "VenoxisAllDead")
 			end
 		end
+        --]]
 	elseif sync == "VenoxisVenoxisDead" then
 		venoxisdead = 1
 		if self.db.profile.bosskill then
 			self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory")
-		end
-		if ((cobra == 4) and (venoxisdead == 1)) then
-			self:TriggerEvent("BigWigs_SendSync", "VenoxisAllDead")
 		end
 	elseif sync == "VenoxisAllDead" then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
