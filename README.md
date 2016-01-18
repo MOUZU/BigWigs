@@ -11,9 +11,10 @@ I've included several other BigWigs AddOns in this repository, so you only need 
     <li><b>BigWigs_CommonAuras</b> <br \>  ( keeps track of certain Buffs eg. Fear Ward and Tank cooldowns )</li>
     <li><b>BigWigs_NefCount</b> <br \>  ( improved mechanism for Nefarian phase 1, keeps track of the Adds killed since that triggers phase 2 )
 * needs overhaul. Disable it for now!</li>
-    <li><b>BigWigs_ZombieFood</b> <br \>  ( announces if a player is getting dazed ) *modified</li>
-    <li><b>BigWigs_LoathebTactical</b> <br \>  ( Spore and Consumable warnings for Loatheb )</li>
-    <li><b>BigWigs_RespawnTimers</b> <br \>  ( Trash respawn timers )</li>
+    <li><b>BigWigs_ZombieFood</b> <br>  ( announces if a player is getting dazed ) *modified</li>
+    <li><b>BigWigs_LoathebTactical</b> <br>  ( Spore and Consumable warnings for Loatheb )</li>
+    <li><b>BigWigs_RespawnTimers</b> <br>  ( Trash respawn timers )</li>
+    <li><b>WarnIcon</b> <br> <i>own development</i> <br> ( Displays important SpellIcons in the center of your screen. Eg. if you're standing in Rain of Fire at Gehennas or if you're a Hunter and Magmadar/Flamegor/Chromaggus is Frenzied and you need to Tranq )</li>
 </ul>
 
 ## Adjustments listed seperately
