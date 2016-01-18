@@ -46,10 +46,13 @@ function BigWigsBossRecords:BigWigs_RecvSync()
 end
 
 function BigWigsBossRecords:BigWigs_BossDeath(name)
+    -- just to be sure that we're not calculating/tracking bullshit
     if c.name == name then
         local timeSpent = GetTime() - c.startTime
         -- todo bossdeath chat message
         -- todo fill savedvariables
         -- todo load from savedvariables and compare time - check if it's the fastest kill, if not display the fastest
+        
+        -- to rethink: does Thekal in ZG work properly with this logic? Is there another boss similar to Thekal?
     end
 end
