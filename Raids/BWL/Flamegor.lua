@@ -149,7 +149,7 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "FlamegorFrenzyStart" and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important", nil, true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
-        if playerClass == "HUNTER" then
+        if playerClass == "HUNTER" or UnitName("player") == "Lyq" then
             self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 10, true)
         end
         lastFrenzy = GetTime()

@@ -242,7 +242,7 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
 		end
-        if playerClass == "HUNTER" then
+        if playerClass == "HUNTER" or UnitName("player") == "Lyq" then
             self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 8, true)
         end
 		self.frenzied = true
