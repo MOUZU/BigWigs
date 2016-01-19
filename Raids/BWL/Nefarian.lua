@@ -14,14 +14,14 @@ local warnpairs = nil
 L:RegisterTranslations("enUS", function() return {
 	landing_soon_trigger = "Let the games begin!",
 	landing_trigger = "Enough! Now you",
-    landingNOW_trigger = "Well done, my minions.",
+    landingNOW_trigger = "courage begins to wane",
 	zerg_trigger = "Impossible! Rise my",
 	fear_trigger = "Nefarian begins to cast Bellowing Roar",
 	shadowflame_trigger = "Nefarian begins to cast Shadow Flame",
 
 	triggerfear = "by Panic.",
 	fbar = "Fear",
-	land = "Landing",
+	land = "Estimated Landing",
 	Mob_Spawn = "Mob Spawn",
 	warn = "Fear in 1.5sec!",
 
@@ -165,7 +165,7 @@ function BigWigsNefarian:BigWigs_RecvSync( sync )
 	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar"], 2, "Interface\\Icons\\Spell_Fire_Incinerate")
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
-		self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_bar"], 20, "Interface\\Icons\\Spell_Fire_Incinerate")
+		self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_bar"], 17, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "NefarianFear" and self.db.profile.fear then
         self:TriggerEvent("BigWigs_StopBar", self, L["fear_bar"])
 		self:TriggerEvent("BigWigs_Message", L["fear_warning"], "Important", true, "Alert")

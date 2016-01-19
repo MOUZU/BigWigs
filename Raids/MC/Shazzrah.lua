@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn5 = "Counterspell! ~18 seconds until next one!",
 	warn6 = "3 seconds until Counterspell!",
 
-	bar1text = "Blink",
+	bar1text = "Possible Blink",
 	bar2text = "Deaden Magic",
 	bar3text = "Shazzrah's Curse",
 	bar4text = "Counterspell",
@@ -64,7 +64,7 @@ L:RegisterTranslations("deDE", function() return {
 	warn5 = "Gegenzauber - 40 Sekunden bis zum n\195\164chsten!",
 	warn6 = "3 Sekunden bis Gegenzauber!",
 
-	bar1text = "Blinzeln",
+	bar1text = "Mögliches Blinzeln",
 	bar2text = "Magie d\195\164mpfen",
 	bar3text = "N\195\164chster Fluch",
 	bar4text = "N\195\164chster Gegenzauber",
@@ -123,13 +123,10 @@ function BigWigsShazzrah:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahBlinkX", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahBlinkFirst", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahCurseX", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahCurseFirst", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahDeadenMagicOn", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahDeadenMagicOff", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahCounterspellX", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahCounterspellFirst", 5)
 end
 
 ------------------------------
@@ -151,15 +148,20 @@ function BigWigsShazzrah:Event(msg)
 end
 
 function BigWigsShazzrah:BigWigs_RecvSync(sync)
-	if sync == self:GetEngageSync() and UnitName("target") == "Shazzrah" then
-		if firstcounterspell == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "ShazzrahCounterspellFirst")
+	if not self.started and ((sync == "ShazzrahEngaged") or (sync == self:GetEngageSync() and UnitName("target") == "Shazzrah")) then
+        self.started = true
+        if sync ~= "ShazzrahEngaged" then self:TriggerEvent("BigWigs_SendSync", "ShazzrahEngaged") end
+        
+        if self.db.profile.counterspell then
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar4text"], 14, "Interface\\Icons\\Spell_Frost_IceShock")
+			self:ScheduleEvent("csfirsttoX", self.Counterspell, 14, self)
 		end
-		if firstblink == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "ShazzrahBlinkFirst")
+		if self.db.profile.blink then
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 29, "Interface\\Icons\\Spell_Arcane_Blink")
+			self:ScheduleEvent("blinkfirsttoX", self.Blink, 30.3, self)
 		end
-		if firstcurse == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "ShazzrahCurseFirst")
+		if self.db.profile.curse then
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 10, "Interface\\Icons\\Spell_Shadow_AntiShadow")
 		end
         if self.db.profile.deaden then
             self:TriggerEvent("BigWigs_StartBar", self, "Next Deaden Magic", 24, "Interface\\Icons\\Spell_Holy_SealOfSalvation")
@@ -174,6 +176,7 @@ function BigWigsShazzrah:BigWigs_RecvSync(sync)
 			self:ScheduleRepeatingEvent("blinkrepeatable", self.Blink, 25.6, self)
 		end
 	elseif sync == "ShazzrahDeadenMagicOn" and self.db.profile.deaden then
+        self:TriggerEvent("BigWigs_StopBar", self, "Next Deaden Magic")
 		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 30, "Interface\\Icons\\Spell_Holy_SealOfSalvation")
         if playerClass == "SHAMAN" or playerClass == "PRIEST" then
@@ -187,26 +190,9 @@ function BigWigsShazzrah:BigWigs_RecvSync(sync)
 	elseif sync == "ShazzrahCurseX" and self.db.profile.curse then
 		self:TriggerEvent("BigWigs_Message", L["warn4"], "Attention", "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 23, "Interface\\Icons\\Spell_Shadow_AntiShadow")
-	elseif sync == "ShazzrahCurseFirst" then
-		firstcurse = 1
-		if self.db.profile.curse then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 10, "Interface\\Icons\\Spell_Shadow_AntiShadow")
-		end
 	elseif sync == "ShazzrahCounterspellX" and self.db.profile.counterspell then
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar4text"], 16.5, "Interface\\Icons\\Spell_Frost_IceShock")
 	    self:ScheduleRepeatingEvent("csrepeatable", self.Counterspell, 16.5, self)
-	elseif sync == "ShazzrahCounterspellFirst" then
-		firstcounterspell = 1
-		if self.db.profile.counterspell then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar4text"], 14, "Interface\\Icons\\Spell_Frost_IceShock")
-			self:ScheduleEvent("csfirsttoX", self.Counterspell, 14, self)
-		end
-	elseif sync == "ShazzrahBlinkFirst" then
-		firstblink = 1
-		if self.db.profile.blink then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 29, "Interface\\Icons\\Spell_Arcane_Blink")
-			self:ScheduleEvent("blinkfirsttoX", self.Blink, 30.3, self)
-		end
 	end
 end
 

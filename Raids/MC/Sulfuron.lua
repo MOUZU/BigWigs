@@ -93,7 +93,6 @@ BigWigsSulfuron.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 function BigWigsSulfuron:OnEnable()
 	deadpriests = 0
 	sulfurondead = 0
-	firstknockback = 0
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "knockback")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "knockback")
@@ -107,7 +106,6 @@ function BigWigsSulfuron:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronAllDead", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronSulfuronDead", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronKnockback", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronKnockbackIni", 5)
 end
 
 ------------------------------
@@ -136,8 +134,9 @@ end
 
 function BigWigsSulfuron:BigWigs_RecvSync( sync )
 	if sync == self:GetEngageSync() and (UnitName("target") == "Sulfuron Harbinger" or UnitName("target") == "Flamewaker Priest") then
-		if firstknockback == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "SulfuronKnockbackIni")
+		if self.db.profile.knockback then
+			self:ScheduleEvent("BigWigs_Message", 2.8, L["knockbackannounce"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 5.8 , "Interface\\Icons\\Spell_Fire_Fireball")
 		end
 	elseif sync == "SulfuronAddDead" then
 		deadpriests = deadpriests + 1
@@ -165,12 +164,6 @@ function BigWigsSulfuron:BigWigs_RecvSync( sync )
 	elseif sync == "SulfuronKnockback" and self.db.profile.knockback then
 		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 10.5, L["knockbackannounce"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 13.5 , "Interface\\Icons\\Spell_Fire_Fireball")
-	elseif sync == "SulfuronKnockbackIni" then
-		firstknockback = 1
-		if self.db.profile.knockback then
-			self:ScheduleEvent("BigWigs_Message", 2.8, L["knockbackannounce"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 5.8 , "Interface\\Icons\\Spell_Fire_Fireball")
-		end
 	elseif sync == "SulfuronAllDead" then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self.core:ToggleModuleActive(self, false)

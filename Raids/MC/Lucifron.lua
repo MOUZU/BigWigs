@@ -191,13 +191,13 @@ function BigWigsLucifron:Event(msg)
 end
 
 function BigWigsLucifron:BigWigs_RecvSync(sync)
-	if sync == self:GetEngageSync("Lucifron") or sync == "LucifronEngage" and not self.started then
+	if not self.started and (sync == self:GetEngageSync("Lucifron") or sync == "LucifronEngaged") then
         self.started = true
-        if sync ~= "LucifronEngage" then self:TriggerEvent("BigWigs_SendSync", "LucifronEngage") end
+        if sync ~= "LucifronEngaged" then self:TriggerEvent("BigWigs_SendSync", "LucifronEngaged") end
         
         if self.db.profile.curse then
 			self:ScheduleEvent("messagewarn4", "BigWigs_Message", 10, L["warn1"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		end
         if self.db.profile.doom then
 			self:ScheduleEvent("messagewarn3", "BigWigs_Message", 5, L["warn3"], "Attention")

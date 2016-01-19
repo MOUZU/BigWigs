@@ -217,20 +217,10 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 end
 
 function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Chromaggus" and not self.started then
+	if not self.started and ((sync == "BossEngaged" and rest == "Chromaggus") or (sync == "ChromaggusEngage") ) then
 		self.started = true
-		if self.db.profile.breath then
-			self:ScheduleEvent("BigWigs_Message", 23.5, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["first_bar"], 28.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
-			self:ScheduleEvent("BigWigs_Message", 53.5, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["second_bar"], 58.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
-		end
-        if self.db.profile.frenzy then
-            self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], 13, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white") 
-        end
-		self:TriggerEvent("BigWigs_SendSync", "ChromaggusEngage")
-	elseif sync == "ChromaggusEngage" and not self.started then
-		self.started = true
+        if sync ~= "ChromaggusEngage" then self:TriggerEvent("BigWigs_SendSync", "ChromaggusEngage") end
+        
 		if self.db.profile.breath then
 			self:ScheduleEvent("BigWigs_Message", 23.5, L["firstbreaths_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["first_bar"], 28.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
@@ -272,11 +262,6 @@ end
 
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE(msg)
 	if string.find(msg, L["frenzy_trigger"]) and arg2 == boss then
-		if self.db.profile.frenzy and not self.frenzied then
-			self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
-		end
-		self.frenzied = true
 		self:TriggerEvent("BigWigs_SendSync", "ChromaggusFrenzyStart")
 	elseif string.find(msg, L["vulnerability_trigger"]) then
 		if self.db.profile.vulnerability then
@@ -293,10 +278,6 @@ end
 
 function BigWigsChromaggus:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg == L["frenzyfade_trigger"] then
-		if self.db.profile.frenzy and self.frenzied then
-			self:TriggerEvent("BigWigs_StopBar", self, L["frenzy_bar"])
-		end
-		self.frenzied = nil
 		self:TriggerEvent("BigWigs_SendSync", "ChromaggusFrenzyStop")
 	end
 end

@@ -4,7 +4,7 @@
 # Molten Core
 
 ## Lucifron
-- <b>(QA)</b> Lucifron's Curse, changed the regular timer from 20 to 15s
+- <b>(100%)</b> Lucifron's Curse, changed the regular timer from 20 to 15s
 - <b>(100%)</b> Impending Doom
 - <b>(100%)</b> Dominate Mind, I don't think it's necessary to implement a timer for the next mc and the normal one works fine
 - <b>(DG)</b> Shadow Shock, Idk idc tbh
@@ -23,8 +23,8 @@ TODO: clean up the code
 
 ## Gehennas
 - <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
-- <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 3.5s for that
-- <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s after the last but I'm missing something to trigger that correctly
+- <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 2.5s for that
+- <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s. THE TRIGGER is not working
 - <b>(QA)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
 
 ## Garr
@@ -41,16 +41,16 @@ TODO: clean up the code
 
 ## Shazzrah
 - I noticed all timers for shazzrah are WORKAROUNDS, they don't use triggers - they simply schedule the next bars, which makes it inaccurate especially on longer fights or fights with lagspikes
-- <b>(TODO)</b> log combatlog to find own triggers
-- <b>(QA)</b> Shazzrah's Curse, increased the timer for the ones after the first from 20 to 23s
-- <b>(QA)</b> Counterspell, lowered the first one from 15 to 14s. others from 17.5 to 16.5s
-- <b>(QA)</b> Blink, changed first from 30.3 to 29s.
-- <b>(QA)</b> Deaden Magic, added timer for the first one after 24s
+- <b>(TODO)</b> LOG COMBATLOG AND CREATE OWN TRIGGERS, ONCE DONE I NEED TO REWORK ALL TIMERS
+- <b>(100%)</b> Shazzrah's Curse, increased the timer for the ones after the first from 20 to 23s
+- <b>(100%)</b> Counterspell, lowered the first one from 15 to 14s. others from 17.5 to 16.5s
+- <b>(100%)</b> Blink, changed first from 30.3 to 29s. Changed the name to 'Possible Blink'
+- <b>(100%)</b> Deaden Magic, added timer for the first one after 24s
 - <b>(QA)</b> WarnIcon, Deaden Magic icon appears for players who can purge it
 
 ## Sulfuron Harbringer
 - <b>(100%)</b> Addcount
-- <b>(QA)</b> Knockback, increased the timer from 9.5 to 13.5s
+- <b>(100%)</b> Knockback, increased the timer from 9.5 to 13.5s
 - <b>(DG)</b> Flame Spear, comes every 13s but I don't yet know how to trigger - gotta check the combatlog
 - <b>(TODO)</b> add big healicons
 
@@ -60,13 +60,12 @@ TODO: clean up the code
 
 ## Majordomo Executus
 - <b>(100%)</b> Addcount
-- <b>(QA)</b> Spell/Damage-reflect Shields, changed timer to every 30s. Timers for the next may only appear after the timer of the current shield is gone.
-- <b>(TODO)</b> add big Icon for which shield is active at the time
+- <b>(100%)</b> Spell/Damage-reflect Shields, changed timer to every 30s. Timers for the next may only appear after the timer of the current shield is gone.
 
 ## Ragnaros
-- <b>(QA)</b> Combat start, added timer 65s prior to start and added an enUS locale triggering that
-- <b>(QA)</b> Knockback, increased the timer from 25s to 29s
-- <b>(QA)</b> Hammer of Ragnaros (Caster Knockback), added timer with 25s
+- <b>(100%)</b> Combat start, added timer 64.5s prior to start and added an enUS locale triggering that
+- <b>(100%)</b> Knockback, increased the timer from 25s to 28s
+- <b>(100%)</b> Hammer of Ragnaros (Caster Knockback), added timer with 25s
 - <b>(100%)</b> Submerge/Emerge timer
 - <b>(100%)</b> Addcount
 - <b>(QA)</b> WarnIcon, Sprint Icon appears 5 seconds prior to Knockback

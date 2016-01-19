@@ -178,11 +178,12 @@ function BigWigsMajordomo:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_Message", string.format(L["edeadmsg"], edead), "Positive")
 	elseif sync == "DomoAuraMagic" then
 		if self.db.profile.magic then
+            self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])
 			self:TriggerEvent("BigWigs_Message", L["warn1"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Frost_FrostShock")
 		end
 		if (self.db.profile.magic or self.db.profile.dmg) then
-			self:ScheduleEvent("BigWigs_StartBar", 10, self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
+			self:ScheduleEvent("BigWigs_StartBar", 10, self, L["bar3text"], 20, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
 			self:ScheduleEvent("BigWigs_Message", 27, L["warn3"], "Urgent")
 		end
 	elseif sync == "DomoAuraDamage" then
@@ -191,7 +192,7 @@ function BigWigsMajordomo:BigWigs_RecvSync(sync)
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 10, "Interface\\Icons\\Spell_Shadow_AntiShadow")
 		end
 		if (self.db.profile.magic or self.db.profile.dmg) then
-			self:ScheduleEvent("BigWigs_StartBar", 10, self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
+			self:ScheduleEvent("BigWigs_StartBar", 10, self, L["bar3text"], 20, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
 			self:ScheduleEvent("BigWigs_Message", 27, L["warn3"], "Urgent")
 		end
 	end
