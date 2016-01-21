@@ -148,7 +148,7 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
         self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_Nextbar"], 14, "Interface\\Icons\\Spell_Fire_Incinerate")
 	elseif sync == "FlamegorFrenzyStart" and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important", nil, true, "Alert")
-		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
+		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "red")
         if playerClass == "HUNTER" then
             self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 10, true)
         end

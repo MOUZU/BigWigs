@@ -204,14 +204,20 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "OnyPhaseThree" and self.db.profile.phase and self.phase < 3 then
 		self:TriggerEvent("BigWigs_Message", L["phase3text"], "Attention")
+        self:TriggerEvent("BigWigs_StartBar", self, L["fear_next"], 8, "Interface\\Icons\\Spell_Shadow_Possession")
         self.phase = 3
 	elseif sync == "OnyDeepBreath" and self.db.profile.deepbreath then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important", true, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_cast"], 5, "Interface\\Icons\\Spell_Fire_SelfDestruct", true, "black")
         self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Lavaspawn", 5)
-	elseif sync == "OnyFlameBreath" and self.db.profile.flamebreath then 
+	elseif sync == "OnyFlameBreath" and self.db.profile.flamebreath then
+        self:TriggerEvent("BigWigs_StopBar", self, L["flamebreath_next"])
 		self:TriggerEvent("BigWigs_StartBar", self, L["flamebreath_cast"], 2, "Interface\\Icons\\Spell_Fire_Fire")
-		self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 16, "Interface\\Icons\\Spell_Fire_Fire")
+        if self.phase == 3 then
+            self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 15, "Interface\\Icons\\Spell_Fire_Fire")
+        else
+            self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 12, "Interface\\Icons\\Spell_Fire_Fire")
+        end
 	elseif sync == "OnyFireball" and self.db.profile.fireball then 
 		self:TriggerEvent("BigWigs_StartBar", self, L["fireball_cast"], 3, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "red")
 	elseif sync == "OnyBellowingRoar" and self.db.profile.onyfear then 

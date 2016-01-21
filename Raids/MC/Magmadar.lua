@@ -129,7 +129,7 @@ function BigWigsMagmadar:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 35, "Interface\\Icons\\Spell_Shadow_DeathScream")
 	elseif sync == "MagmadarFrenzyStart" and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzyann"], "Important", true, "Alert")
-		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar")
+		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "red")
         if playerClass == "HUNTER" or UnitName("player") == "Lyq" then
             self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 8, true)
         end

@@ -284,7 +284,8 @@ function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
 		holyfiretime = GetTime()
 		castingholyfire = 1
 		if self.db.profile.holyfire then
-			self:TriggerEvent("BigWigs_StartBar", self, L["holyfirebar"], 3.5, "Interface\\Icons\\Spell_Holy_SearingLight")
+			self:TriggerEvent("BigWigs_StartBar", self, L["holyfirebar"], 3.5, "Interface\\Icons\\Spell_Holy_SearingLight", true, "red")
+			self:TriggerEvent("BigWigs_StartBar", self, "Next Holy Fire", 12, "Interface\\Icons\\Spell_Holy_SearingLight")
 		end
 	elseif sync == "VenoxisHolyFireStop" then
 		castingholyfire = 0

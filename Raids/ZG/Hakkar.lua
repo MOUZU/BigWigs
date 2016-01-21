@@ -244,9 +244,11 @@ function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("BigWigs_Message", 590, string.format(L["enrageseconds_message"], 10), "Attention")
 		end
 		if self.db.profile.siphon then
-			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
-			self:ScheduleEvent("BigWigs_Message", 60, string.format(L["siphon_warning"], 30), "Urgent")
-			self:ScheduleEvent("BigWigs_Message", 80, string.format(L["siphon_warning"], 10), "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 89, "Interface\\Icons\\Spell_Shadow_LifeDrain")
+			self:ScheduleEvent("BigWigs_Message", 59, string.format(L["siphon_warning"], 30), "Urgent")
+            --self:ScheduleEvent("BigWigs_ShowIcon", 60, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
+            -- before I display that I need to figure out, how to track when the player gained the Poisonous Blood - this should hide the icon again
+			self:ScheduleEvent("BigWigs_Message", 79, string.format(L["siphon_warning"], 10), "Attention")
 		end
 		if self.db.profile.mc then
 			self:TriggerEvent("BigWigs_StartBar", self, L["firstmc_bar"], 17, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
@@ -343,6 +345,8 @@ function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.siphon then
 			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 			self:ScheduleEvent("BigWigs_Message", 60, string.format(L["siphon_warning"], 30), "Urgent")
+            --self:ScheduleEvent("BigWigs_ShowIcon", 60, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
+            -- before I display that I need to figure out, how to track when the player gained the Poisonous Blood - this should hide the icon again
 			self:ScheduleEvent("BigWigs_Message", 80, string.format(L["siphon_warning"], 10), "Attention")
 		end
 		if self.db.profile.aspectjeklik then
@@ -384,7 +388,7 @@ function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
         self:TriggerEvent("BigWigs_StopBar", self, L["aspectthekal_bar"])
 	elseif sync == "HakkarMC" then
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_StartBar", self, L["nextmc_bar"], 15, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+			self:ScheduleEvent("BigWigs_StartBar", 10, self, L["nextmc_bar"], 11, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mindcontrol_bar"], rest), 10, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate", true, "White")
 			if rest == UnitName("player") then
 				self:TriggerEvent("BigWigs_Message", L["mindcontrol_message_you"], "Attention", true, "Alarm")
@@ -397,5 +401,3 @@ function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
-
--- shall I add an WarnIcon for pulling another pet Interface\\Icons\\Ability_Hunter_Pet_windSerpent ?
