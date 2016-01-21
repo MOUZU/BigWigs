@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Chromaggus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local lastFrenzy = 0
 local _, playerClass = UnitClass("player")
+local breathCache = {}  -- in case your raid wipes
 
 ----------------------------
 --      Localization      --
@@ -222,17 +223,36 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
         if sync ~= "ChromaggusEngage" then self:TriggerEvent("BigWigs_SendSync", "ChromaggusEngage") end
         
 		if self.db.profile.breath then
-			self:ScheduleEvent("BigWigs_Message", 23.5, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["first_bar"], 28.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
-			self:ScheduleEvent("BigWigs_Message", 53.5, L["firstbreaths_warning"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["second_bar"], 58.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
+            local firstBarName  = L["first_bar"]
+            local firstBarMSG   = L["firstbreaths_warning"]
+            local secondBarName = L["second_bar"]
+            local secondBarMSG  = L["firstbreaths_warning"]
+            if table.getn(breathCache) == 2 then
+                -- if we have 2 breaths cached this session means we have wiped already and that after discovering the two breath types
+                firstBarName  = string.format(L["castingbar"], breathCache[1])
+                firstBarMSG   = string.format(L["breath_message"], breathCache[1])
+                secondBarName = string.format(L["castingbar"], breathCache[2])
+                secondBarMSG  = string.format(L["breath_message"], breathCache[2])
+            elseif table.getn(breathCache) == 1 then
+                -- we wiped before but know at least the first breath
+                firstBarName  = string.format(L["castingbar"], breathCache[1])
+                firstBarMSG   = string.format(L["breath_message"], breathCache[1])
+            end
+			self:ScheduleEvent("BigWigs_Message", 23.5, firstBarMSG, "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, firstBarName, 28.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
+			self:ScheduleEvent("BigWigs_Message", 53.5, secondBarMSG, "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, secondBarName, 58.5, "Interface\\Icons\\INV_Misc_QuestionMark", true, "cyan")
 		end
         if self.db.profile.frenzy then
             self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_Nextbar"], 13, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white") 
         end
+        self:TriggerEvent("BigWigs_StartBar", self, format(L["vuln_bar"], "???"), 45, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 	elseif sync == "ChromaggusBreath" and self.db.profile.breath then
 		local spellName = L:HasTranslation("breath"..rest) and L["breath"..rest] or nil
 		if not spellName then return end
+        if table.getn(breathCache) < 2 then
+            breathCache[table.getn(breathCache)+1] = spellName
+        end
 		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon"..rest])
 		self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Important")
 		self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 55, string.format(L["breath_warning"], spellName), "Important")
@@ -240,9 +260,9 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "ChromaggusFrenzyStart" then
 		if self.db.profile.frenzy and not self.frenzied then
 			self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "white")
+			self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "red")
 		end
-        if playerClass == "HUNTER" or UnitName("player") == "Lyq" then
+        if playerClass == "HUNTER" then
             self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 8, true)
         end
 		self.frenzied = true
@@ -434,6 +454,7 @@ function BigWigsChromaggus:PlayerDamageEvents(msg)
 
 function BigWigsChromaggus:IdentifyVulnerability(school)
     if not self.db.profile.vulnerability or not type(school) == "string" then return end
+    if (self.lastVuln + 5) > GetTime() then return end -- 5 seconds delay
     
     self.vulnerability = school
     self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive")

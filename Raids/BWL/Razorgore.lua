@@ -338,7 +338,7 @@ end
 function BigWigsRazorgore:CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE(msg)
 	if self.db.profile.fireballvolley and msg == L["volley_trigger"] then
 		self:TriggerEvent("BigWigs_StartBar", self, L["volley_bar"], 2, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "blue")
-        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Meteorstorm", 5) -- does this texture exist on this patch? if not use Spell_Fire_Flamebolt
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Flamebolt", 5)
 	end
 end
 

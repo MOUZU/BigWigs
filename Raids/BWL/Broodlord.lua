@@ -111,7 +111,8 @@ function BigWigsBroodlord:Event(msg)
 	elseif string.find(msg, L["bw_trigger"]) and self.db.profile.bw then
 		if GetTime() - self.lastbw > 5 then
 			self:TriggerEvent("BigWigs_StartBar", self, L["bw_bar"], 8, "Interface\\Icons\\Spell_Holy_Excorcism_02", true, "Red")
-			self:ScheduleEvent("BigWigs_Message", 5, L["bw_warn"], "Urgent", true, "Alert")
+			self:ScheduleEvent("BigWigs_Message", 24, L["bw_warn"], "Urgent", true, "Alert")
+            self:ScheduleEvent("BigWigs_StartBar", 8, self, "Possible Blast Wave", 18, "Interface\\Icons\\Spell_Holy_Excorcism_02")
 		end
 		self.lastbw = GetTime()
 	end
@@ -130,8 +131,8 @@ end
 function BigWigsBroodlord:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.bw then return end
 	if string.find(msg, L["engage_trigger"]) and not self.started then
-		self:TriggerEvent("BigWigs_StartBar", self, L["bw_bar"], 17, "Interface\\Icons\\Spell_Holy_Excorcism_02", true, "Red")
-		self:ScheduleEvent("BigWigs_Message", 12, L["bw_warn"], "Urgent", true, "Alert")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bw_bar"], 19.5, "Interface\\Icons\\Spell_Holy_Excorcism_02", true, "Red")
+		self:ScheduleEvent("BigWigs_Message", 14.5, L["bw_warn"], "Urgent", true, "Alert")
         self.started = true
 	end
 end

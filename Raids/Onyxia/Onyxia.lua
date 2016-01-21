@@ -11,6 +11,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Onyxia",
+    engage_trigger = "must leave my lair to feed",
 
 	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Deep Breath",
@@ -60,6 +61,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	cmd = "Onyxia",
+    engage_trigger = "must leave my lair to feed",
 
 	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Tiefer Atem",
@@ -153,7 +155,9 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
-	if (string.find(msg, L["phase2_trigger"])) then
+    if string.find(msg, L["engage_trigger"]) then
+        self:TriggerEvent("BigWigs_SendSync", "BossEngaged")
+	elseif (string.find(msg, L["phase2_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "OnyPhaseTwo")
 	elseif (string.find(msg, L["phase3_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "OnyPhaseThree")
@@ -190,6 +194,8 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self.started = true
         self.phase = 1
+        self:TriggerEvent("BigWigs_StartBar", self, L["flamebreath_next"], 11, "Interface\\Icons\\Spell_Fire_Fire")
+        self:TriggerEvent("BigWigs_StartBar", self, "Next Wing Buffet", 14, "Interface\\Icons\\INV_Misc_MonsterScales_14")
 	elseif sync == "OnyPhaseTwo" and self.phase < 2 then
 		transitioned = true --to stop sending new syncs
         self.phase = 2
