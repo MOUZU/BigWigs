@@ -10,6 +10,11 @@
 ## High Priestess Mar'li
 
 ## Bloodlord Mandokir
+- <b>(QA)</b> added locale to trigger combat start
+- <b>(QA)</b> added 'Next Whirlwind' bar with 20s
+- <b>(QA)</b> added 'Charge' bar with the first one 15. Need trigger for the ones following that, the following should get +30s
+- <b>(QA)</b> added 'Next Gaze' bar with 13s (should be 20s counting from 'Incoming Gaze')
+- <b>(100%)</b> added missing locale for 'Incoming Gaze'
 
 ## High Priest Thekal
 
