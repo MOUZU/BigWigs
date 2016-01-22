@@ -13,18 +13,18 @@ local c = {
     name = "",
     startTime = 0,
 }
+local prefix = "|cf75DE52f[BigWigs]|r - ";
 
 ----------------------------
 --      Localization      --
 ----------------------------
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossRecords")
 L:RegisterTranslations("enUS", function() return {
-    boss_engaged        = "%s engaged. Good luck and have fun! :)",
-    
-    DBM_CORE_BOSS_DOWN					= "%s down after %s!",
-    DBM_CORE_BOSS_DOWN_I				= "%s down! You have %d total victories.",
-    DBM_CORE_BOSS_DOWN_L				= "%s down after %s! Your last kill took %s and your fastest kill took %s. You have %d total victories.",
-    DBM_CORE_BOSS_DOWN_NR				= "%s down after %s! This is a new record! (Old record was %s). You have %d total victories.",
+    BOSS_ENGAGED    = "%s engaged. Good luck and have fun! :)",
+    BOSS_DOWN		= "%s down after %s!",
+    BOSS_DOWN_I		= "%s down! You have %d total victories.",
+    BOSS_DOWN_L		= "%s down after %s! Your last kill took %s and your fastest kill took %s. You have %d total victories.",
+    BOSS_DOWN_NR	= "%s down after %s! This is a new record! (Old record was %s). You have %d total victories.",
 } end)
 
 ----------------------------------
@@ -50,8 +50,8 @@ function BigWigsBossRecords:BigWigs_RecvSync()
     if sync == "BossEngaged" and rest and rest ~= "" then
         c.name      = rest
         c.startTime = GetTime()
-        -- todo engage chat message
-        SendChat("BigWigsBossRecords TEST - "..rest.." ENGAGED!")
+        
+        DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], rest))
     end
 end
 
@@ -59,11 +59,17 @@ function BigWigsBossRecords:BigWigs_BossDeath(name)
     -- just to be sure that we're not calculating/tracking bullshit
     if c.name == name then
         local timeSpent = GetTime() - c.startTime
-        SendChat("BigWigsBossRecords TEST - "..name.." KILLED!")
-        -- todo bossdeath chat message
-        -- todo fill savedvariables
-        -- todo load from savedvariables and compare time - check if it's the fastest kill, if not display the fastest
         
-        -- to rethink: does Thekal in ZG work properly with this logic? Is there another boss similar to Thekal?
+        if false then
+            -- TODO: if we have data already
+            if false then
+                -- TODO if it's a new record
+            else
+                -- TODO else just display the last and best entry
+            end
+        else
+            -- it's our first kill
+            DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN"], rest, timeSpent))
+        end
     end
 end
