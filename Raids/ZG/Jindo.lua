@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -121,6 +121,7 @@ function BigWigsJindo:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE", "Event")
+    self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "JindoCurse", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "JindoHexStart", 4)
@@ -141,7 +142,9 @@ function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "JindoCurse" then
+    if sync == "BossEngaged" and rest == "Jin'do" then
+        
+	elseif sync == "JindoCurse" then
 		if self.db.profile.curse then
 			if rest == UnitName("player") then
 				self:TriggerEvent("BigWigs_Message", L["cursewarn_message"], "Attention")
