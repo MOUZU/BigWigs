@@ -12,7 +12,8 @@
 - <b>(DG)</b> Conflagration, seems to be RNG
 - <b>(DG)</b> Fireball Volley, seems to be RNG
 - <b>(QA)</b> WarnIcon, Fireball Volley cast is announced via Fireball icon
-- <b>(TO RETHINK)</b> WarnIcon, for player with conflag on? (less priority than Volley)
+- <b>(DG)</b> War Stomp, timer
+- <b>(TODO)</b> Egg Counter, rework counting method and perhaps reworking&implementing CounterBars
 
 ## Vaelastrasz the Corrupt
 - <b>(100%)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 AND adjusted enUS locales to trigger combat
