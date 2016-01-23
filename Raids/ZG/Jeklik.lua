@@ -181,6 +181,7 @@ function BigWigsJeklik:OnEnable()
 	healtimer = 0
 	castingheal = 0
 	
+    self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_HITS", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_MISSES", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
@@ -290,6 +291,12 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_StopBar", self, L["greathealbar"])		
 		end
 	end
+end
+
+function BigWigsJeklik:CHAT_MSG_MONSTER_YELL(msg)
+    if string.find(msg,L["combat_trigger"]) then
+        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+    end
 end
 
 function BigWigsJeklik:Event(msg)

@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -12,6 +12,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Arlokk",
 
+    engage_trigger = "your priestess calls upon your might",
 	mark_trigger = "Feast on (.+), my pretties!",
 	mark_warning_self = "You are marked!",
 	mark_warning_other = "%s is marked!",
@@ -21,7 +22,8 @@ L:RegisterTranslations("enUS", function() return {
 	trollphase_message = "Troll Phase",
 	pantherphase_message = "Panther Phase",
 	vanishphase_message = "Vanish!",
-	vanish_bar = "Vanish",
+	vanish_bar = "Vanished",
+	vanish_Nextbar = "Next Vanish",
 
 	vanish_cmd = "vanish",
 	vanish_name = "Vanish alert",
@@ -47,6 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	cmd = "Arlokk",
 
+    engage_trigger = "your priestess calls upon your might",
 	mark_trigger = "Feast on (.+), my pretties!",
 	mark_warning_self = "Du bist markiert!",
 	mark_warning_other = "%s ist markiert!",
@@ -56,7 +59,8 @@ L:RegisterTranslations("deDE", function() return {
 	trollphase_message = "Troll Phase",
 	pantherphase_message = "Panther Phase",
 	vanishphase_message = "Verschwinden!",
-	vanish_bar = "Verschwinden",
+	vanish_bar = "Verschwunden",
+	vanish_Nextbar = "Nächstes Verschwinden",
 
 	vanish_cmd = "vanish",
 	vanish_name = "Verschwinden anzeigen",
@@ -112,18 +116,23 @@ end
 ------------------------------
 
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL(msg)
-	local _,_, n = string.find(msg, L["mark_trigger"])
-	if n then
-		if self.db.profile.mark then
-			if n == UnitName("player") then
-				self:TriggerEvent("BigWigs_Message", L["mark_warning_self"], "Attention", true, "Alarm")
-			else
-				self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], n), "Attention")
-			end
-		end
-		if self.db.profile.puticon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", n)
-		end
+    if string.find(msg,L["engage_trigger"]) then
+        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+    else
+        local _,_, n = string.find(msg, L["mark_trigger"])
+        if n then
+            if self.db.profile.mark then
+                if n == UnitName("player") then
+                    self:TriggerEvent("BigWigs_Message", L["mark_warning_self"], "Attention", true, "Alarm")
+                else
+                    self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], n), "Attention")
+                end
+            end
+            if self.db.profile.puticon then
+                self:TriggerEvent("BigWigs_SetRaidIcon", n)
+            end
+            self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseVanish")
+        end
 	end
 end
 
@@ -134,7 +143,7 @@ function BigWigsArlokk:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "High Priestess Arlokk" and not started then
+	if not self.started and sync == "BossEngaged" and rest == "High Priestess Arlokk" then
 		self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseTroll")
 	elseif sync == "ArlokkPhaseTroll" then
 		vanished = nil
@@ -145,7 +154,7 @@ function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["trollphase_message"], "Attention")
 		end
-		self:ScheduleEvent("BigWigs_SendSync", 24.9, "ArlokkPhasePanther")
+		self:ScheduleEvent("BigWigs_StartBar", self, L["vanish_Nextbar"], 35, "Interface\\Icons\\Ability_Vanish")
 	elseif sync == "ArlokkPhasePanther" then
 		self:CancelScheduledEvent("checkunvanish")
 		if self.db.profile.vanish then

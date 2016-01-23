@@ -181,6 +181,8 @@ function BigWigsTest:BigWigs_RecvSync(sync, rest, nick)
         if type(rest) == "number" then
             --SendChat(rest * 2) 
         end
+    elseif sync == "BossEngaged" and rest then
+        self:TriggerEvent("BigWigs_Message", sync .. rest, "Positive")
 	end
 end
 
@@ -195,6 +197,7 @@ function BigWigsTest:BigWigs_Test()
     self:TriggerEvent("BigWigs_StartBar", self, "Combat", 25, "Interface\\Icons\\Inv_Hammer_Unique_Sulfuras")
     self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Inv_Hammer_Unique_Sulfuras", 5)
     self:TriggerEvent("BigWigs_SendSync", "TestNumber 5")
+    self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
     
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 2"], 10, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 3"], 5, "Interface\\Icons\\Spell_Nature_ResistNature", true, "red")

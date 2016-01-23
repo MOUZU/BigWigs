@@ -19,6 +19,9 @@
 ## High Priest Thekal
 
 ## High Priestess Arlokk
+- <b>(QA)</b> added locale to trigger combat
+- <b>(QA)</b> added 'Next Vanish' bar with 35s (should be accurate)
+- <b>(QA)</b> fixed trigger for Vanish, so 'Vanish' bar should display but it can't be 100% accurate
 
 ## Jin'do the Hexxer
 
