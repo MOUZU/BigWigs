@@ -4,6 +4,7 @@
 # Zul'Gurub
 
 ## High Priestess Jeklik
+- <b>(QA)</b> Heal (Phase 2), added 'Next' timer with 20s
 
 ## High Priest Venoxis
 

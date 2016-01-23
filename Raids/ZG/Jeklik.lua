@@ -178,10 +178,11 @@ BigWigsJeklik.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 function BigWigsJeklik:OnEnable()
 	firstfear = 0
 	phase = 0
-	healtimer = 0
+	self.lastHeal = 0
 	castingheal = 0
 	
     self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_HITS", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_MISSES", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
@@ -279,7 +280,7 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "JeklikMindFlayEnd" and self.db.profile.flay then
 		self:TriggerEvent("BigWigs_StopBar", self, L["mindflaybar"])
 	elseif sync == "JeklikHeal" then
-		healtimer = GetTime()
+		self.lastHeal = GetTime()
 		castingheal = 1
 		if self.db.profile.heal then
 			self:TriggerEvent("BigWigs_Message", L["greathealtext"], "Important", "Alarm")
@@ -288,7 +289,10 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "JeklikHealStop" then
 		castingheal = 0
 		if self.db.profile.heal then
-			self:TriggerEvent("BigWigs_StopBar", self, L["greathealbar"])		
+			self:TriggerEvent("BigWigs_StopBar", self, L["greathealbar"])
+            if (self.lastHeal + 20) > GetTime() then
+                self:TriggerEvent("BigWigs_StartBar", self, "Next Heal", (self.lastHeal + 20 - GetTime()), "Interface\\Icons\\Spell_Holy_Heal")
+            end
 		end
 	end
 end
@@ -324,9 +328,9 @@ function BigWigsJeklik:Event(msg)
 		self:TriggerEvent("BigWigs_SendSync", "JeklikFearTwoRep")
 	elseif string.find(msg, L["attack_trigger1"]) or string.find(msg, L["attack_trigger2"]) or string.find(msg, L["attack_trigger3"]) or string.find(msg, L["attack_trigger4"]) then
 		if castingheal == 1 then 
-			if (GetTime()-healtimer)<4 then
+			if (GetTime()-self.lastHeal)<4 then
 				self:TriggerEvent("BigWigs_SendSync", "JeklikHealStop")
-			elseif (GetTime()-healtimer)>=4 then
+			elseif (GetTime()-self.lastHeal)>=4 then
 				castingheal = 0
 			end
 		end
@@ -355,4 +359,15 @@ function BigWigsJeklik:Event(msg)
 			end
 		end
 	end
+end
+
+function BigWigsJeklik:UNIT_HEALTH(msg)
+    if UnitName(msg) == boss then
+        if UnitHealthMax(msg) == 100 then
+            -- in the current state of Nostalrius you can only get the HP percentages, this is just in case it changes in the future
+            if not self.phase2 and UnitHealth(msg) < 50 then
+                
+            end
+        end
+    end
 end
