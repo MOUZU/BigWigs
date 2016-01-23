@@ -129,6 +129,7 @@ function BigWigsOnyxia:OnEnable()
     self.phase   = 0
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+    self:RegisterEvent("PLAYER_TARGET_CHANGED")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("UNIT_HEALTH")
     self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
@@ -173,6 +174,14 @@ function BigWigsOnyxia:UNIT_HEALTH(arg1) --temporary workaround until Phase2 yel
 			transitioned = false
 		end
 	end
+end
+
+function BigWigsOnyxia:PLAYER_TARGET_CHANGED(msg)
+    if msg == boss then
+        if self:KTM_SetTarget(msg) or (not IsRaidLeader() and not IsRaidOfficer()) then
+            self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+        end
+    end
 end
 
 function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)

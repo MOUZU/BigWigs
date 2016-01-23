@@ -500,6 +500,24 @@ function BigWigs.modulePrototype:IsRegistered()
 	return self.registered
 end
 
+function BigWigs.modulePrototype:KTM_Reset()
+	if IsAddOnLoaded("KLHThreatMeter") then
+        klhtm.net.clearraidthreat()
+    end
+end
+
+function BigWigs.modulePrototype:KTM_SetTarget(targetName)
+	if IsAddOnLoaded("KLHThreatMeter") then
+        if klhtm.target.targetismaster(targetName) then
+            -- 'targetName' is already the MasterTarget
+            return true
+        end
+        if (IsRaidLeader() or IsRaidOfficer()) and targetName then
+            klhtm.net.sendmessage("target " .. targetName)
+        end
+    end
+end
+
 ------------------------------
 --      Initialization      --
 ------------------------------

@@ -14,6 +14,7 @@
 - <b>(QA)</b> WarnIcon, Heart of Fire icon appears when Ony starts casting Deep Breath
 - <b>(QA)</b> added locale to trigger combat
 - <b>(QA)</b> Wing Buffet, added First Wing Buffet timer with 14s
+- <b>(QA)</b> KTM MasterTarget on Onyxia
 
 <br \><br \>
 ##### Prefix legend
