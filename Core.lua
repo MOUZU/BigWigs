@@ -500,21 +500,40 @@ function BigWigs.modulePrototype:IsRegistered()
 	return self.registered
 end
 
+BigWigs.lastReset = 0;
 function BigWigs.modulePrototype:KTM_Reset()
 	if IsAddOnLoaded("KLHThreatMeter") then
-        klhtm.net.clearraidthreat()
+        if (IsRaidLeader() or IsRaidOfficer()) and ((BigWigs.lastReset + 5) < GetTime()) then
+            klhtm.net.clearraidthreat()
+            -- we want to sync the reset to others so that everyone saves the .lastReset value for our 5seconds reset prevention
+            self:TriggerEvent("BigWigs_SendSync", "KTM_RESETTED")
+        end
     end
 end
 
+BigWigs.modulePrototype.masterTarget
 function BigWigs.modulePrototype:KTM_SetTarget(targetName)
 	if IsAddOnLoaded("KLHThreatMeter") then
-        if klhtm.target.targetismaster(targetName) then
-            -- 'targetName' is already the MasterTarget
-            return true
+        if targetName and type(targetName) == "string" and (IsRaidLeader() or IsRaidOfficer()) then
+            self:RegisterEvent("PLAYER_TARGET_CHANGED")
+            self.masterTarget = targetName
         end
-        if (IsRaidLeader() or IsRaidOfficer()) and targetName then
-            klhtm.net.sendmessage("target " .. targetName)
+    end
+end
+
+function BigWigs.modulePrototype:PLAYER_TARGET_CHANGED()
+    if IsAddOnLoaded("KLHThreatMeter") and self.masterTarget then
+        if klhtm.target.targetismaster(self.masterTarget) then
+            self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+            return
         end
+        
+        if (IsRaidLeader() or IsRaidOfficer()) then
+            klhtm.net.sendmessage("target " .. self.masterTarget)
+            self.masterTarget = nil
+        end
+    else
+        self:UnregisterEvent("PLAYER_TARGET_CHANGED")
     end
 end
 
@@ -766,6 +785,8 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
 			self:Print(string.format(L["%s has requested forced reboot for the %s module."], nick, module))
 		end
 		self:TriggerEvent("BigWigs_RebootModule", module)
+    elseif sync == "KTM_RESETTED" then
+        BigWigs.lastReset = GetTime()
 	end
 end
 
