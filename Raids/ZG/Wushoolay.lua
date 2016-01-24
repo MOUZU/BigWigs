@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Wushoolay"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsWushoolay")
 
 ----------------------------
 --      Localization      --
@@ -49,7 +49,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsWushoolay = BigWigs:NewModule(boss)
+BigWigsWushoolay = BigWigs:NewModule("Wushoolay")
 BigWigsWushoolay.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsWushoolay.enabletrigger = boss
 BigWigsWushoolay.toggleoptions = {"chainlightning", "lightningcloud", "bosskill"}
@@ -82,7 +82,9 @@ function BigWigsWushoolay:Event(msg)
 end
 
 function BigWigsWushoolay:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "WushoolayChainLightning" and self.db.profile.chainlightning then
+    if not self.started and sync == "BossEngaged" and (rest == "Wushoolay" or rest == boss) then
+        self.started = true
+	elseif sync == "WushoolayChainLightning" and self.db.profile.chainlightning then
 		self:TriggerEvent("BigWigs_Message", L["chainlightning_message"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["chainlightning_bar"], 1.5, "Interface\\Icons\\Spell_Nature_ChainLightning")
 	end

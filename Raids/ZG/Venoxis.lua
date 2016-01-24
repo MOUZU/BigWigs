@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priest Venoxis"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsVenoxis")
 
 ----------------------------
 --      Localization      --
@@ -135,7 +135,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsVenoxis = BigWigs:NewModule(boss)
+BigWigsVenoxis = BigWigs:NewModule("Venoxis")
 BigWigsVenoxis.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsVenoxis.enabletrigger = boss
 BigWigsVenoxis.wipemobs = { L["add_name"] }
@@ -147,6 +147,7 @@ BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 ------------------------------
 
 function BigWigsVenoxis:OnEnable()
+    self.started = nil
 	self.cobra = 0
 	venoxisdead = 0
 	castingholyfire = 0
@@ -255,7 +256,7 @@ function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "High Priest Venoxis" then
+	if not self.started and sync == "BossEngaged" and (rest == "Venoxis" or rest == boss) then
 		self:TriggerEvent("BigWigs_SendSync", "VenoxisPhaseOne")
 	elseif sync == "VenoxisPhaseOne" then
 		if self.db.profile.phase then

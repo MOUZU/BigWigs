@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Golemagg the Incinerator"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsGolemagg")
 
 ----------------------------
 --      Localization      --
@@ -47,7 +47,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGolemagg = BigWigs:NewModule(boss)
+BigWigsGolemagg = BigWigs:NewModule("Golemagg")
 BigWigsGolemagg.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGolemagg.enabletrigger = boss
 BigWigsGolemagg.wipemobs = { L["corerager_name"] }
@@ -59,6 +59,7 @@ BigWigsGolemagg.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsGolemagg:OnEnable()
+    self.started = nil
 	earthquakeon = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -74,8 +75,11 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGolemagg:BigWigs_RecvSync(sync)
-	if sync == "GolemaggEarthquake" and self.db.profile.earthquake then
+function BigWigsGolemagg:BigWigs_RecvSync(sync, rest)
+    if not self.started and sync == "BossEngaged" and (rest == "Golemagg" or rest == boss) then
+        self.started = true
+        self:KTM_SetTarget(boss, true)
+	elseif sync == "GolemaggEarthquake" and self.db.profile.earthquake then
 		self:TriggerEvent("BigWigs_Message", L["earthquakesoonwarn"], "Attention", "Alarm")
 	elseif sync == "GolemaggEnrage" and self.db.profile.enraged then
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Attention")

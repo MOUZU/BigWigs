@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gehennas"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsGehennas")
 
 ----------------------------
 --      Localization      --
@@ -79,7 +79,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGehennas = BigWigs:NewModule(boss)
+BigWigsGehennas = BigWigs:NewModule("Gehennas")
 BigWigsGehennas.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGehennas.enabletrigger = boss
 BigWigsGehennas.wipemobs = { L["flamewaker_name"] }
@@ -117,10 +117,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGehennas:BigWigs_RecvSync(sync)
-	if not self.started and ((sync == self:GetEngageSync() and (UnitName("target") == "Gehennas" or UnitName("target") == "Flamewaker")) or (sync == "GehennasEngaged")) then
+function BigWigsGehennas:BigWigs_RecvSync(sync, rest)
+	if not self.started and sync == "BossEngaged" and (rest == "Gehennas" or rest == boss) then
         self.started = true
-        if sync ~= "GehennasEngaged" then self:TriggerEvent("BigWigs_SendSync", "GehennasEngaged") end
         
 		if self.db.profile.curse then
 			self:ScheduleEvent("messagewarn2", "BigWigs_Message", 7, L["warn1"], "Urgent")

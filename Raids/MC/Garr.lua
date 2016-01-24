@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Garr"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsGarr")
 
 ----------------------------
 --      Localization      --
@@ -67,7 +67,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGarr = BigWigs:NewModule(boss)
+BigWigsGarr = BigWigs:NewModule("Garr")
 BigWigsGarr.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGarr.enabletrigger = boss
 BigWigsGarr.wipemobs = { L["firesworn_name"] }
@@ -79,6 +79,7 @@ BigWigsGarr.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsGarr:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -98,8 +99,10 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGarr:BigWigs_RecvSync(sync)
-	if sync == "GarrAddDead1" then
+function BigWigsGarr:BigWigs_RecvSync(sync, rest)
+    if not self.started and sync == "BossEngaged" and (rest == "Garr" or rest == boss) then
+        self.started = true
+	elseif sync == "GarrAddDead1" then
 		self:TriggerEvent("BigWigs_Message", L["addmsg1"], "Positive")
 	elseif sync == "GarrAddDead2" then
 		self:TriggerEvent("BigWigs_Message", L["addmsg2"], "Positive")

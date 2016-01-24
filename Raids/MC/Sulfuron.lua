@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Sulfuron Harbinger"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsSulfuron")
 
 ----------------------------
 --      Localization      --
@@ -79,7 +79,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsSulfuron = BigWigs:NewModule(boss)
+BigWigsSulfuron = BigWigs:NewModule("Sulfuron")
 BigWigsSulfuron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsSulfuron.enabletrigger = boss
 BigWigsSulfuron.wipemobs = { L["flamewakerpriest_name"] }
@@ -91,6 +91,7 @@ BigWigsSulfuron.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsSulfuron:OnEnable()
+    self.started = nil
 	deadpriests = 0
 	sulfurondead = 0
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
@@ -132,8 +133,9 @@ function BigWigsSulfuron:knockback(msg)
 	end
 end
 
-function BigWigsSulfuron:BigWigs_RecvSync( sync )
-	if sync == self:GetEngageSync() and (UnitName("target") == "Sulfuron Harbinger" or UnitName("target") == "Flamewaker Priest") then
+function BigWigsSulfuron:BigWigs_RecvSync(sync, rest)
+	if not self.started and sync == "BossEngaged" and (rest == "Sulfuron" or rest == boss) then
+        self.started = true
 		if self.db.profile.knockback then
 			self:ScheduleEvent("BigWigs_Message", 2.8, L["knockbackannounce"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 5.8 , "Interface\\Icons\\Spell_Fire_Fireball")

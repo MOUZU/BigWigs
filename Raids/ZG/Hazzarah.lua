@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hazza'rah"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsHazzarah")
 
 ----------------------------
 --      Localization      --
@@ -34,7 +34,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsHazzarah = BigWigs:NewModule(boss)
+BigWigsHazzarah = BigWigs:NewModule("Hazzarah")
 BigWigsHazzarah.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsHazzarah.enabletrigger = boss
 BigWigsHazzarah.toggleoptions = {"nightmaresummon", "bosskill"}
@@ -64,7 +64,9 @@ function BigWigsHazzarah:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsHazzarah:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "HazzarahIllusions" and self.db.profile.nightmaresummon then
+    if not self.started and sync == "BossEngaged" and (rest == "Hazzarah" or rest == boss) then
+        
+	elseif sync == "HazzarahIllusions" and self.db.profile.nightmaresummon then
 		self:TriggerEvent("BigWigs_Message", L["nightmaresummon_message"], "Important", true, "Alarm")
 	end
 end

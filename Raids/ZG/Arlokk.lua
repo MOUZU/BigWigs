@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priestess Arlokk"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsArlokk")
 
 ----------------------------
 --      Localization      --
@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsArlokk = BigWigs:NewModule(boss)
+BigWigsArlokk = BigWigs:NewModule("Arlokk")
 BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsArlokk.enabletrigger = boss
 BigWigsArlokk.toggleoptions = {"phase", "whirlwind", "vanish", "mark", "puticon", "bosskill"}
@@ -98,7 +98,7 @@ BigWigsArlokk.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 ------------------------------
 
 function BigWigsArlokk:OnEnable()
-	started = nil
+	self.started = nil
 	vanished = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -143,14 +143,12 @@ function BigWigsArlokk:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == "High Priestess Arlokk" then
+	if not self.started and sync == "BossEngaged" and (rest == "Arlokk" or rest == boss) then
+        self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseTroll")
 	elseif sync == "ArlokkPhaseTroll" then
 		vanished = nil
 		self:CancelScheduledEvent("checkvanish")
-		if started == nil then
-			started = true
-		end
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["trollphase_message"], "Attention")
 		end

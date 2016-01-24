@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Lucifron"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsLucifron")
 
 ----------------------------
 --      Localization      --
@@ -120,7 +120,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsLucifron = BigWigs:NewModule(boss)
+BigWigsLucifron = BigWigs:NewModule("Lucifron")
 BigWigsLucifron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsLucifron.enabletrigger = boss
 BigWigsLucifron.wipemobs = { L["add_name"] }
@@ -190,10 +190,9 @@ function BigWigsLucifron:Event(msg)
 	end
 end
 
-function BigWigsLucifron:BigWigs_RecvSync(sync)
-	if not self.started and (sync == self:GetEngageSync("Lucifron") or sync == "LucifronEngaged") then
+function BigWigsLucifron:BigWigs_RecvSync(sync, rest)
+	if not self.started and sync == "BossEngaged" and (rest == "Lucifron" or rest == boss) then
         self.started = true
-        if sync ~= "LucifronEngaged" then self:TriggerEvent("BigWigs_SendSync", "LucifronEngaged") end
         
         if self.db.profile.curse then
 			self:ScheduleEvent("messagewarn4", "BigWigs_Message", 10, L["warn1"], "Attention")

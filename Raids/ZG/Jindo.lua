@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Jin'do the Hexxer"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsJindo")
 
 ----------------------------
 --      Localization      --
@@ -101,7 +101,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsJindo = BigWigs:NewModule(boss)
+BigWigsJindo = BigWigs:NewModule("Jindo")
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJindo.enabletrigger = boss
 BigWigsJindo.toggleoptions = {"curse", "hex", "brainwash", "healingward", "puticon", "bosskill"}
@@ -112,6 +112,7 @@ BigWigsJindo.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsJindo:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY", "FadeFrom")
@@ -142,7 +143,8 @@ function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
-    if sync == "BossEngaged" and rest == "Jin'do" then
+    if not self.started and sync == "BossEngaged" and (rest == "Jindo" or rest == boss) then
+        self.started = true
         
 	elseif sync == "JindoCurse" then
 		if self.db.profile.curse then

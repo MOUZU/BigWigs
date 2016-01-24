@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Magmadar"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsMagmadar")
 local _, playerClass = UnitClass("player")
 
 ----------------------------
@@ -63,7 +63,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMagmadar = BigWigs:NewModule(boss)
+BigWigsMagmadar = BigWigs:NewModule("Magmadar")
 BigWigsMagmadar.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsMagmadar.enabletrigger = boss
 BigWigsMagmadar.toggleoptions = {"panic", "frenzy", "bosskill"}
@@ -109,8 +109,8 @@ function BigWigsMagmadar:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	end
 end
 
-function BigWigsMagmadar:BigWigs_RecvSync(sync)
-	if sync == self:GetEngageSync() and UnitName("target") == "Magmadar" then
+function BigWigsMagmadar:BigWigs_RecvSync(sync, rest)
+	if not self.started and sync == "BossEngaged" and (rest == "Magmadar" or rest == boss) then
 		if firstpanic == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "MagmadarPanicIni")
 		end
