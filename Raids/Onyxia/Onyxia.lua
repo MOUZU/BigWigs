@@ -196,6 +196,7 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
         self.phase = 1
         self:TriggerEvent("BigWigs_StartBar", self, L["flamebreath_next"], 11, "Interface\\Icons\\Spell_Fire_Fire")
         self:TriggerEvent("BigWigs_StartBar", self, "Next Wing Buffet", 14, "Interface\\Icons\\INV_Misc_MonsterScales_14")
+        self:KTM_SetTarget(boss)
 	elseif sync == "OnyPhaseTwo" and self.phase < 2 then
 		transitioned = true --to stop sending new syncs
         self.phase = 2
@@ -206,6 +207,7 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_Message", L["phase3text"], "Attention")
         self:TriggerEvent("BigWigs_StartBar", self, L["fear_next"], 8, "Interface\\Icons\\Spell_Shadow_Possession")
         self.phase = 3
+        self:KTM_Reset()
 	elseif sync == "OnyDeepBreath" and self.db.profile.deepbreath then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important", true, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_cast"], 5, "Interface\\Icons\\Spell_Fire_SelfDestruct", true, "black")
