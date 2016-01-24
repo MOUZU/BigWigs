@@ -10,8 +10,9 @@
 --      Are you local?      --
 ------------------------------
 local c = {
-    name = "",
-    startTime = 0,
+    name        = "",
+    startTime   = 0,
+    lastKill    = 0,
 }
 local prefix = "|cf75DE52f[BigWigs]|r - ";
 
@@ -47,7 +48,7 @@ end
 ------------------------------
 
 function BigWigsBossRecords:BigWigs_RecvSync()
-    if sync == "BossEngaged" and rest and rest ~= "" then
+    if sync == "BossEngaged" and rest and rest ~= "" and ((c.startTime + 5) < GetTime()) then
         c.name      = rest
         c.startTime = GetTime()
         
@@ -57,8 +58,9 @@ end
 
 function BigWigsBossRecords:BigWigs_BossDeath(name)
     -- just to be sure that we're not calculating/tracking bullshit
-    if c.name == name then
+    if c.name == name and ((c.lastKill + 5) < GetTime()) then
         local timeSpent = GetTime() - c.startTime
+        c.lastKill      = GetTime()
         
         if false then
             -- TODO: if we have data already
