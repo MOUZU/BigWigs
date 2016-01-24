@@ -1,9 +1,9 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priestess Mar'li"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsMarli")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -97,7 +97,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMarli = BigWigs:NewModule("Marli")
+BigWigsMarli = BigWigs:NewModule(boss)
 BigWigsMarli.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMarli.enabletrigger = boss
 BigWigsMarli.wipemobs = { L["spawn_name"] }
@@ -109,7 +109,6 @@ BigWigsMarli.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsMarli:OnEnable()
-    self.started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
@@ -164,10 +163,8 @@ function BigWigsMarli:Event(msg)
 	end
 end
 
-function BigWigsMarli:BigWigs_RecvSync(sync, rest)
-    if not self.started and sync == "BossEngaged" and (rest == "Marli" or rest == boss) then
-        self.started = true
-	elseif sync == "MarliSpiders" and self.db.profile.spider then
+function BigWigsMarli:BigWigs_RecvSync(sync)
+	if sync == "MarliSpiders" and self.db.profile.spider then
 		self:TriggerEvent("BigWigs_Message", L["spiders_message"], "Attention")
 	elseif sync == "MarliTrollPhase" and self.db.profile.phase then
 		self:TriggerEvent("BigWigs_Message", L["trollphase"], "Attention")

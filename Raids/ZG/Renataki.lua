@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Renataki"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsRenataki")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -53,7 +53,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRenataki = BigWigs:NewModule("Renataki")
+BigWigsRenataki = BigWigs:NewModule(boss)
 BigWigsRenataki.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsRenataki.enabletrigger = boss
 BigWigsRenataki.toggleoptions = {"vanish", "enraged", "bosskill"}
@@ -65,7 +65,7 @@ BigWigsRenataki.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 
 function BigWigsRenataki:OnEnable()
 	enrageannounced = nil
-	selfstarted = nil
+	started = nil
 	vanished = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -90,8 +90,10 @@ function BigWigsRenataki:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsRenataki:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == "Renataki" or rest == boss) then
-		self.started = true
+	if sync == "BossEngaged" and rest == "Renataki" and not started then
+		self:TriggerEvent("BigWigs_SendSync", "RenatakiStarted")
+	elseif sync == "RenatakiStarted" then
+		started = true
 		if self.db.profile.vanish then
 			self:ScheduleEvent("BigWigs_Message", 22, L["vanishsoon_message"], "Urgent")
 		end

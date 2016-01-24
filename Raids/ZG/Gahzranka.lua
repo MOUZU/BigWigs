@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gahz'ranka"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsGahzranka")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -47,7 +47,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGahzranka = BigWigs:NewModule("Gahzranka")
+BigWigsGahzranka = BigWigs:NewModule(boss)
 BigWigsGahzranka.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsGahzranka.enabletrigger = boss
 BigWigsGahzranka.toggleoptions = {"frostbreath", "massivegeyser", "bosskill"}
@@ -57,8 +57,7 @@ BigWigsGahzranka.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 --      Initialization      --
 ------------------------------
 
-function BigWigsGahzranka:OnEnable()
-    self.started = nil
+function BigWigsGahzranka:OnEnable()	
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

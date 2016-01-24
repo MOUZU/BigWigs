@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Majordomo Executus"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsMajordomo")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -93,7 +93,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMajordomo = BigWigs:NewModule("Majordomo")
+BigWigsMajordomo = BigWigs:NewModule(boss)
 BigWigsMajordomo.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsMajordomo.enabletrigger = boss
 BigWigsMajordomo.wipemobs = { L["elitename"], L["healername"] }
@@ -139,7 +139,7 @@ function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self.core:ToggleModuleActive(self, false)
     elseif string.find(msg, L["trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+        self:TriggerEvent("BigWigs_SendSync", "DomoPull")
 	end
 end
 
@@ -159,8 +159,12 @@ function BigWigsMajordomo:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsMajordomo:BigWigs_RecvSync(sync, rest)
-	if not self.started and sync == "BossEngaged" and (rest == "Majordomo" or rest == boss) then
+function BigWigsMajordomo:BigWigs_RecvSync(sync)
+	if sync == self:GetEngageSync() and (UnitName("target") == "Majordomo Executus" or UnitName("target") == "Flamewaker Elite" or UnitName("target") == "Flamewaker Healer") then
+		if firstshield == 0 then
+			self:TriggerEvent("BigWigs_SendSync", "DomoCombatStart")
+		end
+    elseif sync == "DomoPull" and not self.started then
         self.started = true
         if self.db.profile.magic or self.db.profile.dmg then
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")

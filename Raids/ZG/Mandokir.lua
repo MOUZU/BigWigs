@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Bloodlord Mandokir"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsMandokir")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -111,7 +111,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMandokir = BigWigs:NewModule("Mandokir")
+BigWigsMandokir = BigWigs:NewModule(boss)
 BigWigsMandokir.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMandokir.enabletrigger = boss
 BigWigsMandokir.wipemobs = { L["ohgan"] }
@@ -152,7 +152,7 @@ end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg, L["engage_trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+        self:TriggerEvent("BigWigs_SendSync", "MandokirEngaged")
     else
         local gazetime
         local _,_,watchedplayer,_ = string.find(msg, L["watch_trigger"])
@@ -204,8 +204,7 @@ function BigWigsMandokir:Event(msg)
 end
 
 function BigWigsMandokir:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and sync == "BossEngaged" and (rest == "Mandokir" or rest == boss) then
-        self.started = true
+    if sync == "MandokirEngaged" then
         self:TriggerEvent("BigWigs_StartBar", self, "Charge", 15, "Interface\\Icons\\Ability_Warrior_Charge") 
         -- todo check combat log regarding CHARGE to trigger the ones following the first
         self:TriggerEvent("BigWigs_StartBar", self, "Next Whirlwind", 20, "Interface\\Icons\\Ability_Whirlwind")

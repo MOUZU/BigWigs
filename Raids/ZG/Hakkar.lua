@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hakkar"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsHakkar")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -197,7 +197,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsHakkar = BigWigs:NewModule("Hakkar")
+BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsHakkar.enabletrigger = boss
 BigWigsHakkar.toggleoptions = { "mc", "puticon", "siphon", "enrage", -1, "aspectjeklik", "aspectvenoxis", "aspectmarli", "aspectthekal", "aspectarlokk", "bosskill" }
@@ -208,7 +208,6 @@ BigWigsHakkar.revision = tonumber(string.sub("$Revision: 11201 $", 12, -3))
 ------------------------------
 
 function BigWigsHakkar:OnEnable()
-    self.started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")

@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shazzrah"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsShazzrah")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local _, playerClass = UnitClass("player")
 
 ----------------------------
@@ -92,7 +92,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsShazzrah = BigWigs:NewModule("Shazzrah")
+BigWigsShazzrah = BigWigs:NewModule(boss)
 BigWigsShazzrah.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsShazzrah.enabletrigger = boss
 BigWigsShazzrah.toggleoptions = {"curse", "deaden", "blink", "counterspell", "bosskill"}
@@ -147,9 +147,10 @@ function BigWigsShazzrah:Event(msg)
 	end
 end
 
-function BigWigsShazzrah:BigWigs_RecvSync(sync, rest)
-	if not self.started and sync == "BossEngaged" and (rest == "Shazzrah" or rest == boss) then
+function BigWigsShazzrah:BigWigs_RecvSync(sync)
+	if not self.started and ((sync == "ShazzrahEngaged") or (sync == self:GetEngageSync() and UnitName("target") == "Shazzrah")) then
         self.started = true
+        if sync ~= "ShazzrahEngaged" then self:TriggerEvent("BigWigs_SendSync", "ShazzrahEngaged") end
         
         if self.db.profile.counterspell then
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar4text"], 14, "Interface\\Icons\\Spell_Frost_IceShock")

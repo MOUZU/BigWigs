@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Baron Geddon"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsGeddon")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -135,7 +135,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBaronGeddon = BigWigs:NewModule("Geddon")
+BigWigsBaronGeddon = BigWigs:NewModule(boss)
 BigWigsBaronGeddon.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsBaronGeddon.enabletrigger = boss
 BigWigsBaronGeddon.toggleoptions = {"inferno", "service", "bomb", "mana", "announce", "icon", "bosskill"}
@@ -233,8 +233,8 @@ function BigWigsBaronGeddon:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
-function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest)
-	if not self.started and sync == "BossEngaged" and (rest == "Geddon" or rest == boss) then
+function BigWigsBaronGeddon:BigWigs_RecvSync(sync)
+	if sync == self:GetEngageSync() and UnitName("target") == "Baron Geddon" and not self.started then
         self.started = true
 		if firstinferno == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "GeddonInfernoFirst")

@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gri'lek"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsGrilek")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -71,7 +71,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGrilek = BigWigs:NewModule("Grilek")
+BigWigsGrilek = BigWigs:NewModule(boss)
 BigWigsGrilek.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsGrilek.enabletrigger = boss
 BigWigsGrilek.toggleoptions = {"avatar", "melee", "announce", "puticon", "bosskill"}
@@ -82,7 +82,6 @@ BigWigsGrilek.revision = tonumber(string.sub("$Revision: 11208 $", 12, -3))
 ------------------------------
 
 function BigWigsGrilek:OnEnable()
-    self.started = true
 	firstwarn = 0
 	nameoftarget = nil
 	lasttarget = "randomshitthatwonthappen"
@@ -144,8 +143,7 @@ function BigWigsGrilek:Avatar()
 end
 
 function BigWigsGrilek:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == "Grilek" or rest == boss) then
-        self.started = true
+	if sync == "BossEngaged" and rest == "Gri'lek" and not started then
 		if firstwarn == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "GrilekMeleeIni")
 		end	

@@ -5,7 +5,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ragnaros"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsRagnaros")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -101,7 +101,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRagnaros = BigWigs:NewModule("Ragnaros")
+BigWigsRagnaros = BigWigs:NewModule(boss)
 BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsRagnaros.enabletrigger = boss
 BigWigsRagnaros.wipemobs = { L["sonofflame"] }
@@ -113,7 +113,7 @@ BigWigsRagnaros.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsRagnaros:OnEnable()
-	self.started = nil
+	started = nil
 	sonsdead = 0
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -137,12 +137,11 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
-	if not self.started and sync == "BossEngaged" and (rest == "Ragnaros" or rest == boss) then
-		self.started = true
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
 		if self.db.profile.aoeknock then
 			self:TriggerEvent("BigWigs_SendSync", "RagnarosKnockback")
 		end
-        self:KTM_SetTarget(boss)
 	elseif sync == "RagnarosSonDeadX" then
 		sonsdead = sonsdead + 1
 		if self.db.profile.adds then
@@ -188,12 +187,11 @@ function BigWigsRagnaros:Submerge()
 	end
 	self:ScheduleRepeatingEvent("bwragnarosemergecheck", self.EmergeCheck, 2, self)
 	self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
-    self:KTM_ClearTarget(true)
 end
 
 function BigWigsRagnaros:EmergeCheck()
 	if UnitExists("target") and UnitName("target") == boss and UnitExists("targettarget") then
-		if self.started == nil then
+		if started == nil then
 			self:TriggerEvent("BigWigs_SendSync", "RagnarosKnockback")		
 		else
 			sonsdead = 0 -- reset counter
@@ -229,5 +227,4 @@ function BigWigsRagnaros:Emerge()
 		self:TriggerEvent("BigWigs_StartBar", self, L["submerge_bar"], 180, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	    self:ScheduleEvent("bwragnarossubmerge", self.Submerge, 180, self)
 	end
-    self:KTM_SetTarget(boss, true)
 end

@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priest Thekal"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsThekal")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -183,7 +183,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsThekal = BigWigs:NewModule("Thekal")
+BigWigsThekal = BigWigs:NewModule(boss)
 BigWigsThekal.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsThekal.enabletrigger = boss
 BigWigsThekal.wipemobs = { L["roguename"], L["shamanname"] }
@@ -195,7 +195,7 @@ BigWigsThekal.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsThekal:OnEnable()
-	self.started = nil
+	started = nil
 	zathdead = nil
 	lorkhandead = nil
 	thekaldead = nil
@@ -325,8 +325,10 @@ function BigWigsThekal:Fades(msg)
 end
 
 function BigWigsThekal:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == "Thekal" or rest == boss) then
-        self.started = true
+	if sync == "BossEngaged" and rest == "High Priest Thekal" and not started then
+		self:TriggerEvent("BigWigs_SendSync", "ThekalPhaseOne")
+	elseif sync == "ThekalPhaseOne" then
+		started = true
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["phaseone_message"], "Attention")
 		end
