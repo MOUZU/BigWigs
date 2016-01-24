@@ -154,7 +154,7 @@ function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["trollphase_message"], "Attention")
 		end
-		self:ScheduleEvent("BigWigs_StartBar", self, L["vanish_Nextbar"], 35, "Interface\\Icons\\Ability_Vanish")
+		self:TriggerEvent("BigWigs_StartBar", self, L["vanish_Nextbar"], 35, "Interface\\Icons\\Ability_Vanish")
 	elseif sync == "ArlokkPhasePanther" then
 		self:CancelScheduledEvent("checkunvanish")
 		if self.db.profile.vanish then
