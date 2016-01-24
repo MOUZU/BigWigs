@@ -47,7 +47,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBossRecords:BigWigs_RecvSync()
+function BigWigsBossRecords:BigWigs_RecvSync(sync, rest)
     if sync == "BossEngaged" and rest and rest ~= "" and ((c.startTime + 5) < GetTime()) then
         c.name      = rest
         c.startTime = GetTime()
