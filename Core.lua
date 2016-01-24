@@ -511,7 +511,7 @@ function BigWigs.modulePrototype:KTM_Reset()
     end
 end
 
-BigWigs.modulePrototype.masterTarget
+BigWigs.modulePrototype.masterTarget = nil;
 function BigWigs.modulePrototype:KTM_SetTarget(targetName)
 	if IsAddOnLoaded("KLHThreatMeter") then
         if targetName and type(targetName) == "string" and (IsRaidLeader() or IsRaidOfficer()) then
@@ -528,6 +528,7 @@ function BigWigs.modulePrototype:KTM_SetTarget(targetName)
 end
 
 function BigWigs.modulePrototype:PLAYER_TARGET_CHANGED()
+    -- this could cause problems for bossmods which do have this event registered
     if IsAddOnLoaded("KLHThreatMeter") and self.masterTarget then
         if klhtm.target.targetismaster(self.masterTarget) then
             self:UnregisterEvent("PLAYER_TARGET_CHANGED")
