@@ -527,6 +527,12 @@ function BigWigs.modulePrototype:KTM_SetTarget(targetName)
     end
 end
 
+function BigWigs.modulePrototype:KTM_ClearTarget()
+    if IsAddOnLoaded("KLHThreatMeter") and (IsRaidLeader() or IsRaidOfficer()) then
+        klhtm.net.clearmastertarget()
+    end
+end
+
 function BigWigs.modulePrototype:PLAYER_TARGET_CHANGED()
     -- this could cause problems for bossmods which do have this event registered
     if IsAddOnLoaded("KLHThreatMeter") and self.masterTarget then
