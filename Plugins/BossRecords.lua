@@ -69,7 +69,7 @@ function BigWigsBossRecords:BigWigs_BossDeath(name)
             end
         else
             -- it's our first kill
-            DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN"], rest, timeSpent))
+            DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN"], name, timeSpent))
         end
     end
 end
