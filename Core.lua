@@ -500,8 +500,12 @@ function BigWigs.modulePrototype:IsRegistered()
 	return self.registered
 end
 
+------------------------------
+--      KLHThreatMeter      --
+------------------------------
+
 BigWigs.lastReset = 0;
-function BigWigs.modulePrototype:KTM_Reset()
+function BigWigs:KTM_Reset()
 	if IsAddOnLoaded("KLHThreatMeter") then
         if (IsRaidLeader() or IsRaidOfficer()) and ((BigWigs.lastReset + 5) < GetTime()) then
             klhtm.net.clearraidthreat()
@@ -510,43 +514,57 @@ function BigWigs.modulePrototype:KTM_Reset()
         end
     end
 end
+function BigWigs.modulePrototype:KTM_Reset()
+    BigWigs:KTM_Reset()
+end
 
-BigWigs.modulePrototype.masterTarget = nil;
-function BigWigs.modulePrototype:KTM_SetTarget(targetName)
+BigWigs.masterTarget = nil;
+BigWigs.forceReset = nil;
+function BigWigs.modulePrototype:KTM_SetTarget(targetName, forceReset)
 	if IsAddOnLoaded("KLHThreatMeter") then
         if targetName and type(targetName) == "string" and (IsRaidLeader() or IsRaidOfficer()) then
             if UnitName("target") == targetName then
                 klhtm.net.sendmessage("target " .. targetName)
+                if forceReset then
+                    self:KTM_Reset()
+                end
             else
                 -- we need to delay the setting mastertarget, as KTM only allows it to work if the person
                 -- calling the mastertarget sync has the unit as target
-                self:RegisterEvent("PLAYER_TARGET_CHANGED")
-                self.masterTarget = targetName
+                BigWigs:RegisterEvent("PLAYER_TARGET_CHANGED")
+                BigWigs.masterTarget    = targetName
+                BigWigs.forceReset      = forceReset
             end
         end
     end
 end
 
-function BigWigs.modulePrototype:KTM_ClearTarget()
+function BigWigs.modulePrototype:KTM_ClearTarget(forceReset)
     if IsAddOnLoaded("KLHThreatMeter") and (IsRaidLeader() or IsRaidOfficer()) then
         klhtm.net.clearmastertarget()
+        if forceReset then
+            self:KTM_Reset()
+        end
     end
 end
 
-function BigWigs.modulePrototype:PLAYER_TARGET_CHANGED()
-    -- this could cause problems for bossmods which do have this event registered
-    if IsAddOnLoaded("KLHThreatMeter") and self.masterTarget then
-        if klhtm.target.targetismaster(self.masterTarget) then
-            self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+function BigWigs:PLAYER_TARGET_CHANGED()
+    if IsAddOnLoaded("KLHThreatMeter") and BigWigs.masterTarget then
+        if klhtm.target.targetismaster(BigWigs.masterTarget) then
+            BigWigs:UnregisterEvent("PLAYER_TARGET_CHANGED")
             return
         end
         
         if (IsRaidLeader() or IsRaidOfficer()) then
-            klhtm.net.sendmessage("target " .. self.masterTarget)
-            self.masterTarget = nil
+            klhtm.net.sendmessage("target " .. BigWigs.masterTarget)
+            if BigWigs.forceReset then
+                BigWigs:KTM_Reset()
+                BigWigs.forceReset = nil
+            end
+            BigWigs.masterTarget   = nil
         end
     else
-        self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+        BigWigs:UnregisterEvent("PLAYER_TARGET_CHANGED")
     end
 end
 
