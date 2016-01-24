@@ -515,8 +515,14 @@ BigWigs.modulePrototype.masterTarget
 function BigWigs.modulePrototype:KTM_SetTarget(targetName)
 	if IsAddOnLoaded("KLHThreatMeter") then
         if targetName and type(targetName) == "string" and (IsRaidLeader() or IsRaidOfficer()) then
-            self:RegisterEvent("PLAYER_TARGET_CHANGED")
-            self.masterTarget = targetName
+            if UnitName("target") == targetName then
+                klhtm.net.sendmessage("target " .. targetName)
+            else
+                -- we need to delay the setting mastertarget, as KTM only allows it to work if the person
+                -- calling the mastertarget sync has the unit as target
+                self:RegisterEvent("PLAYER_TARGET_CHANGED")
+                self.masterTarget = targetName
+            end
         end
     end
 end
