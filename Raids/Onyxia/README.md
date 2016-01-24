@@ -15,6 +15,7 @@
 - <b>(QA)</b> added locale to trigger combat
 - <b>(QA)</b> Wing Buffet, added First Wing Buffet timer with 14s
 - <b>(QA)</b> KTM MasterTarget on Onyxia
+- <b>(QA)</b> KTM Reset on Phase 3
 
 <br \><br \>
 ##### Prefix legend
