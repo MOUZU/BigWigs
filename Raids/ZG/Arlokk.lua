@@ -144,7 +144,7 @@ function BigWigsArlokk:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and (rest == bossSync or rest == "High Priestess Arlokk") then
 		self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseTroll")
 	elseif sync == "ArlokkPhaseTroll" then
 		vanished = nil

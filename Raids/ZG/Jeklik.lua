@@ -230,7 +230,7 @@ end
 ------------------------------
 
 function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and (rest == bossSync or rest == "High Priestess Jeklik") then
         self.started = true
 		if firstfear == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "JeklikFearIni")

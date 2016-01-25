@@ -326,7 +326,7 @@ function BigWigsThekal:Fades(msg)
 end
 
 function BigWigsThekal:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and (rest == bossSync or rest == "High Priest Thekal") then
         self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "ThekalPhaseOne")
 	elseif sync == "ThekalPhaseOne" then
