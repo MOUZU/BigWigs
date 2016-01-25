@@ -53,6 +53,7 @@ function BigWigsBossRecords:BigWigs_RecvSync(sync, rest)
         c.startTime = GetTime()
         
         DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], rest))
+        self:TriggerEvent("BigWigs_Message", rest .. " engaged!", "Positive")
     end
 end
 

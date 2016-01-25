@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -99,7 +99,7 @@ function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function BigWigsFankriss:BigWigs_RecvSync(sync, rest)
+function BigWigsFankriss:BigWigs_RecvSync(sync, rest, nick)
 	if sync ~= "FankrissWormSpawn" then return end
 	if not rest then return end
 	rest = tonumber(rest)

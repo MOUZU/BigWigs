@@ -283,6 +283,7 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 		self.lastHeal = GetTime()
 		castingheal = 1
 		if self.db.profile.heal then
+            self:TriggerEvent("BigWigs_StopBar", self, "Next Heal")
 			self:TriggerEvent("BigWigs_Message", L["greathealtext"], "Important", "Alarm")
 			self:TriggerEvent("BigWigs_StartBar", self, L["greathealbar"], 4, "Interface\\Icons\\Spell_Holy_Heal")
 		end

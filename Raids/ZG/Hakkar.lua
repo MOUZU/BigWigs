@@ -12,6 +12,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "FACE THE WRATH OF THE SOULFLAYER!",
 	siphon_trigger = "Hakkar gains Blood Siphon.",
+	poisonousblood_trigger = "You are afflicted by Poisonous Blood.",
 	mindcontrolyou_trigger = "You are afflicted by Cause Insanity.",
 	mindcontrolother_trigger = "(.+) is afflicted by Cause Insanity.",
 	flee_trigger = "Fleeing will do you no good, mortals!",
@@ -104,6 +105,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "FACE THE WRATH OF THE SOULFLAYER!",
 	siphon_trigger = "Hakkar gains Blood Siphon.",
+	poisonousblood_trigger = "You are afflicted by Poisonous Blood.",
 	mindcontrolyou_trigger = "You are afflicted by Cause Insanity.",
 	mindcontrolother_trigger = "(.+) is afflicted by Cause Insanity.",
 	flee_trigger = "Fleeing will do you no good, mortals!",
@@ -247,8 +249,7 @@ function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.siphon then
 			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 89, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 			self:ScheduleEvent("BigWigs_Message", 59, string.format(L["siphon_warning"], 30), "Urgent")
-            --self:ScheduleEvent("BigWigs_ShowIcon", 60, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
-            -- before I display that I need to figure out, how to track when the player gained the Poisonous Blood - this should hide the icon again
+            self:ScheduleEvent("BigWigs_ShowIcon", 60, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
 			self:ScheduleEvent("BigWigs_Message", 79, string.format(L["siphon_warning"], 10), "Attention")
 		end
 		if self.db.profile.mc then
@@ -291,6 +292,8 @@ function BigWigsHakkar:Self(msg)
 		self:TriggerEvent("BigWigs_SendSync", "HakkarAspectMarliAvoid")
 	elseif string.find(msg, L["aspectofarlokkgeneralavoid_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "HakkarAspectArlokkAvoid")
+    elseif string.find(msg, L["poisonousblood_trigger"]) then
+        self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent")
 	end
 end
 
@@ -343,10 +346,11 @@ end
 
 function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "HakkarBloodSiphon" then
+        self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent")   -- just to be safe, shouldn't be needed
 		if self.db.profile.siphon then
 			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 			self:ScheduleEvent("BigWigs_Message", 60, string.format(L["siphon_warning"], 30), "Urgent")
-            --self:ScheduleEvent("BigWigs_ShowIcon", 60, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
+            self:ScheduleEvent("BigWigs_ShowIcon", 60, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
             -- before I display that I need to figure out, how to track when the player gained the Poisonous Blood - this should hide the icon again
 			self:ScheduleEvent("BigWigs_Message", 80, string.format(L["siphon_warning"], 10), "Attention")
 		end

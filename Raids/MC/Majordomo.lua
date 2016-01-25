@@ -159,7 +159,7 @@ function BigWigsMajordomo:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsMajordomo:BigWigs_RecvSync(sync)
+function BigWigsMajordomo:BigWigs_RecvSync(sync, rest, nick)
 	if sync == self:GetEngageSync() and (UnitName("target") == "Majordomo Executus" or UnitName("target") == "Flamewaker Elite" or UnitName("target") == "Flamewaker Healer") then
 		if firstshield == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "DomoCombatStart")

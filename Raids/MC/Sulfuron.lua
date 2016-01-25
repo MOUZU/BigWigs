@@ -132,7 +132,7 @@ function BigWigsSulfuron:knockback(msg)
 	end
 end
 
-function BigWigsSulfuron:BigWigs_RecvSync( sync )
+function BigWigsSulfuron:BigWigs_RecvSync(sync, rest, nick)
 	if sync == self:GetEngageSync() and (UnitName("target") == "Sulfuron Harbinger" or UnitName("target") == "Flamewaker Priest") then
 		if self.db.profile.knockback then
 			self:ScheduleEvent("BigWigs_Message", 2.8, L["knockbackannounce"], "Urgent")

@@ -147,7 +147,7 @@ function BigWigsShazzrah:Event(msg)
 	end
 end
 
-function BigWigsShazzrah:BigWigs_RecvSync(sync)
+function BigWigsShazzrah:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and ((sync == "ShazzrahEngaged") or (sync == self:GetEngageSync() and UnitName("target") == "Shazzrah")) then
         self.started = true
         if sync ~= "ShazzrahEngaged" then self:TriggerEvent("BigWigs_SendSync", "ShazzrahEngaged") end

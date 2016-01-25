@@ -156,7 +156,7 @@ end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg, L["engage_trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "BossEngaged")
+        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
 	elseif (string.find(msg, L["phase2_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "OnyPhaseTwo")
 	elseif (string.find(msg, L["phase3_trigger"])) then
@@ -218,7 +218,7 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
         if self.phase == 3 then
             self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 15, "Interface\\Icons\\Spell_Fire_Fire")
         else
-            self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 12, "Interface\\Icons\\Spell_Fire_Fire")
+            self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 10, "Interface\\Icons\\Spell_Fire_Fire")
         end
 	elseif sync == "OnyFireball" and self.db.profile.fireball then 
 		self:TriggerEvent("BigWigs_StartBar", self, L["fireball_cast"], 3, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "red")

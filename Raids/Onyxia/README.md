@@ -8,11 +8,10 @@
 
 ## Onyxia
 - <b>(100%)</b> Fear, added a timer for the next Fear with 30s.
-- <b>(QA)</b> Flame Breath, added a timer for phase 3 with ~17s. first breath for 11s.
-- <b>(QA)</b> Deep Breath, added a big icon to make it more obvious that Deep Breath is being casted
+- <b>(99%)</b> Flame Breath, added a timer for phase 3 with ~17s. first breath for 11s. others in phase 1 with ~10s
 - <b>(100%)</b> WarnIcon, Fear icon appears when Ony starts casting Fear
 - <b>(QA)</b> WarnIcon, Heart of Fire icon appears when Ony starts casting Deep Breath
-- <b>(QA)</b> added locale to trigger combat
+- <b>(100%)</b> added locale to trigger combat
 - <b>(QA)</b> Wing Buffet, added First Wing Buffet timer with 14s
 - <b>(QA)</b> KTM MasterTarget on Onyxia
 - <b>(QA)</b> KTM Reset on Phase 3

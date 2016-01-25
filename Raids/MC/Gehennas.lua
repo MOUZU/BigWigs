@@ -117,7 +117,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGehennas:BigWigs_RecvSync(sync)
+function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and ((sync == self:GetEngageSync() and (UnitName("target") == "Gehennas" or UnitName("target") == "Flamewaker")) or (sync == "GehennasEngaged")) then
         self.started = true
         if sync ~= "GehennasEngaged" then self:TriggerEvent("BigWigs_SendSync", "GehennasEngaged") end

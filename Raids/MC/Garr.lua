@@ -98,7 +98,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGarr:BigWigs_RecvSync(sync)
+function BigWigsGarr:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "GarrAddDead1" then
 		self:TriggerEvent("BigWigs_Message", L["addmsg1"], "Positive")
 	elseif sync == "GarrAddDead2" then

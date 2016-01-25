@@ -222,6 +222,7 @@ function BigWigsMandokir:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StopBar", self, L["enragebar"])
 	elseif sync == "MandokirGazeCast" and self.db.profile.gaze then
 		self:TriggerEvent("BigWigs_StartBar", self, L["gazecast"], 2, "Interface\\Icons\\Spell_Shadow_Charm")
+        self:TriggerEvent("BigWigs_StopBar", self, "Next Gaze")
 	elseif sync == "MandokirGazeAfflict" and self.db.profile.gaze then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["gazewatchedbar"], rest), 5, "Interface\\Icons\\Spell_Shadow_Charm", true, "Black")
 	elseif sync == "MandokirGazeEnd" then
@@ -231,6 +232,6 @@ function BigWigsMandokir:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.puticon then
 			self:TriggerEvent("BigWigs_RemoveRaidIcon", rest)
 		end
-        self:TriggerEvent("BigWigs_StartBar", self, "Next Gaze", 13, "Interface\\Icons\\Spell_Shadow_Charm")
+        self:TriggerEvent("BigWigs_StartBar", self, "Next Gaze", 12, "Interface\\Icons\\Spell_Shadow_Charm")
 	end
 end

@@ -74,7 +74,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGolemagg:BigWigs_RecvSync(sync)
+function BigWigsGolemagg:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "GolemaggEarthquake" and self.db.profile.earthquake then
 		self:TriggerEvent("BigWigs_Message", L["earthquakesoonwarn"], "Attention", "Alarm")
 	elseif sync == "GolemaggEnrage" and self.db.profile.enraged then

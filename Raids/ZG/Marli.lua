@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -163,7 +163,7 @@ function BigWigsMarli:Event(msg)
 	end
 end
 
-function BigWigsMarli:BigWigs_RecvSync(sync)
+function BigWigsMarli:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MarliSpiders" and self.db.profile.spider then
 		self:TriggerEvent("BigWigs_Message", L["spiders_message"], "Attention")
 	elseif sync == "MarliTrollPhase" and self.db.profile.phase then

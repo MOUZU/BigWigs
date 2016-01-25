@@ -182,7 +182,6 @@ function BigWigsTest:BigWigs_RecvSync(sync, rest, nick)
             --SendChat(rest * 2) 
         end
     elseif sync == "BossEngaged" and rest then
-        self:TriggerEvent("BigWigs_Message", sync .. rest, "Positive")
 	end
 end
 

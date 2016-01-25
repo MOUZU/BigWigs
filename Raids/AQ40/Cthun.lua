@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -164,7 +164,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsCThun:BigWigs_RecvSync( sync )
+function BigWigsCThun:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "CThunStart" then
 		self:CThunStart()
 	elseif sync == "CThunP2Start" then

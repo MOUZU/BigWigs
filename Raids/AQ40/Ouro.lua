@@ -1,4 +1,4 @@
-﻿--      Are you local?      --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ouro"]
@@ -376,7 +376,7 @@ function BigWigsOuro:UNIT_HEALTH( msg )
 	end
 end
 
-function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
+function BigWigsOuro:BigWigs_RecvSync(sync, rest, nick)
 	if sync == self:GetEngageSync() and rest and rest == boss and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
