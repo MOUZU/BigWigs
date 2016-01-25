@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Flamegor"]
+local bossSync = "Flamegor"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local lastFrenzy = 0
 local _, playerClass = UnitClass("player")
@@ -123,7 +124,7 @@ function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Flamegor" and not self.started then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorStart")
 	elseif sync == "FlamegorStart" and not self.started then
 		self.started = true

@@ -5,6 +5,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ragnaros"]
+local bossSync = "Ragnaros"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -137,7 +138,7 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
 		started = true
 		if self.db.profile.aoeknock then
 			self:TriggerEvent("BigWigs_SendSync", "RagnarosKnockback")

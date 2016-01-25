@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Garr"]
+local bossSync = "Garr"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -79,6 +80,7 @@ BigWigsGarr.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsGarr:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -99,7 +101,9 @@ end
 ------------------------------
 
 function BigWigsGarr:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "GarrAddDead1" then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "GarrAddDead1" then
 		self:TriggerEvent("BigWigs_Message", L["addmsg1"], "Positive")
 	elseif sync == "GarrAddDead2" then
 		self:TriggerEvent("BigWigs_Message", L["addmsg2"], "Positive")

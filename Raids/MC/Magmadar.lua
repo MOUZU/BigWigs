@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Magmadar"]
+local bossSync = "Magmadar"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local _, playerClass = UnitClass("player")
 
@@ -110,7 +111,7 @@ function BigWigsMagmadar:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 end
 
 function BigWigsMagmadar:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and UnitName("target") == "Magmadar" then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
 		if firstpanic == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "MagmadarPanicIni")
 		end

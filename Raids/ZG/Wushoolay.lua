@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Wushoolay"]
+local bossSync = "Wushoolay"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -59,7 +60,8 @@ BigWigsWushoolay.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 --      Initialization      --
 ------------------------------
 
-function BigWigsWushoolay:OnEnable()	
+function BigWigsWushoolay:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -82,7 +84,9 @@ function BigWigsWushoolay:Event(msg)
 end
 
 function BigWigsWushoolay:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "WushoolayChainLightning" and self.db.profile.chainlightning then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "WushoolayChainLightning" and self.db.profile.chainlightning then
 		self:TriggerEvent("BigWigs_Message", L["chainlightning_message"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["chainlightning_bar"], 1.5, "Interface\\Icons\\Spell_Nature_ChainLightning")
 	end

@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Baron Geddon"]
+local bossSync = "Geddon"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -234,7 +235,7 @@ function BigWigsBaronGeddon:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and UnitName("target") == "Baron Geddon" and not self.started then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
         self.started = true
 		if self.db.profile.inferno then
 			self:ScheduleEvent("BigWigs_Message", 11.5, L["nextinferno_message"], "Urgent")

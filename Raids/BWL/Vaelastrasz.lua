@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Vaelastrasz the Corrupt"]
+local bossSync = "Vaelastrasz"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -180,7 +181,9 @@ function BigWigsVaelastrasz:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "VaelBreath" and self.db.profile.flamebreath then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "VaelBreath" and self.db.profile.flamebreath then
 		self:TriggerEvent("BigWigs_StartBar", self, L["breath_bar"], 2, "Interface\\Icons\\Spell_Fire_Fire", true, "Red")
 		self:TriggerEvent("BigWigs_Message", L["breath_message"], "Urgent")
 	elseif sync == "VaelDead" and rest and rest ~= "" and self.db.profile.adrenaline then

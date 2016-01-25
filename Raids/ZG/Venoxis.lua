@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priest Venoxis"]
+local bossSync = "Venoxis"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -147,6 +148,7 @@ BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 ------------------------------
 
 function BigWigsVenoxis:OnEnable()
+    self.started = nil
 	self.cobra = 0
 	venoxisdead = 0
 	castingholyfire = 0
@@ -255,7 +257,8 @@ function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "High Priest Venoxis" then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "VenoxisPhaseOne")
 	elseif sync == "VenoxisPhaseOne" then
 		if self.db.profile.phase then

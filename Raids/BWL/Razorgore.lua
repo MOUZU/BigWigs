@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Razorgore the Untamed"]
+local bossSync = "Razorgore"
 local controller = AceLibrary("Babble-Boss-2.2")["Grethok the Controller"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -351,7 +352,9 @@ function BigWigsRazorgore:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "RazorgoreEgg" then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "RazorgoreEgg" then
 		rest = tonumber(rest)
 		if rest == (self.eggs + 1) then
 			self.eggs = self.eggs + 1

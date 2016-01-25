@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shazzrah"]
+local bossSync = "Shazzrah"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local _, playerClass = UnitClass("player")
 
@@ -148,7 +149,7 @@ function BigWigsShazzrah:Event(msg)
 end
 
 function BigWigsShazzrah:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and ((sync == "ShazzrahEngaged") or (sync == self:GetEngageSync() and UnitName("target") == "Shazzrah")) then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
         self.started = true
         if sync ~= "ShazzrahEngaged" then self:TriggerEvent("BigWigs_SendSync", "ShazzrahEngaged") end
         

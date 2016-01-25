@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priestess Mar'li"]
+local bossSync = "Mar'li"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -109,6 +110,7 @@ BigWigsMarli.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsMarli:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
@@ -164,7 +166,9 @@ function BigWigsMarli:Event(msg)
 end
 
 function BigWigsMarli:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MarliSpiders" and self.db.profile.spider then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "MarliSpiders" and self.db.profile.spider then
 		self:TriggerEvent("BigWigs_Message", L["spiders_message"], "Attention")
 	elseif sync == "MarliTrollPhase" and self.db.profile.phase then
 		self:TriggerEvent("BigWigs_Message", L["trollphase"], "Attention")

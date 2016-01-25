@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priestess Arlokk"]
+local bossSync = "Arlokk"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -143,7 +144,7 @@ function BigWigsArlokk:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == "High Priestess Arlokk" then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
 		self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseTroll")
 	elseif sync == "ArlokkPhaseTroll" then
 		vanished = nil

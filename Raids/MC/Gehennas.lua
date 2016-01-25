@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gehennas"]
+local bossSync = "Gehennas"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -118,7 +119,7 @@ end
 ------------------------------
 
 function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and ((sync == self:GetEngageSync() and (UnitName("target") == "Gehennas" or UnitName("target") == "Flamewaker")) or (sync == "GehennasEngaged")) then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
         self.started = true
         if sync ~= "GehennasEngaged" then self:TriggerEvent("BigWigs_SendSync", "GehennasEngaged") end
         

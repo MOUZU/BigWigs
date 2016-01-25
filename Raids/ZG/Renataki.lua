@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Renataki"]
+local bossSync = "Renataki"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -65,7 +66,7 @@ BigWigsRenataki.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 
 function BigWigsRenataki:OnEnable()
 	enrageannounced = nil
-	started = nil
+	self.started = nil
 	vanished = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -90,7 +91,8 @@ function BigWigsRenataki:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsRenataki:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Renataki" and not started then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "RenatakiStarted")
 	elseif sync == "RenatakiStarted" then
 		started = true

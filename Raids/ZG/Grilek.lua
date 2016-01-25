@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gri'lek"]
+local bossSync = "Gri'lek"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -82,6 +83,7 @@ BigWigsGrilek.revision = tonumber(string.sub("$Revision: 11208 $", 12, -3))
 ------------------------------
 
 function BigWigsGrilek:OnEnable()
+    self.started = nil
 	firstwarn = 0
 	nameoftarget = nil
 	lasttarget = "randomshitthatwonthappen"
@@ -143,7 +145,8 @@ function BigWigsGrilek:Avatar()
 end
 
 function BigWigsGrilek:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Gri'lek" and not started then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
 		if firstwarn == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "GrilekMeleeIni")
 		end	

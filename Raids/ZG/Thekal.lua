@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priest Thekal"]
+local bossSync = "Thekal"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -195,7 +196,7 @@ BigWigsThekal.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsThekal:OnEnable()
-	started = nil
+	self.started = nil
 	zathdead = nil
 	lorkhandead = nil
 	thekaldead = nil
@@ -325,7 +326,8 @@ function BigWigsThekal:Fades(msg)
 end
 
 function BigWigsThekal:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "High Priest Thekal" and not started then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "ThekalPhaseOne")
 	elseif sync == "ThekalPhaseOne" then
 		started = true

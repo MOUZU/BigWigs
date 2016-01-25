@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Sulfuron Harbinger"]
+local bossSync = "Sulfuron"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -133,7 +134,7 @@ function BigWigsSulfuron:knockback(msg)
 end
 
 function BigWigsSulfuron:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and (UnitName("target") == "Sulfuron Harbinger" or UnitName("target") == "Flamewaker Priest") then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
 		if self.db.profile.knockback then
 			self:ScheduleEvent("BigWigs_Message", 2.8, L["knockbackannounce"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 5.8 , "Interface\\Icons\\Spell_Fire_Fireball")

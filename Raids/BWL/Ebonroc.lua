@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ebonroc"]
+local bossSync = "Ebonroc"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -120,10 +121,8 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsEbonroc:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Ebonroc" and not self.started then
-		self:TriggerEvent("BigWigs_SendSync", "EbonrocStart")
-	elseif sync == "EbonrocStart" and not self.started then
-		self.started = true
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
 		if self.db.profile.wingbuffet then
 			self:ScheduleEvent("BigWigs_Message", 14, L["wingbuffet_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet1_bar"], 29, "Interface\\Icons\\INV_Misc_MonsterScales_14")

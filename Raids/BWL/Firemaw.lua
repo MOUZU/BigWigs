@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Firemaw"]
+local bossSync = "Firemaw"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -126,7 +127,7 @@ function BigWigsFiremaw:Event(msg)
 end
 
 function BigWigsFiremaw:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Firemaw" and not self.started then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
 		self:TriggerEvent("BigWigs_SendSync", "FiremawStart")
 		self:TriggerEvent("BigWigs_SendSync", "FiremawFirstBuffet")
 	elseif sync == "FiremawStart" and not self.started then

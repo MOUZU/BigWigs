@@ -2,6 +2,7 @@
 --      Are you local?      --
 ------------------------------
 local boss = AceLibrary("Babble-Boss-2.2")["Nefarian"]
+local bossSync = "Nefarian"
 local victor = AceLibrary("Babble-Boss-2.2")["Lord Victor Nefarius"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -92,6 +93,7 @@ BigWigsNefarian.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
 ------------------------------
 
 function BigWigsNefarian:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -163,7 +165,9 @@ function BigWigsNefarian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsNefarian:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "NefarianShadowflame" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar"], 2, "Interface\\Icons\\Spell_Fire_Incinerate")
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 		self:ScheduleEvent("BigWigs_StartBar", 2, self, L["shadowflame_bar"], 17, "Interface\\Icons\\Spell_Fire_Incinerate")

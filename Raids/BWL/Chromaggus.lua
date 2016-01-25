@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Chromaggus"]
+local bossSync = "Chromaggus"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local lastFrenzy = 0
 local _, playerClass = UnitClass("player")

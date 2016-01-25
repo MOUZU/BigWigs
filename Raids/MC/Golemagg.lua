@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Golemagg the Incinerator"]
+local bossSync = "Golemagg"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -59,6 +60,7 @@ BigWigsGolemagg.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsGolemagg:OnEnable()
+    self.started = nil
 	earthquakeon = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -75,7 +77,9 @@ end
 ------------------------------
 
 function BigWigsGolemagg:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "GolemaggEarthquake" and self.db.profile.earthquake then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "GolemaggEarthquake" and self.db.profile.earthquake then
 		self:TriggerEvent("BigWigs_Message", L["earthquakesoonwarn"], "Attention", "Alarm")
 	elseif sync == "GolemaggEnrage" and self.db.profile.enraged then
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Attention")

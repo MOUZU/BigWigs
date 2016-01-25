@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Bloodlord Mandokir"]
+local bossSync = "Mandokir"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -123,6 +124,7 @@ BigWigsMandokir.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsMandokir:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF", "Event")
@@ -204,7 +206,8 @@ function BigWigsMandokir:Event(msg)
 end
 
 function BigWigsMandokir:BigWigs_RecvSync(sync, rest, nick)
-    if sync == "MandokirEngaged" then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
         self:TriggerEvent("BigWigs_StartBar", self, "Charge", 15, "Interface\\Icons\\Ability_Warrior_Charge") 
         -- todo check combat log regarding CHARGE to trigger the ones following the first
         self:TriggerEvent("BigWigs_StartBar", self, "Next Whirlwind", 20, "Interface\\Icons\\Ability_Whirlwind")

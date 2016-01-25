@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Lucifron"]
+local bossSync = "Lucifron"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -191,7 +192,7 @@ function BigWigsLucifron:Event(msg)
 end
 
 function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and (sync == self:GetEngageSync("Lucifron") or sync == "LucifronEngaged") then
+	if not self.started and sync == "BossEngaged" and rest == bossSync then
         self.started = true
         if sync ~= "LucifronEngaged" then self:TriggerEvent("BigWigs_SendSync", "LucifronEngaged") end
         

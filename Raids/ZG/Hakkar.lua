@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hakkar"]
+local bossSync = "Hakkar"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -210,6 +211,7 @@ BigWigsHakkar.revision = tonumber(string.sub("$Revision: 11201 $", 12, -3))
 ------------------------------
 
 function BigWigsHakkar:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -345,7 +347,9 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 end
 
 function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "HakkarBloodSiphon" then
+    if not self.started and sync == "BossEngaged" and rest == bossSync then
+        self.started = true
+	elseif sync == "HakkarBloodSiphon" then
         self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent")   -- just to be safe, shouldn't be needed
 		if self.db.profile.siphon then
 			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
