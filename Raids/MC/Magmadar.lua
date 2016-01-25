@@ -121,8 +121,8 @@ function BigWigsMagmadar:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_DeathScream")
 		end
         self:TriggerEvent("BigWigs_StartBar", self, "First Frenzy", 29, "Interface\\Icons\\Ability_Druid_ChallangingRoar")
-        self:TriggerEvent("BigWigs_StartBar", self, "Lava Bomb", 12, "Interface\\Icons\\Spell_Fire_SelfDestruct")
-        self:ScheduleEvent("BigWigs_SendSync", 12, "MagmadarLavaBomb")
+        --self:TriggerEvent("BigWigs_StartBar", self, "Lava Bomb", 12, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+        --self:ScheduleEvent("BigWigs_SendSync", 12, "MagmadarLavaBomb")
 	elseif sync == "MagmadarPanic" and self.db.profile.panic then
 		self:TriggerEvent("BigWigs_Message", L["feartime"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 30, L["fearsoon"], "Urgent")		
@@ -130,15 +130,15 @@ function BigWigsMagmadar:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "MagmadarFrenzyStart" and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzyann"], "Important", true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar", true, "red")
-        if playerClass == "HUNTER" or UnitName("player") == "Lyq" then
+        if playerClass == "HUNTER" then
             self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Nature_Drowsy", 8, true)
         end
 	elseif sync == "MagmadarFrenzyStop" and self.db.profile.frenzy then
         self:TriggerEvent("BigWigs_StopBar", self, L["frenzy_bar"])
         self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Nature_Drowsy")
     elseif sync == "MagmadarLavaBomb" then
-        self:TriggerEvent("BigWigs_StartBar", self, "Lava Bomb", 11, "Interface\\Icons\\Spell_Fire_SelfDestruct")
-        self:ScheduleEvent("BigWigs_SendSync", 11, "MagmadarLavaBomb")
+        --self:TriggerEvent("BigWigs_StartBar", self, "Lava Bomb", 11, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+        --self:ScheduleEvent("BigWigs_SendSync", 11, "MagmadarLavaBomb")
 	end
 end
 

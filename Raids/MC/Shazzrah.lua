@@ -189,7 +189,7 @@ function BigWigsShazzrah:BigWigs_RecvSync(sync, rest, nick)
         end
 	elseif sync == "ShazzrahCurseX" and self.db.profile.curse then
 		self:TriggerEvent("BigWigs_Message", L["warn4"], "Attention", "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 23, "Interface\\Icons\\Spell_Shadow_AntiShadow")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 22, "Interface\\Icons\\Spell_Shadow_AntiShadow")
 	elseif sync == "ShazzrahCounterspellX" and self.db.profile.counterspell then
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar4text"], 16.5, "Interface\\Icons\\Spell_Frost_IceShock")
 	    self:ScheduleRepeatingEvent("csrepeatable", self.Counterspell, 16.5, self)

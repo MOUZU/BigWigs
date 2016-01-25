@@ -10,11 +10,10 @@
 - <b>(DG)</b> Shadow Shock, Idk idc tbh
 
 # Magmadar
-- <b>(100%)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones
+- <b>(100%)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones (do I want to add an WarnIcon for that? few seconds prior and until it's gone)
 - <b>(100%)</b> Frenzy, added timer for first one with 29s (the others are kinda RNG between 16-21s, so no timer)
-- <b>(QA)</b> Lava Bomb, added timer for first one with 12s and regular ones with 11s
-- <b>(QA)</b> WarnIcon, Tranq Icon will appear for Hunters when Frenzy is up
-TODO: clean up the code
+- <b>(DG)</b> Lava Bomb, added timer for first one with 12s and regular ones with 11s (REVERTED: If I want to have such I need to find a proper trigger first)
+- <b>(100%)</b> WarnIcon, Tranq Icon will appear for Hunters when Frenzy is up
 
 ## Gehennas
 - <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
@@ -35,13 +34,11 @@ TODO: clean up the code
 - TODO cleanup code
 
 ## Shazzrah
-- I noticed all timers for shazzrah are WORKAROUNDS, they don't use triggers - they simply schedule the next bars, which makes it inaccurate especially on longer fights or fights with lagspikes
-- <b>(TODO)</b> LOG COMBATLOG AND CREATE OWN TRIGGERS, ONCE DONE I NEED TO REWORK ALL TIMERS
 - <b>(100%)</b> Shazzrah's Curse, increased the timer for the ones after the first from 20 to 23s
-- <b>(100%)</b> Counterspell, lowered the first one from 15 to 14s. others from 17.5 to 16.5s
-- <b>(100%)</b> Blink, changed first from 30.3 to 29s. Changed the name to 'Possible Blink'
+- <b>(100%)</b> Counterspell, lowered the first one from 15 to 14s. others from 17.5 to 16.5s       (NO TRIGGER YET)
+- <b>(100%)</b> Blink, changed first from 30.3 to 29s. Changed the name to 'Possible Blink'         (NO TRIGGER YET)
 - <b>(100%)</b> Deaden Magic, added timer for the first one after 24s
-- <b>(QA)</b> WarnIcon, Deaden Magic icon appears for players who can purge it
+- <b>(100%)</b> WarnIcon, Deaden Magic icon appears for players who can purge it
 
 ## Sulfuron Harbringer
 - <b>(100%)</b> Addcount
