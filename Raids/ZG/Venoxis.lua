@@ -257,7 +257,7 @@ function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == bossSync or rest == "High Priest Venoxis") then
+	if not self.started and sync == "BossEngaged" and (rest == self.bossSync or rest == "High Priest Venoxis") then
         self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "VenoxisPhaseOne")
 	elseif sync == "VenoxisPhaseOne" then

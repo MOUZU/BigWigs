@@ -119,7 +119,7 @@ end
 ------------------------------
 
 function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
         if sync ~= "GehennasEngaged" then self:TriggerEvent("BigWigs_SendSync", "GehennasEngaged") end
         

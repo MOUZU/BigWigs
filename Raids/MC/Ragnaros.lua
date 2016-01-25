@@ -138,7 +138,7 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
 		started = true
 		if self.db.profile.aoeknock then
 			self:TriggerEvent("BigWigs_SendSync", "RagnarosKnockback")

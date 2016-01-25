@@ -118,7 +118,7 @@ end
 
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg,L["engage_trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+        self:SendEngageSync()
     else
         local _,_, n = string.find(msg, L["mark_trigger"])
         if n then
@@ -144,7 +144,7 @@ function BigWigsArlokk:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == bossSync or rest == "High Priestess Arlokk") then
+	if not self.started and sync == "BossEngaged" and (rest == self.bossSync or rest == "High Priestess Arlokk") then
 		self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseTroll")
 	elseif sync == "ArlokkPhaseTroll" then
 		vanished = nil

@@ -157,7 +157,7 @@ end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg, L["engage_trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+        self:SendEngageSync()
 	elseif (string.find(msg, L["phase2_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "OnyPhaseTwo")
 	elseif (string.find(msg, L["phase3_trigger"])) then

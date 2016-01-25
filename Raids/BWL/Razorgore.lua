@@ -225,7 +225,7 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 			self:TriggerEvent("BigWigs_StartBar", self, L["mobs_bar"], 46, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
 			self:ScheduleEvent("BigWigs_Message", 41, L["mobs_soon"], "Important")
 		end
-        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+        self:SendEngageSync()
 	elseif msg == L["phase2_trigger"] then
 		self:CancelScheduledEvent("destroyegg_check")
 		self:CancelScheduledEvent("orbcontrol_check")
@@ -352,7 +352,7 @@ function BigWigsRazorgore:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and sync == "BossEngaged" and rest == bossSync then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 	elseif sync == "RazorgoreEgg" then
 		rest = tonumber(rest)

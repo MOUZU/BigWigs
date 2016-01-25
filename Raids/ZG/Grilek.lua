@@ -145,7 +145,7 @@ function BigWigsGrilek:Avatar()
 end
 
 function BigWigsGrilek:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 		if firstwarn == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "GrilekMeleeIni")

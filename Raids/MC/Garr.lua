@@ -101,7 +101,7 @@ end
 ------------------------------
 
 function BigWigsGarr:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and sync == "BossEngaged" and rest == bossSync then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 	elseif sync == "GarrAddDead1" then
 		self:TriggerEvent("BigWigs_Message", L["addmsg1"], "Positive")

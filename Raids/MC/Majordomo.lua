@@ -161,7 +161,7 @@ function BigWigsMajordomo:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsMajordomo:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
 		if firstshield == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "DomoCombatStart")
 		end

@@ -14,6 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 	triggeradddead = "Flamewaker Priest dies",
 	triggerbossdead = "Sulfuron Harbinger dies",
 	triggercast = "begins to cast Dark Mending",
+    spear_cast = "begins to perform Flame Spear",
 	healbar = "Dark Mending",
 	knockbacktimer = "AoE knockback",
 	knockbackannounce = "3 seconds until knockback!",
@@ -47,6 +48,7 @@ L:RegisterTranslations("deDE", function() return {
 	triggeradddead = "Flamewaker Priest stirbt",
 	triggerbossdead = "Sulfuron Harbinger stirbt",
 	triggercast = "beginnt Dunkle Besserung",
+    spear_cast = "begins to perform Flame Spear",
 	healbar = "Dunkle Besserung",
 	knockbacktimer = "AoE R\195\188cksto\195\159",
 	knockbackannounce = "3 Sekunden bis R\195\188cksto\195\159!",
@@ -95,9 +97,9 @@ function BigWigsSulfuron:OnEnable()
 	deadpriests = 0
 	sulfurondead = 0
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "knockback")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "knockback")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "knockback")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Events")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Events")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Events")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -107,6 +109,7 @@ function BigWigsSulfuron:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronAllDead", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronSulfuronDead", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronKnockback", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronSpear", 5)
 end
 
 ------------------------------
@@ -127,14 +130,16 @@ function BigWigsSulfuron:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function BigWigsSulfuron:knockback(msg)
+function BigWigsSulfuron:Events(msg)
 	if (string.find(msg, L["knockback1"]) or string.find(msg, L["knockback11"]) or string.find(msg, L["knockback2"]) or string.find(msg, L["knockback3"]) or string.find(msg, L["knockback33"]) or string.find(msg, L["knockback4"])) then
 		self:TriggerEvent("BigWigs_SendSync", "SulfuronKnockback")
+    elseif string.find(msg,"spear_cast") then
+        self:TriggerEvent("BigWigs_SendSync", "SulfuronSpear")
 	end
 end
 
 function BigWigsSulfuron:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
 		if self.db.profile.knockback then
 			self:ScheduleEvent("BigWigs_Message", 2.8, L["knockbackannounce"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 5.8 , "Interface\\Icons\\Spell_Fire_Fireball")
@@ -168,5 +173,7 @@ function BigWigsSulfuron:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "SulfuronAllDead" then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self.core:ToggleModuleActive(self, false)
+    elseif sync == "SulfuronSpear" then
+        self:TriggerEvent("BigWigs_StartBar", self, "Flame Spear", 13 , "Interface\\Icons\\Spell_Fire_FlameBlades")
 	end
 end

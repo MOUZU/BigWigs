@@ -91,7 +91,7 @@ function BigWigsRenataki:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsRenataki:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "RenatakiStarted")
 	elseif sync == "RenatakiStarted" then

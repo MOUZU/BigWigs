@@ -206,7 +206,7 @@ function BigWigsMandokir:Event(msg)
 end
 
 function BigWigsMandokir:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and sync == "BossEngaged" and rest == bossSync then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
         self:TriggerEvent("BigWigs_StartBar", self, "Charge", 15, "Interface\\Icons\\Ability_Warrior_Charge") 
         -- todo check combat log regarding CHARGE to trigger the ones following the first

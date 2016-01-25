@@ -124,7 +124,7 @@ function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorStart")
 	elseif sync == "FlamegorStart" and not self.started then
 		self.started = true

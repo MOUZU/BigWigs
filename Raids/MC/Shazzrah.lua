@@ -149,7 +149,7 @@ function BigWigsShazzrah:Event(msg)
 end
 
 function BigWigsShazzrah:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
         if sync ~= "ShazzrahEngaged" then self:TriggerEvent("BigWigs_SendSync", "ShazzrahEngaged") end
         

@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -223,7 +223,7 @@ end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["starttrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+		self:SendEngageSync()
 	elseif msg == L["endtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "SarturaSarturaDead")
 	end

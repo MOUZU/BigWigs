@@ -127,7 +127,7 @@ function BigWigsFiremaw:Event(msg)
 end
 
 function BigWigsFiremaw:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
 		self:TriggerEvent("BigWigs_SendSync", "FiremawStart")
 		self:TriggerEvent("BigWigs_SendSync", "FiremawFirstBuffet")
 	elseif sync == "FiremawStart" and not self.started then

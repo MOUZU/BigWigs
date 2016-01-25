@@ -66,7 +66,7 @@ function BigWigsHazzarah:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsHazzarah:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and sync == "BossEngaged" and rest == bossSync then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 	elseif sync == "HazzarahIllusions" and self.db.profile.nightmaresummon then
 		self:TriggerEvent("BigWigs_Message", L["nightmaresummon_message"], "Important", true, "Alarm")

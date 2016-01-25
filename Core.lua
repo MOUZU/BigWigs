@@ -434,6 +434,10 @@ function BigWigs.modulePrototype:GetEngageSync()
 	return "BossEngaged"
 end
 
+function BigWigs.modulePrototype:SendEngageSync()
+	self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self.bossSync)
+end
+
 
 function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
@@ -443,7 +447,7 @@ function BigWigs.modulePrototype:CheckForEngage()
 			self.core:LevelDebug(1, "Scan returned true, engaging ["..self:ToString().."].")
 		end
 		self:CancelScheduledEvent(self:ToString().."_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self.bossSync)
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckStart", self.CheckForEngage, .5, self)
 	end

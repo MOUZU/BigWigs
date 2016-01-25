@@ -181,7 +181,7 @@ function BigWigsVaelastrasz:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and ((sync == "BossEngaged" and rest == bossSync) or (sync == "VaelStart")) then
+    if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "VaelStart")) then
         self.started = true
 		if self.db.profile.tankburn then
             self:TriggerEvent("BigWigs_StartBar", self, L["tankburn_bar"], 44.9, "Interface\\Icons\\INV_Gauntlets_03", true, "Black")

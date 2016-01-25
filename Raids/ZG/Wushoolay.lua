@@ -84,7 +84,7 @@ function BigWigsWushoolay:Event(msg)
 end
 
 function BigWigsWushoolay:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and sync == "BossEngaged" and rest == bossSync then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 	elseif sync == "WushoolayChainLightning" and self.db.profile.chainlightning then
 		self:TriggerEvent("BigWigs_Message", L["chainlightning_message"], "Important")

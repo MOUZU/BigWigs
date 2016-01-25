@@ -230,7 +230,7 @@ end
 ------------------------------
 
 function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == bossSync or rest == "High Priestess Jeklik") then
+	if not self.started and sync == "BossEngaged" and (rest == self.bossSync or rest == "High Priestess Jeklik") then
         self.started = true
 		if firstfear == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "JeklikFearIni")
@@ -303,7 +303,7 @@ end
 
 function BigWigsJeklik:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg,L["combat_trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+        self:SendEngageSync()
     end
 end
 

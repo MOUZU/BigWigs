@@ -192,7 +192,7 @@ function BigWigsLucifron:Event(msg)
 end
 
 function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
         if sync ~= "LucifronEngaged" then self:TriggerEvent("BigWigs_SendSync", "LucifronEngaged") end
         

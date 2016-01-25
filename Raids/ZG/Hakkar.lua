@@ -246,7 +246,7 @@ function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("BigWigs_Message", 540, L["enrage1minute_message"], "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 570, string.format(L["enrageseconds_message"], 30), "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 590, string.format(L["enrageseconds_message"], 10), "Attention")
-            self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+            self:SendEngageSync()
 		end
 		if self.db.profile.siphon then
 			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 89, "Interface\\Icons\\Spell_Shadow_LifeDrain")
@@ -347,7 +347,7 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 end
 
 function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
-    if not self.started and sync == "BossEngaged" and rest == bossSync then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 	elseif sync == "HakkarBloodSiphon" then
         self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent")   -- just to be safe, shouldn't be needed

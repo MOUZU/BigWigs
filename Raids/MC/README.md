@@ -43,7 +43,7 @@
 ## Sulfuron Harbringer
 - <b>(100%)</b> Addcount
 - <b>(100%)</b> Knockback, increased the timer from 9.5 to 13.5s
-- <b>(DG)</b> Flame Spear, comes every 13s but I don't yet know how to trigger - gotta check the combatlog
+- <b>(QA)</b> Flame Spear, added timer every 13s
 - <b>(TODO)</b> add big healicons
 
 ## Golemagg the Incinerator

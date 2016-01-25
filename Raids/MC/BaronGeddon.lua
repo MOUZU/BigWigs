@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Baron Geddon"]
-local bossSync = "Geddon"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -136,11 +135,12 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBaronGeddon = BigWigs:NewModule(boss)
-BigWigsBaronGeddon.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsBaronGeddon.enabletrigger = boss
-BigWigsBaronGeddon.toggleoptions = {"inferno", "service", "bomb", "mana", "announce", "icon", "bosskill"}
-BigWigsBaronGeddon.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
+BigWigsBaronGeddon                  = BigWigs:NewModule(boss)
+BigWigsBaronGeddon.zonename         = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+BigWigsBaronGeddon.enabletrigger    = boss
+BigWigsBaronGeddon.bossSync         = "Geddon"
+BigWigsBaronGeddon.toggleoptions    = {"inferno", "service", "bomb", "mana", "announce", "icon", "bosskill"}
+BigWigsBaronGeddon.revision         = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -235,7 +235,7 @@ function BigWigsBaronGeddon:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == bossSync then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 		if self.db.profile.inferno then
 			self:ScheduleEvent("BigWigs_Message", 11.5, L["nextinferno_message"], "Urgent")
