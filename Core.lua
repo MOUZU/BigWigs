@@ -435,13 +435,17 @@ function BigWigs.modulePrototype:GetEngageSync()
 end
 
 function BigWigs.modulePrototype:SendEngageSync()
-	self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self.bossSync)
-    BigWigsBossRecords:StartBossfight(self)
+    if self.bossSync then
+	   self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self.bossSync)
+        BigWigsBossRecords:StartBossfight(self)
+    end
 end
 
 function BigWigs.modulePrototype:SendBosskillSync()
-	self:TriggerEvent("BigWigs_SendSync", "Bosskill "..self.bossSync)
-    BigWigsBossRecords:EndBossfight(self)
+    if self.bossSync then
+	   self:TriggerEvent("BigWigs_SendSync", "Bosskill "..self.bossSync)
+        BigWigsBossRecords:EndBossfight(self)
+    end
 end
 
 function BigWigs.modulePrototype:CheckForEngage()
