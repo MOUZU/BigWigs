@@ -175,7 +175,7 @@ function BigWigsLucifron:Event(msg)
 	elseif ((string.find(msg, L["trigger2"])) or (string.find(msg, L["trigger6"]))) then
 		self:TriggerEvent("BigWigs_SendSync", "LucifronDoomRep")
 	elseif ((string.find(msg, L["trigger3"])) or (string.find(msg, L["trigger4"]))) then
-		self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
+		--self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
 	elseif string.find(msg, L["mindcontrolyou_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "LucifronMC_"..UnitName("player"))
 	elseif string.find(msg, L["mindcontrolyouend_trigger"]) then
@@ -204,7 +204,7 @@ function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("messagewarn3", "BigWigs_Message", 5, L["warn3"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 10, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
+		--self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
 	elseif sync == "LucifronCurseRep" and self.db.profile.curse then
 		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 10, L["warn1"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")

@@ -137,7 +137,7 @@ function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "GehennasShadowboltCast" and self.db.profile.shadowbolt then
 		self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 0.5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
-        self:ScheduleEvent("BigWigs_StartBar", 0.5, self, L["bar3text"], 3.5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
+        self:ScheduleEvent("BigWigs_StartBar", 0.5, self, L["bar3text"], 3, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
 	elseif sync == "GehennasAddDead" then
 		flamewaker = flamewaker + 1
 		if self.db.profile.adds then
@@ -171,7 +171,6 @@ function BigWigsGehennas:Event(msg)
 		self:TriggerEvent("BigWigs_SendSync", "GehennasCurse")
 	elseif (string.find(msg, L["trigger2"])) then
 		self:TriggerEvent("BigWigs_SendSync", "GehennasShadowboltCast")
-		self:TriggerEvent("BigWigs_SendSync", "GehennasShadowbolt")
 	elseif (string.find(msg, L["trigger3"])) then
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
         self:ScheduleEvent("BigWigs_StartBar", 6, self, "Next Rain", 9, "Interface\\Icons\\Spell_Shadow_RainOfFire")

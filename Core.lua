@@ -438,6 +438,9 @@ function BigWigs.modulePrototype:SendEngageSync()
 	self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self.bossSync)
 end
 
+function BigWigs.modulePrototype:SendBosskillSync()
+	self:TriggerEvent("BigWigs_SendSync", "Bosskill "..self.bossSync)
+end
 
 function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
@@ -447,12 +450,24 @@ function BigWigs.modulePrototype:CheckForEngage()
 			self.core:LevelDebug(1, "Scan returned true, engaging ["..self:ToString().."].")
 		end
 		self:CancelScheduledEvent(self:ToString().."_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self.bossSync)
+        -- I'll leave the old sync in it and only add the new one, the old one for people with an older version - we're nice guys that's why
+		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+        self:SendEngageSync()
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckStart", self.CheckForEngage, .5, self)
 	end
 end
 
+function BigWigs:CheckForBosskill(msg)
+    for name, module in self.core:IterateModules() do
+        if module:IsBossModule() and self.core:IsModuleActive(module) then
+            if string.find(msg, module:ToString()) then
+                module:SendBosskillSync()
+            end
+        end
+    end
+end
+BigWigs:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH","CheckForBosskill")
 
 function BigWigs.modulePrototype:CheckForWipe()
 	local running = self:IsEventScheduled(self:ToString().."_CheckWipe")

@@ -7,7 +7,7 @@
 - <b>(100%)</b> Lucifron's Curse, changed the regular timer from 20 to 15s
 - <b>(100%)</b> Impending Doom
 - <b>(100%)</b> Dominate Mind, I don't think it's necessary to implement a timer for the next mc and the normal one works fine
-- <b>(DG)</b> Shadow Shock, Idk idc tbh
+- <b>(RREMOVED)</b> Shadow Shock, wasn't accurate - is maybe not possible to do - and isn't worth it
 
 # Magmadar
 - <b>(100%)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones (do I want to add an WarnIcon for that? few seconds prior and until it's gone)
@@ -17,7 +17,7 @@
 
 ## Gehennas
 - <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
-- <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 2.5s for that
+- <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 3s for that
 - <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s. THE TRIGGER is not working
 - <b>(QA)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
 
