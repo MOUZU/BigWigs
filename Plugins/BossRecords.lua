@@ -39,27 +39,27 @@ BigWigsBossRecords = BigWigs:NewModule("BossRecords")
 ------------------------------
 
 function BigWigsBossRecords:OnEnable()
-    self:RegisterEvent("BigWigs_BossDeath")
-    self:RegisterEvent("BigWigs_RecvSync")
+    --self:RegisterEvent("BigWigs_BossDeath")
+    --self:RegisterEvent("BigWigs_RecvSync")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBossRecords:BigWigs_RecvSync(sync, rest)
-    if sync == "BossEngaged" and rest and rest ~= "" and ((c.startTime + 5) < GetTime()) then
-        c.name      = rest
+function BigWigsBossRecords:StartBossfight(self)
+    if self and self.bossSync and ((c.startTime + 5) < GetTime()) then
+        c.name      = self:ToString()
         c.startTime = GetTime()
         
-        DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], rest))
-        self:TriggerEvent("BigWigs_Message", rest .. " engaged!", "Positive")
+        DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], c.name))
+        self:TriggerEvent("BigWigs_Message", c.name .. " engaged!", "Positive")
     end
 end
-
-function BigWigsBossRecords:BigWigs_BossDeath(name)
+    
+function BigWigsBossRecords:EndBossfight(self)
     -- just to be sure that we're not calculating/tracking bullshit
-    if c.name == name and ((c.lastKill + 5) < GetTime()) then
+    if c.name == self:ToString() and ((c.lastKill + 5) < GetTime()) then
         local timeSpent = GetTime() - c.startTime
         c.lastKill      = GetTime()
         
@@ -72,7 +72,32 @@ function BigWigsBossRecords:BigWigs_BossDeath(name)
             end
         else
             -- it's our first kill
-            DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN"], name, timeSpent))
+            DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN"], c.name, self:FormatTime(timeSpent)))
         end
+        self:TriggerEvent("BigWigs_Message", c.name .. " has been defeated!", "Positive")
+    end
+end
+
+function BigWigsBossRecords:FormatTime(time)
+    if not type(time) == "number" then return end
+    --[[
+        input:  time in seconds
+        output: time formated as string (eg. '2min 14s')
+    --]]
+    
+    if time < 60 then
+        return ToString(time) .. "s";
+    else
+        -- really sloppy way of doing this, but I don't know if modulo exists in this lua version and I'm not at home to test atm
+        local minutes = 0
+        local seconds = 0
+        while (time >= 60) do
+            time    = time - 60;
+            minutes = minutes + 1;
+        end
+        if time > 0 then
+            seconds = time
+        end
+        return ToString(minutes) .. "min " .. ToString(seconds) .. "s";
     end
 end
