@@ -461,7 +461,7 @@ function BigWigs.modulePrototype:CheckForEngage()
 end
 
 function BigWigs:CheckForBosskill(msg)
-    for name, module in self.core:IterateModules() do
+    for name, module in BigWigs:IterateModules() do
         if module:IsBossModule() and self.core:IsModuleActive(module) then
             if string.find(msg, module:ToString()) then
                 module:SendBosskillSync()
