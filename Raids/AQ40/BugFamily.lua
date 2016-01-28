@@ -150,7 +150,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsBugFamily = BigWigs:NewModule(boss)
 BigWigsBugFamily.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsBugFamily.enabletrigger = {kri, yauj, vem}
-BigWigsBugFamily.bossSync = "BugFamily"
+BigWigsBugFamily.bossSync = "The Bug Family"
 BigWigsBugFamily.toggleoptions = {"panic", "toxicvolley", "heal", "announce", "deathspecials", "enrage", "bosskill"}
 BigWigsBugFamily.revision = tonumber(string.sub("$Revision: 11208 $", 12, -3))
 

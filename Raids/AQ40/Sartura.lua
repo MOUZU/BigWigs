@@ -112,7 +112,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsSartura = BigWigs:NewModule(boss)
 BigWigsSartura.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsSartura.enabletrigger = boss
-BigWigsSartura.bossSync = "Sartura"
+BigWigsSartura.bossSync = "Battleguard Sartura"
 BigWigsSartura.wipemobs = { L["add_name"] }
 BigWigsSartura.toggleoptions = {"whirlwind", "adds", "enrage", "berserk", "bosskill"}
 BigWigsSartura.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))

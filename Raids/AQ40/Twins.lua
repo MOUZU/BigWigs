@@ -62,7 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsTwins = BigWigs:NewModule(boss)
 BigWigsTwins.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsTwins.enabletrigger = {veklor, veknilash}
-BigWigsTwins.bossSync = "TwinEmps"
+BigWigsTwins.bossSync = "The Twin Emperors"
 BigWigsTwins.toggleoptions = {"bug", "teleport", "enrage", "heal", "bosskill"}
 BigWigsTwins.revision = tonumber(string.sub("$Revision: 16970 $", 12, -3))
 
