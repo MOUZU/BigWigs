@@ -186,7 +186,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsThekal = BigWigs:NewModule(boss)
 BigWigsThekal.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsThekal.enabletrigger = boss
-BigWigsThekal.bossSync = "Thekal"
+BigWigsThekal.bossSync = "High Priest Thekal"
 BigWigsThekal.wipemobs = { L["roguename"], L["shamanname"] }
 BigWigsThekal.toggleoptions = {"bloodlust", "silence", "cleave", "heal", "disarm", -1, "phase", "punch", "tigers", "frenzy", "enraged", "bosskill"}
 BigWigsThekal.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
@@ -326,7 +326,7 @@ function BigWigsThekal:Fades(msg)
 end
 
 function BigWigsThekal:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == self.bossSync or rest == "High Priest Thekal") then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "ThekalPhaseOne")
 	elseif sync == "ThekalPhaseOne" then

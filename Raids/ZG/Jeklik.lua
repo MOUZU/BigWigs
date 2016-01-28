@@ -168,7 +168,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsJeklik = BigWigs:NewModule(boss)
 BigWigsJeklik.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJeklik.enabletrigger = boss
-BigWigsJeklik.bossSync = "Jeklik"
+BigWigsJeklik.bossSync = "High Priestess Jeklik"
 BigWigsJeklik.toggleoptions = {"phase", "heal", "flay", "fear", "swarm", "bomb", "announce", "bosskill"}
 BigWigsJeklik.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 
@@ -230,7 +230,7 @@ end
 ------------------------------
 
 function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == self.bossSync or rest == "High Priestess Jeklik") then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 		if firstfear == 0 then
 			self:TriggerEvent("BigWigs_SendSync", "JeklikFearIni")

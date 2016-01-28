@@ -138,7 +138,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsVenoxis = BigWigs:NewModule(boss)
 BigWigsVenoxis.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsVenoxis.enabletrigger = boss
-BigWigsVenoxis.bossSync = "Venoxis"
+BigWigsVenoxis.bossSync = "High Priest Venoxis"
 BigWigsVenoxis.wipemobs = { L["add_name"] }
 BigWigsVenoxis.toggleoptions = {"phase", "adds", "renew", "holyfire", "enrage", "announce", "bosskill"}
 BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
@@ -257,7 +257,7 @@ function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == self.bossSync or rest == "High Priest Venoxis") then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
 		self:TriggerEvent("BigWigs_SendSync", "VenoxisPhaseOne")
 	elseif sync == "VenoxisPhaseOne" then
