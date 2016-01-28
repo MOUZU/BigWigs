@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Onyxia"]
-local bossSync = "Onyxia"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -117,6 +116,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsOnyxia = BigWigs:NewModule(boss)
 BigWigsOnyxia.zonename = AceLibrary("Babble-Zone-2.2")["Onyxia's Lair"]
 BigWigsOnyxia.enabletrigger = boss
+BigWigsOnyxia.bossSync = "Onyxia"
 BigWigsOnyxia.toggleoptions = { "flamebreath", "deepbreath", "wingbuffet", "fireball", "phase", "onyfear", "bosskill"}
 BigWigsOnyxia.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 
