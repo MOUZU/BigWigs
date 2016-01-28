@@ -843,6 +843,8 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
 		self:TriggerEvent("BigWigs_RebootModule", module)
     elseif sync == "KTM_RESETTED" then
         BigWigs.lastReset = GetTime()
+    elseif sync == "Bosskill" and module then
+        self:ToggleModuleActive(module, false)
 	end
 end
 
