@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Flamegor"]
-local bossSync = "Flamegor"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local lastFrenzy = 0
 local _, playerClass = UnitClass("player")
@@ -88,6 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsFlamegor = BigWigs:NewModule(boss)
 BigWigsFlamegor.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsFlamegor.enabletrigger = boss
+BigWigsFlamegor.bossSync = "Flamegor"
 BigWigsFlamegor.toggleoptions = {"wingbuffet", "shadowflame", "frenzy", "bosskill"}
 BigWigsFlamegor.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 

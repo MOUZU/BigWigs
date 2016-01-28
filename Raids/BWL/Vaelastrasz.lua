@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Vaelastrasz the Corrupt"]
-local bossSync = "Vaelastrasz"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -111,6 +110,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsVaelastrasz = BigWigs:NewModule(boss)
 BigWigsVaelastrasz.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsVaelastrasz.enabletrigger = boss
+BigWigsVaelastrasz.bossSync = "Vaelastrasz"
 BigWigsVaelastrasz.toggleoptions = { "start", "flamebreath", "adrenaline", "whisper", "tankburn", "icon", "bosskill" }
 BigWigsVaelastrasz.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 

@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Magmadar"]
-local bossSync = "Magmadar"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local _, playerClass = UnitClass("player")
 
@@ -67,6 +66,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsMagmadar = BigWigs:NewModule(boss)
 BigWigsMagmadar.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsMagmadar.enabletrigger = boss
+BigWigsMagmadar.bossSync = "Magmadar"
 BigWigsMagmadar.toggleoptions = {"panic", "frenzy", "bosskill"}
 BigWigsMagmadar.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 

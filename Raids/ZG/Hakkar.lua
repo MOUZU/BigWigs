@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hakkar"]
-local bossSync = "Hakkar"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -203,6 +202,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsHakkar.enabletrigger = boss
+BigWigsHakkar.bossSync = "Hakkar"
 BigWigsHakkar.toggleoptions = { "mc", "puticon", "siphon", "enrage", -1, "aspectjeklik", "aspectvenoxis", "aspectmarli", "aspectthekal", "aspectarlokk", "bosskill" }
 BigWigsHakkar.revision = tonumber(string.sub("$Revision: 11201 $", 12, -3))
 

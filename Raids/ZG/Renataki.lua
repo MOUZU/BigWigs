@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Renataki"]
-local bossSync = "Renataki"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -57,6 +56,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsRenataki = BigWigs:NewModule(boss)
 BigWigsRenataki.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsRenataki.enabletrigger = boss
+BigWigsRenataki.bossSync = "Renataki"
 BigWigsRenataki.toggleoptions = {"vanish", "enraged", "bosskill"}
 BigWigsRenataki.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 

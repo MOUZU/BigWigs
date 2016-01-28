@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priest Venoxis"]
-local bossSync = "Venoxis"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -139,6 +138,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsVenoxis = BigWigs:NewModule(boss)
 BigWigsVenoxis.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsVenoxis.enabletrigger = boss
+BigWigsVenoxis.bossSync = "Venoxis"
 BigWigsVenoxis.wipemobs = { L["add_name"] }
 BigWigsVenoxis.toggleoptions = {"phase", "adds", "renew", "holyfire", "enrage", "announce", "bosskill"}
 BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))

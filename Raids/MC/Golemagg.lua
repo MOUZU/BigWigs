@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Golemagg the Incinerator"]
-local bossSync = "Golemagg"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -51,6 +50,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsGolemagg = BigWigs:NewModule(boss)
 BigWigsGolemagg.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGolemagg.enabletrigger = boss
+BigWigsGolemagg.bossSync = "Golemagg"
 BigWigsGolemagg.wipemobs = { L["corerager_name"] }
 BigWigsGolemagg.toggleoptions = { "earthquake", "enraged", "bosskill"}
 BigWigsGolemagg.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))

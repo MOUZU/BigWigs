@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Garr"]
-local bossSync = "Garr"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -71,6 +70,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsGarr = BigWigs:NewModule(boss)
 BigWigsGarr.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGarr.enabletrigger = boss
+BigWigsGarr.bossSync = "Garr"
 BigWigsGarr.wipemobs = { L["firesworn_name"] }
 BigWigsGarr.toggleoptions = {"adds", "bosskill"}
 BigWigsGarr.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))

@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Bloodlord Mandokir"]
-local bossSync = "Mandokir"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -115,6 +114,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsMandokir = BigWigs:NewModule(boss)
 BigWigsMandokir.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMandokir.enabletrigger = boss
+BigWigsMandokir.bossSync = "Mandokir"
 BigWigsMandokir.wipemobs = { L["ohgan"] }
 BigWigsMandokir.toggleoptions = {"gaze", "announce", "puticon", "whirlwind", "enraged", "bosskill"}
 BigWigsMandokir.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))

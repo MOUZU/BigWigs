@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priestess Mar'li"]
-local bossSync = "Mar'li"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -101,6 +100,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsMarli = BigWigs:NewModule(boss)
 BigWigsMarli.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMarli.enabletrigger = boss
+BigWigsMarli.bossSync = "Mar'li"
 BigWigsMarli.wipemobs = { L["spawn_name"] }
 BigWigsMarli.toggleoptions = {"phase", "spider", "drain", "volley", "bosskill"}
 BigWigsMarli.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))

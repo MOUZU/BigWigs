@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Razorgore the Untamed"]
-local bossSync = "Razorgore"
 local controller = AceLibrary("Babble-Boss-2.2")["Grethok the Controller"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -180,6 +179,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsRazorgore = BigWigs:NewModule(boss)
 BigWigsRazorgore.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsRazorgore.enabletrigger = { boss, controller }
+BigWigsRazorgore.bossSync = "Razorgore"
 BigWigsRazorgore.toggleoptions = { "phase", "mobs", "eggs", "polymorph", "mc", "icon", "orb", "fireballvolley", "conflagration", "ktm", "bosskill" }
 BigWigsRazorgore.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 

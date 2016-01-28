@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Majordomo Executus"]
-local bossSync = "Majordomo"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -97,6 +96,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsMajordomo = BigWigs:NewModule(boss)
 BigWigsMajordomo.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsMajordomo.enabletrigger = boss
+BigWigsMajordomo.bossSync = "Majordomo"
 BigWigsMajordomo.wipemobs = { L["elitename"], L["healername"] }
 BigWigsMajordomo.toggleoptions = {"magic", "dmg", "adds", "bosskill"}
 BigWigsMajordomo.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))

@@ -5,7 +5,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ragnaros"]
-local bossSync = "Ragnaros"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -105,6 +104,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsRagnaros = BigWigs:NewModule(boss)
 BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsRagnaros.enabletrigger = boss
+BigWigsRagnaros.bossSync = "Ragnaros"
 BigWigsRagnaros.wipemobs = { L["sonofflame"] }
 BigWigsRagnaros.toggleoptions = { "aoeknock", "submerge", "emerge", "adds", "bosskill" }
 BigWigsRagnaros.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))

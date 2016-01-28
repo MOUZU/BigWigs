@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priest Thekal"]
-local bossSync = "Thekal"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -187,6 +186,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsThekal = BigWigs:NewModule(boss)
 BigWigsThekal.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsThekal.enabletrigger = boss
+BigWigsThekal.bossSync = "Thekal"
 BigWigsThekal.wipemobs = { L["roguename"], L["shamanname"] }
 BigWigsThekal.toggleoptions = {"bloodlust", "silence", "cleave", "heal", "disarm", -1, "phase", "punch", "tigers", "frenzy", "enraged", "bosskill"}
 BigWigsThekal.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))

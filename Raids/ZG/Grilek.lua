@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gri'lek"]
-local bossSync = "Gri'lek"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -75,6 +74,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsGrilek = BigWigs:NewModule(boss)
 BigWigsGrilek.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsGrilek.enabletrigger = boss
+BigWigsGrilek.bossSync = "Gri'lek"
 BigWigsGrilek.toggleoptions = {"avatar", "melee", "announce", "puticon", "bosskill"}
 BigWigsGrilek.revision = tonumber(string.sub("$Revision: 11208 $", 12, -3))
 

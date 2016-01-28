@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gehennas"]
-local bossSync = "Gehennas"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -83,6 +82,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsGehennas = BigWigs:NewModule(boss)
 BigWigsGehennas.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGehennas.enabletrigger = boss
+BigWigsGehennas.bossSync = "Gehennas"
 BigWigsGehennas.wipemobs = { L["flamewaker_name"] }
 BigWigsGehennas.toggleoptions = {"adds", "shadowbolt", "curse", "bosskill"}
 BigWigsGehennas.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))

@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Broodlord Lashlayer"]
-local bossSync = "Broodlord"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -69,6 +68,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsBroodlord = BigWigs:NewModule(boss)
 BigWigsBroodlord.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsBroodlord.enabletrigger = boss
+BigWigsBroodlord.bossSync = "Broodlord"
 BigWigsBroodlord.toggleoptions = {"ms", "bw", "bosskill"}
 BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 

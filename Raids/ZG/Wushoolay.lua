@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Wushoolay"]
-local bossSync = "Wushoolay"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -53,6 +52,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsWushoolay = BigWigs:NewModule(boss)
 BigWigsWushoolay.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsWushoolay.enabletrigger = boss
+BigWigsWushoolay.bossSync = "Wushoolay"
 BigWigsWushoolay.toggleoptions = {"chainlightning", "lightningcloud", "bosskill"}
 BigWigsWushoolay.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 

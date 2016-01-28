@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Jin'do the Hexxer"]
-local bossSync = "Jin'do"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -105,6 +104,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsJindo = BigWigs:NewModule(boss)
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJindo.enabletrigger = boss
+BigWigsJindo.bossSync = "Jin'do"
 BigWigsJindo.toggleoptions = {"curse", "hex", "brainwash", "healingward", "puticon", "bosskill"}
 BigWigsJindo.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 

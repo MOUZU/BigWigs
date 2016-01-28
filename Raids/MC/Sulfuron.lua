@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Sulfuron Harbinger"]
-local bossSync = "Sulfuron"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -85,6 +84,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsSulfuron = BigWigs:NewModule(boss)
 BigWigsSulfuron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsSulfuron.enabletrigger = boss
+BigWigsSulfuron.bossSync = "Sulfuron"
 BigWigsSulfuron.wipemobs = { L["flamewakerpriest_name"] }
 BigWigsSulfuron.toggleoptions = {"heal", "adds", "knockback", "bosskill"}
 BigWigsSulfuron.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))

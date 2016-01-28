@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Chromaggus"]
-local bossSync = "Chromaggus"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local lastFrenzy = 0
 local _, playerClass = UnitClass("player")
@@ -162,6 +161,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsChromaggus = BigWigs:NewModule(boss)
 BigWigsChromaggus.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsChromaggus.enabletrigger = boss
+BigWigsChromaggus.bossSync = "Chromaggus"
 BigWigsChromaggus.toggleoptions = { "enrage", "frenzy", "breath", "vulnerability", "bosskill"}
 BigWigsChromaggus.revision = tonumber(string.sub("$Revision: 11211 $", 12, -3))
 

@@ -2,7 +2,6 @@
 --      Are you local?      --
 ------------------------------
 local boss = AceLibrary("Babble-Boss-2.2")["Nefarian"]
-local bossSync = "Nefarian"
 local victor = AceLibrary("Babble-Boss-2.2")["Lord Victor Nefarius"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -85,6 +84,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsNefarian = BigWigs:NewModule(boss)
 BigWigsNefarian.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsNefarian.enabletrigger = { boss, victor }
+BigWigsNefarian.bossSync = "Nefarian"
 BigWigsNefarian.toggleoptions = {"shadowflame", "fear", "classcall", "otherwarn", "bosskill"}
 BigWigsNefarian.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
 

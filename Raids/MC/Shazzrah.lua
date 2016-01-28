@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shazzrah"]
-local bossSync = "Shazzrah"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local _, playerClass = UnitClass("player")
 
@@ -96,6 +95,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsShazzrah = BigWigs:NewModule(boss)
 BigWigsShazzrah.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsShazzrah.enabletrigger = boss
+BigWigsShazzrah.bossSync = "Shazzrah"
 BigWigsShazzrah.toggleoptions = {"curse", "deaden", "blink", "counterspell", "bosskill"}
 BigWigsShazzrah.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 

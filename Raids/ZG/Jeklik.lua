@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priestess Jeklik"]
-local bossSync = "Jeklik"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -169,6 +168,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsJeklik = BigWigs:NewModule(boss)
 BigWigsJeklik.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJeklik.enabletrigger = boss
+BigWigsJeklik.bossSync = "Jeklik"
 BigWigsJeklik.toggleoptions = {"phase", "heal", "flay", "fear", "swarm", "bomb", "announce", "bosskill"}
 BigWigsJeklik.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 

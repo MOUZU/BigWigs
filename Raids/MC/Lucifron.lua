@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Lucifron"]
-local bossSync = "Lucifron"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -124,6 +123,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsLucifron = BigWigs:NewModule(boss)
 BigWigsLucifron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsLucifron.enabletrigger = boss
+BigWigsLucifron.bossSync = "Lucifron"
 BigWigsLucifron.wipemobs = { L["add_name"] }
 BigWigsLucifron.toggleoptions = { "adds", "curse", "doom", "shock", "mc", "bosskill"}
 BigWigsLucifron.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))

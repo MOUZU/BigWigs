@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ebonroc"]
-local bossSync = "Ebonroc"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -85,6 +84,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsEbonroc = BigWigs:NewModule(boss)
 BigWigsEbonroc.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsEbonroc.enabletrigger = boss
+BigWigsEbonroc.bossSync = "Ebonroc"
 BigWigsEbonroc.toggleoptions = { "curse", "wingbuffet", "shadowflame", "bosskill" }
 BigWigsEbonroc.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 

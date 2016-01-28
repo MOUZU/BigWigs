@@ -3,7 +3,6 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Firemaw"]
-local bossSync = "Firemaw"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -87,6 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsFiremaw = BigWigs:NewModule(boss)
 BigWigsFiremaw.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsFiremaw.enabletrigger = boss
+BigWigsFiremaw.bossSync = "Firemaw"
 BigWigsFiremaw.toggleoptions = {"wingbuffet", "shadowflame", "flamebuffet", "bosskill"}
 BigWigsFiremaw.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 
