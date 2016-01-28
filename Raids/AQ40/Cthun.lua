@@ -106,10 +106,12 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsCThun = BigWigs:NewModule(cthun)
 BigWigsCThun.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsCThun.enabletrigger = { eyeofcthun, cthun }
+BigWigsCThun.bossSync = "CThun"
 BigWigsCThun.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
 BigWigsCThun.revision = tonumber(string.sub("$Revision: 15989 $", 12, -3))
 
 function BigWigsCThun:OnEnable()
+    self.started = nil
 	target = nil
 	cthunstarted = nil
 	firstGlare = nil
@@ -165,7 +167,8 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsCThun:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "CThunStart" then
+    if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "CThunStart")) then
+        self.started = true
 		self:CThunStart()
 	elseif sync == "CThunP2Start" then
 		self:CThunP2Start()

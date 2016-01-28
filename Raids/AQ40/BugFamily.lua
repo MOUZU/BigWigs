@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -150,6 +150,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsBugFamily = BigWigs:NewModule(boss)
 BigWigsBugFamily.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsBugFamily.enabletrigger = {kri, yauj, vem}
+BigWigsBugFamily.bossSync = "BugFamily"
 BigWigsBugFamily.toggleoptions = {"panic", "toxicvolley", "heal", "announce", "deathspecials", "enrage", "bosskill"}
 BigWigsBugFamily.revision = tonumber(string.sub("$Revision: 11208 $", 12, -3))
 
@@ -158,12 +159,12 @@ BigWigsBugFamily.revision = tonumber(string.sub("$Revision: 11208 $", 12, -3))
 ------------------------------
 
 function BigWigsBugFamily:OnEnable()
+    self.started = nil
 	kridead = nil
 	vemdead = nil
 	yaujdead = nil
 	healtime = 0
 	castingheal = false
-	started = false
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS", "Melee")
@@ -245,27 +246,25 @@ function BigWigsBugFamily:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function BigWigsBugFamily:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "The Bug Family" then
-		if not started then
-			if self.db.profile.panic then
-				self:TriggerEvent("BigWigs_StartBar", self, L["panic_bar"], 18.4, "Interface\\Icons\\Spell_Shadow_DeathScream", true, "white")
-				self:ScheduleEvent("PanicAnnounce", "BigWigs_Message", 15.4, L["panic_message"], "Urgent", true, "Alarm")
-			end
-			if self.db.profile.toxicvolley then
-				self:TriggerEvent("BigWigs_StartBar", self, L["toxicvolley_bar"], 11.4, "Interface\\Icons\\Spell_Nature_Corrosivebreath", true, "green")
-				self:ScheduleEvent("ToxicVolleyAnnounce", "BigWigs_Message", 8.4, L["toxicvolley_message"], "Urgent")
-			end
-			if self.db.profile.enrage then
-				self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 900, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", true, "red")
-				self:ScheduleEvent("BigWigs_Message", 600, L["warn5minutes"], "Attention")
-				self:ScheduleEvent("BigWigs_Message", 720, L["warn3minutes"], "Attention")
-				self:ScheduleEvent("BigWigs_Message", 810, L["warn90seconds"], "Attention")
-				self:ScheduleEvent("BigWigs_Message", 840, L["warn60seconds"], "Attention")
-				self:ScheduleEvent("BigWigs_Message", 870, L["warn30seconds"], "Attention")
-				self:ScheduleEvent("BigWigs_Message", 890, L["warn10seconds"], "Attention")
-			end
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+		if self.db.profile.panic then
+            self:TriggerEvent("BigWigs_StartBar", self, L["panic_bar"], 18.4, "Interface\\Icons\\Spell_Shadow_DeathScream", true, "white")
+            self:ScheduleEvent("PanicAnnounce", "BigWigs_Message", 15.4, L["panic_message"], "Urgent", true, "Alarm")
 		end
-		started = true
+		if self.db.profile.toxicvolley then
+            self:TriggerEvent("BigWigs_StartBar", self, L["toxicvolley_bar"], 11.4, "Interface\\Icons\\Spell_Nature_Corrosivebreath", true, "green")
+            self:ScheduleEvent("ToxicVolleyAnnounce", "BigWigs_Message", 8.4, L["toxicvolley_message"], "Urgent")
+		end
+		if self.db.profile.enrage then
+            self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 900, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", true, "red")
+            self:ScheduleEvent("BigWigs_Message", 600, L["warn5minutes"], "Attention")
+            self:ScheduleEvent("BigWigs_Message", 720, L["warn3minutes"], "Attention")
+            self:ScheduleEvent("BigWigs_Message", 810, L["warn90seconds"], "Attention")
+            self:ScheduleEvent("BigWigs_Message", 840, L["warn60seconds"], "Attention")
+            self:ScheduleEvent("BigWigs_Message", 870, L["warn30seconds"], "Attention")
+            self:ScheduleEvent("BigWigs_Message", 890, L["warn10seconds"], "Attention")
+		end
 	elseif sync == "BugTrioKriVolley" and self.db.profile.toxicvolley then
 		self:TriggerEvent("BigWigs_StartBar", self, L["toxicvolley_bar"], 10, "Interface\\Icons\\Spell_Nature_Corrosivebreath", true, "green")
 		self:ScheduleEvent("ToxicVolleyAnnounce", "BigWigs_Message", 7, L["toxicvolley_message"], "Urgent")

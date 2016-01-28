@@ -217,6 +217,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsViscidus = BigWigs:NewModule(boss)
 BigWigsViscidus.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsViscidus.enabletrigger = boss
+BigWigsViscidus.bossSync = "Viscidus"
 BigWigsViscidus.toggleoptions = {"freeze", "volley", "toxinyou", "toxinother", "bosskill"}
 BigWigsViscidus.revision = tonumber(string.sub("$Revision: 16282 $", 12, -3))
 
@@ -225,6 +226,7 @@ BigWigsViscidus.revision = tonumber(string.sub("$Revision: 16282 $", 12, -3))
 ------------------------------
 
 function BigWigsViscidus:OnEnable()
+    self.started = nil
 	prior = nil
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

@@ -112,6 +112,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsSartura = BigWigs:NewModule(boss)
 BigWigsSartura.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsSartura.enabletrigger = boss
+BigWigsSartura.bossSync = "Sartura"
 BigWigsSartura.wipemobs = { L["add_name"] }
 BigWigsSartura.toggleoptions = {"whirlwind", "adds", "enrage", "berserk", "bosskill"}
 BigWigsSartura.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
@@ -121,9 +122,9 @@ BigWigsSartura.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsSartura:OnEnable()
+    self.started = nil
 	guard = 0
 	sarturadead = false
-	started = false
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -146,8 +147,9 @@ end
 ------------------------------
 
 function BigWigsSartura:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BossEngaged" and rest == "Battleguard Sartura" then
-		if self.db.profile.berserk and not started then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+		if self.db.profile.berserk then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["berserktext"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 			self:ScheduleEvent("300into", "BigWigs_Message", 300, L["warn1"], "Attention")
@@ -157,11 +159,10 @@ function BigWigsSartura:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("570into", "BigWigs_Message", 570, L["warn5"], "Important")
 			self:ScheduleEvent("590into", "BigWigs_Message", 590, L["warn6"], "Important")
 		end
-		if self.db.profile.whirlwind and not started then
+		if self.db.profile.whirlwind then
 			self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindfirstbartext"], 20.3, "Interface\\Icons\\Ability_Whirlwind")
 			self:ScheduleEvent("BigWigs_Message", 17.3, L["whirlwindinctext"], "Attention", true, "Alarm")
 		end
-		started = true
 	elseif sync == "SarturaWhirlwindStart" and self.db.profile.whirlwind then
 		self:TriggerEvent("BigWigs_Message", L["whirlwindonwarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindbartext"], 15, "Interface\\Icons\\Ability_Whirlwind")

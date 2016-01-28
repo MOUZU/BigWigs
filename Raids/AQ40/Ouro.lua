@@ -5,7 +5,6 @@ local boss = AceLibrary("Babble-Boss-2.2")["Ouro"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local berserkannounced
-local started 
 
 ----------------------------
 --      Localization      --
@@ -332,6 +331,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsOuro = BigWigs:NewModule(boss)
 BigWigsOuro.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsOuro.enabletrigger = boss
+BigWigsOuro.bossSync = "Ouro"
 BigWigsOuro.toggleoptions = {"sweep", "sandblast", "scarab", -1, "emerge", "submerge", -1, "berserk", "bosskill"}
 BigWigsOuro.revision = tonumber(string.sub("$Revision: 18120 $", 12, -3))
 
@@ -341,7 +341,7 @@ BigWigsOuro.revision = tonumber(string.sub("$Revision: 18120 $", 12, -3))
 
 function BigWigsOuro:OnEnable()
 	berserkannounced = nil
-	started = nil
+	self.started = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -377,8 +377,8 @@ function BigWigsOuro:UNIT_HEALTH( msg )
 end
 
 function BigWigsOuro:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+		self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.emerge then
 			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")

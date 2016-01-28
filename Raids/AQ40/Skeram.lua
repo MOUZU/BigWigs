@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -65,6 +65,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsSkeram = BigWigs:NewModule(boss)
 BigWigsSkeram.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsSkeram.enabletrigger = boss
+BigWigsSkeram.bossSync = "Skeram"
 BigWigsSkeram.toggleoptions = {"mc", "split", "bosskill"}
 BigWigsSkeram.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 
@@ -73,6 +74,7 @@ BigWigsSkeram.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsSkeram:OnEnable()
+    self.started = nil
 	splittime = false
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -149,7 +151,9 @@ function BigWigsSkeram:UNIT_HEALTH(arg1)
 end
 
 function BigWigsSkeram:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "SkeramSplit80Soon" then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+	elseif sync == "SkeramSplit80Soon" then
 		splittime = true
 		if self.db.profile.split then
 			self:TriggerEvent("BigWigs_Message", L["splitsoon_message"], "Urgent")

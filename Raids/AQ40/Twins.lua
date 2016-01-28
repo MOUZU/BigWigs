@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -6,8 +6,6 @@ local veklor = AceLibrary("Babble-Boss-2.2")["Emperor Vek'lor"]
 local veknilash = AceLibrary("Babble-Boss-2.2")["Emperor Vek'nilash"]
 local boss = AceLibrary("Babble-Boss-2.2")["The Twin Emperors"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs" .. boss)
-
-local started = nil
 
 ----------------------------
 --      Localization      --
@@ -64,6 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsTwins = BigWigs:NewModule(boss)
 BigWigsTwins.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsTwins.enabletrigger = {veklor, veknilash}
+BigWigsTwins.bossSync = "TwinEmps"
 BigWigsTwins.toggleoptions = {"bug", "teleport", "enrage", "heal", "bosskill"}
 BigWigsTwins.revision = tonumber(string.sub("$Revision: 16970 $", 12, -3))
 
@@ -72,7 +71,7 @@ BigWigsTwins.revision = tonumber(string.sub("$Revision: 16970 $", 12, -3))
 ------------------------------
 
 function BigWigsTwins:OnEnable()
-	started = nil
+	self.started = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	--self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
@@ -114,8 +113,8 @@ function BigWigsTwins:Stopb()
 end]]
 
 function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+		self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
