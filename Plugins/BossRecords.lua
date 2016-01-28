@@ -47,9 +47,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBossRecords:StartBossfight(self)
-    if self and self.bossSync and ((c.startTime + 5) < GetTime()) then
-        c.name      = self:ToString()
+function BigWigsBossRecords:StartBossfight(module)
+    if module and module.bossSync and ((c.startTime + 5) < GetTime()) then
+        c.name      = module:ToString()
         c.startTime = GetTime()
         
         DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], c.name))
@@ -57,9 +57,9 @@ function BigWigsBossRecords:StartBossfight(self)
     end
 end
     
-function BigWigsBossRecords:EndBossfight(self)
+function BigWigsBossRecords:EndBossfight(module)
     -- just to be sure that we're not calculating/tracking bullshit
-    if c.name == self:ToString() and ((c.lastKill + 5) < GetTime()) then
+    if c.name == module:ToString() and ((c.lastKill + 5) < GetTime()) then
         local timeSpent = GetTime() - c.startTime
         c.lastKill      = GetTime()
         
