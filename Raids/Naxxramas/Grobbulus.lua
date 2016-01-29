@@ -1,11 +1,9 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Grobbulus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-
-local started
 
 ----------------------------
 --      Localization      --
@@ -63,6 +61,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsGrobbulus = BigWigs:NewModule(boss)
 BigWigsGrobbulus.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsGrobbulus.enabletrigger = boss
+BigWigsGrobbulus.bossSync = "Grobbulus"
 BigWigsGrobbulus.toggleoptions = { "youinjected", "otherinjected", "icon", "cloud", -1, "enrage", "bosskill" }
 BigWigsGrobbulus.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 
@@ -71,7 +70,7 @@ BigWigsGrobbulus.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 ------------------------------
 
 function BigWigsGrobbulus:OnEnable()
-	started = nil
+	self.started = nil
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
@@ -93,8 +92,8 @@ end
 ------------------------------
 
 function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")

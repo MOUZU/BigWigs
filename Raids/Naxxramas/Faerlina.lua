@@ -1,11 +1,9 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Grand Widow Faerlina"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-
-local started = nil
 
 ----------------------------
 --      Localization      --
@@ -50,6 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsFaerlina = BigWigs:NewModule(boss)
 BigWigsFaerlina.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsFaerlina.enabletrigger = boss
+BigWigsFaerlina.bossSync = "Faerlina"
 BigWigsFaerlina.toggleoptions = {"silence", "enrage", "bosskill"}
 BigWigsFaerlina.revision = tonumber(string.sub("$Revision: 15233 $", 12, -3))
 
@@ -58,12 +57,11 @@ BigWigsFaerlina.revision = tonumber(string.sub("$Revision: 15233 $", 12, -3))
 ------------------------------
 
 function BigWigsFaerlina:OnEnable()
+    self.started = nil
 	self.enragetime = 60
 	self.enrageTimerStarted = 0
 	self.silencetime = 20
 	self.enraged = nil
-
-	started = nil
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -100,8 +98,10 @@ function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
 	end
 end
 
-function BigWigsFaerlina:BigWigs_RecvSync( sync )
-	if sync == "FaerlinaEnrage" then
+function BigWigsFaerlina:BigWigs_RecvSync(sync, rest, nick)
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+	elseif sync == "FaerlinaEnrage" then
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Urgent")
 		end

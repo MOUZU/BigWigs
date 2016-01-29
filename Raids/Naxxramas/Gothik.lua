@@ -69,6 +69,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsGothik = BigWigs:NewModule(boss)
 BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsGothik.enabletrigger = { boss }
+BigWigsGothik.bossSync = "Gothik"
 BigWigsGothik.wipemobs = {
 	L["rider_name"], L["deathknight_name"], L["trainee_name"],
 	L["spectral_rider_name"], L["spectral_deathknight_name"], L["spectral_trainee_name"]
@@ -81,6 +82,7 @@ BigWigsGothik.revision = tonumber(string.sub("$Revision: 15773 $", 12, -3))
 ------------------------------
 
 function BigWigsGothik:OnEnable()
+    self.started = nil
 	self.wave = 0
 	self.tratime = 20 -- testing from 21
 	self.dktime = 72

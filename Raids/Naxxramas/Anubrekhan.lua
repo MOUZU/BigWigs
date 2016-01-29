@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -47,6 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsAnubrekhan = BigWigs:NewModule(boss)
 BigWigsAnubrekhan.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsAnubrekhan.enabletrigger = boss
+BigWigsAnubrekhan.bossSync = "AnubRekhan"
 BigWigsAnubrekhan.toggleoptions = {"locust", "enrage", "bosskill"}
 BigWigsAnubrekhan.revision = tonumber(string.sub("$Revision: 15496 $", 12, -3))
 
@@ -55,6 +56,7 @@ BigWigsAnubrekhan.revision = tonumber(string.sub("$Revision: 15496 $", 12, -3))
 ------------------------------
 
 function BigWigsAnubrekhan:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "LocustCast")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "LocustCast")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -89,7 +91,9 @@ function BigWigsAnubrekhan:LocustCast(msg)
 end
 
 function BigWigsAnubrekhan:BigWigs_RecvSync(sync)
-	if sync == "AnubLocustInc" then
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+	elseif sync == "AnubLocustInc" then
 		self:ScheduleEvent("bwanublocustinc", self.TriggerEvent, 3.25, self, "BigWigs_SendSync", "AnubLocustSwarm")
 		if self.db.profile.locust then
 			self:TriggerEvent("BigWigs_Message", L["castwarn"], "Orange")

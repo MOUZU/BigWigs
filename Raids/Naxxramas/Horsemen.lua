@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -11,8 +11,6 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Four Horsemen"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local times = nil
-
-local started = nil
 
 ----------------------------
 --      Localization      --
@@ -73,6 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsHorsemen = BigWigs:NewModule(boss)
 BigWigsHorsemen.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsHorsemen.enabletrigger = { thane, mograine, zeliek, blaumeux }
+BigWigsHorsemen.bossSync = "The Four Horsemen"
 BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", -1, "meteor", "void", "wrath", "bosskill"}
 BigWigsHorsemen.revision = tonumber(string.sub("$Revision: 16494 $", 12, -3))
 
@@ -140,8 +139,8 @@ end
 
 function BigWigsHorsemen:BigWigs_RecvSync(sync, rest, nick)
 	--Print("sync= "..sync.." rest= "..rest.." nick= "..nick)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

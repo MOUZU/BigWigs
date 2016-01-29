@@ -71,6 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsNoth = BigWigs:NewModule(boss)
 BigWigsNoth.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsNoth.enabletrigger = boss
+BigWigsNoth.bossSync = "Noth"
 BigWigsNoth.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
 BigWigsNoth.revision = tonumber(string.sub("$Revision: 15520 $", 12, -3))
 
@@ -79,6 +80,7 @@ BigWigsNoth.revision = tonumber(string.sub("$Revision: 15520 $", 12, -3))
 ------------------------------
 
 function BigWigsNoth:OnEnable()
+    self.started = nil
 	self.timeblink = 25
 	self.timeroom = 90
 	self.timebalcony = 70
@@ -137,8 +139,10 @@ function BigWigsNoth:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	end
 end
 
-function BigWigsNoth:BigWigs_RecvSync( sync )
-	if sync == "NothCurse" then
+function BigWigsNoth:BigWigs_RecvSync(sync, rest, nick)
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+	elseif sync == "NothCurse" then
 		if self.db.profile.curse then
 			self:TriggerEvent("BigWigs_Message", L["cursewarn"], "Important", nil, "Alarm")
 			self:ScheduleEvent("bwnothcurse", "BigWigs_Message", self.cursetime-10, L["curse10secwarn"], "Urgent")

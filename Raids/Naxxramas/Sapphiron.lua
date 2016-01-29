@@ -8,7 +8,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local time
 local cachedUnitId
 local lastTarget
-local started
 
 ----------------------------
 --      Localization      --
@@ -64,6 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsSapphiron = BigWigs:NewModule(boss)
 BigWigsSapphiron.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsSapphiron.enabletrigger = boss
+BigWigsSapphiron.bossSync = "Sapphiron"
 BigWigsSapphiron.toggleoptions = { "berserk", "lifedrain", "deepbreath", "icebolt", "bosskill" }
 BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 17541 $", 12, -3))
 
@@ -72,10 +72,10 @@ BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 17541 $", 12, -3))
 ------------------------------
 
 function BigWigsSapphiron:OnEnable()
+    self.started = nil
 	time = nil
 	cachedUnitId = nil
 	lastTarget = nil
-	started = nil
 
 	if self:IsEventScheduled("bwsapphtargetscanner") then
 		self:CancelScheduledEvent("bwsapphtargetscanner")
@@ -104,9 +104,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+function BigWigsSapphiron:BigWigs_RecvSync(sync, rest, nick)
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self:IsEventScheduled("bwsapphtargetscanner") then
 			self:CancelScheduledEvent("bwsapphtargetscanner")
@@ -133,7 +133,7 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-	elseif sync == "SapphironFlight" and self.db.profile.deepbreath and started then
+	elseif sync == "SapphironFlight" and self.db.profile.deepbreath and self.started then
 		if self:IsEventScheduled("bwsapphtargetscanner") then
 			self:CancelScheduledEvent("bwsapphtargetscanner")
 		end
@@ -177,7 +177,7 @@ end
 ------------------------------
 
 function BigWigsSapphiron:StartTargetScanner()
-	if self:IsEventScheduled("bwsapphtargetscanner") or not started then return end
+	if self:IsEventScheduled("bwsapphtargetscanner") or not self.started then return end
 
 	-- Start a repeating event that scans the raid for targets every 1 second.
 	self:ScheduleRepeatingEvent("bwsapphtargetscanner", self.RepeatedTargetScanner, 1, self)
@@ -189,7 +189,7 @@ function BigWigsSapphiron:RepeatedTargetScanner()
 		return
 	end
 
-	if not started then return end
+	if not self.started then return end
 	local found = nil
 
 	-- If we have a cached unit (which we will if we found someone with the boss

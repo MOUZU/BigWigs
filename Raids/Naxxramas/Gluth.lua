@@ -4,8 +4,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Gluth"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local started = nil
-
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -66,6 +64,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsGluth = BigWigs:NewModule(boss)
 BigWigsGluth.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsGluth.enabletrigger = boss
+BigWigsGluth.bossSync = "Gluth"
 BigWigsGluth.toggleoptions = {"frenzy", "fear", "decimate", "enrage", "bosskill", "zombies"}
 BigWigsGluth.revision = tonumber(string.sub("$Revision: 15380 $", 12, -3))
 
@@ -74,9 +73,9 @@ BigWigsGluth.revision = tonumber(string.sub("$Revision: 15380 $", 12, -3))
 ------------------------------
 
 function BigWigsGluth:OnEnable()
+    self.started = nil
 	self.prior = nil
 	self.zomnum = 1
-	started = nil
 
 	
 	self:RegisterEvent("BigWigs_Message")
@@ -153,9 +152,9 @@ end
 
 
 
-function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+function BigWigsGluth:BigWigs_RecvSync(sync, rest, nick)
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then	self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")

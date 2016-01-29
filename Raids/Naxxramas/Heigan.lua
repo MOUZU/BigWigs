@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -63,6 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsHeigan = BigWigs:NewModule(boss)
 BigWigsHeigan.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsHeigan.enabletrigger = boss
+BigWigsHeigan.bossSync = "Heigan"
 BigWigsHeigan.wipemobs = { L["Eye Stalk"], L["Rotting Maggot"] }
 BigWigsHeigan.toggleoptions = {"engage", "teleport", "disease", "bosskill"}
 BigWigsHeigan.revision = tonumber(string.sub("$Revision: 17550 $", 12, -3))
@@ -72,6 +73,7 @@ BigWigsHeigan.revision = tonumber(string.sub("$Revision: 17550 $", 12, -3))
 ------------------------------
 
 function BigWigsHeigan:OnEnable()
+    self.started = nil
 	self.toRoomTime = 45
 	self.toPlatformTime = 90
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -111,8 +113,10 @@ function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsHeigan:BigWigs_RecvSync( sync )
-	if sync == "HeiganDisease" then
+function BigWigsHeigan:BigWigs_RecvSync(sync, rest, nick)
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+	elseif sync == "HeiganDisease" then
 		self:TriggerEvent("BigWigs_Message", L["dwarn"], "Important") 
 		self:TriggerEvent("BigWigs_StartBar", self, L["dbar"], 15, "Interface\\Icons\\Ability_Creature_Disease_03")
 	elseif sync == "HeiganTeleport" then

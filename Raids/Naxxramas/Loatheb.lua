@@ -1,11 +1,9 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Loatheb"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-
-local started = nil
 
 ----------------------------
 --      Localization      --
@@ -51,6 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsLoatheb = BigWigs:NewModule(boss)
 BigWigsLoatheb.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsLoatheb.enabletrigger = boss
+BigWigsLoatheb.bossSync = "Loatheb"
 BigWigsLoatheb.toggleoptions = {"doom", "curse", "bosskill"}
 BigWigsLoatheb.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 
@@ -59,10 +58,10 @@ BigWigsLoatheb.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 ------------------------------
 
 function BigWigsLoatheb:OnEnable()
+    self.started = nil
 	self.doomTime = 30
 	self.sporeCount = 1
 	self.doomCount = 1
-	started = nil
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -83,8 +82,8 @@ function BigWigsLoatheb:OnEnable()
 end
 
 function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

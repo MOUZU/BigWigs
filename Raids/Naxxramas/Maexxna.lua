@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -7,7 +7,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local times = {}
 local prior = nil
-local started
 
 ----------------------------
 --      Localization      --
@@ -66,6 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsMaexxna = BigWigs:NewModule(boss)
 BigWigsMaexxna.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsMaexxna.enabletrigger = boss
+BigWigsMaexxna.bossSync = "Maexxna"
 BigWigsMaexxna.toggleoptions = {"spray", "poison", "cocoon", "enrage", "bosskill"}
 BigWigsMaexxna.revision = tonumber(string.sub("$Revision: 15520 $", 12, -3))
 
@@ -74,10 +74,10 @@ BigWigsMaexxna.revision = tonumber(string.sub("$Revision: 15520 $", 12, -3))
 ------------------------------
 
 function BigWigsMaexxna:OnEnable()
+    self.started = nil
 	self.enrageannounced = nil
 	prior = nil
 	times = {}
-	started = nil
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -124,8 +124,8 @@ function BigWigsMaexxna:SprayEvent( msg )
 end
 
 function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		self:BigWigs_RecvSync("MaexxnaWebspray", nil, nil)
 	elseif sync == "MaexxnaWebspray" then

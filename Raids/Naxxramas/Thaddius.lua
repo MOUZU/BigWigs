@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -97,6 +97,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsThaddius = BigWigs:NewModule(boss)
 BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
+BigWigsThaddius.bossSync = "Thaddius"
 BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "throw", "phase", "bosskill"}
 BigWigsThaddius.revision = tonumber(string.sub("$Revision: 17540 $", 12, -3))
 
@@ -105,6 +106,7 @@ BigWigsThaddius.revision = tonumber(string.sub("$Revision: 17540 $", 12, -3))
 ------------------------------
 
 function BigWigsThaddius:OnEnable()
+    self.started = nil
 	self.enrageStarted = nil
 	self.addsdead = 0
 	self.teslawarn = nil
@@ -219,8 +221,10 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 	self.previousCharge = chargetype
 end
 
-function BigWigsThaddius:BigWigs_RecvSync( sync )
-	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
+function BigWigsThaddius:BigWigs_RecvSync(sync, rest, nick)
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+	elseif sync == "ThaddiusPolarity" and self.db.profile.polarity then
 		self:RegisterEvent("PLAYER_AURAS_CHANGED")
 		self:ScheduleEvent("BigWigs_Message", 27, L["pswarn3"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Nature_Lightning")

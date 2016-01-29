@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -38,6 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsPatchwerk = BigWigs:NewModule(boss)
 BigWigsPatchwerk.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsPatchwerk.enabletrigger = boss
+BigWigsPatchwerk.bossSync = "Patchwerk"
 BigWigsPatchwerk.toggleoptions = {"enrage", "bosskill"}
 BigWigsPatchwerk.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 
@@ -46,6 +47,7 @@ BigWigsPatchwerk.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 ------------------------------
 
 function BigWigsPatchwerk:OnEnable()
+    self.started = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

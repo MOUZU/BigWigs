@@ -56,6 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsRazuvious = BigWigs:NewModule(boss)
 BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsRazuvious.enabletrigger = { boss }
+BigWigsRazuvious.bossSync = "Razuvious"
 BigWigsRazuvious.wipemobs = { understudy }
 BigWigsRazuvious.toggleoptions = {"shout", "unbalance", "shieldwall", "bosskill"}
 BigWigsRazuvious.revision = tonumber(string.sub("$Revision: 15233 $", 12, -3))
@@ -65,6 +66,7 @@ BigWigsRazuvious.revision = tonumber(string.sub("$Revision: 15233 $", 12, -3))
 ------------------------------
 
 function BigWigsRazuvious:OnEnable()
+    self.started = nil
 	self.timeShout = 30
 	self.prior = nil
 
@@ -139,8 +141,10 @@ function BigWigsRazuvious:Unbalance(msg)
 end
 
 
-function BigWigsRazuvious:BigWigs_RecvSync( sync )
-	if sync == "RazuviousShout" then
+function BigWigsRazuvious:BigWigs_RecvSync(sync, rest, nick)
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+	elseif sync == "RazuviousShout" then
 		self:CancelScheduledEvent("bwrazuviousnoshout")
 		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )		
 		if self.db.profile.shout then
