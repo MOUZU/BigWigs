@@ -114,14 +114,14 @@ BigWigsRagnaros.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsRagnaros:OnEnable()
-	started = nil
-	sonsdead = 0
+	self.started = nil
+	self.sonsdead = 0
+    
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "RagnarosSonDeadX", 0.7)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RagnarosKnockback", 5)
 end
 
@@ -131,8 +131,10 @@ end
 
 function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["sonofflame"]) then
-		self:TriggerEvent("BigWigs_SendSync", "RagnarosSonDeadX")
+        self.sonsdead = self.sonsdead + 1;
+		self:TriggerEvent("BigWigs_SendSync", "RagnarosSonDeadX " .. self.sonsdead)
 	else
+        -- TODO: take a look at this
 		self:GenericBossDeath(msg)
 	end
 end
@@ -143,16 +145,19 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.aoeknock then
 			self:TriggerEvent("BigWigs_SendSync", "RagnarosKnockback")
 		end
-	elseif sync == "RagnarosSonDeadX" then
-		sonsdead = sonsdead + 1
-		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", string.format(L["sonsdeadwarn"], sonsdead), "Positive")
-		end
-		if sonsdead == 8 then
-			self:CancelScheduledEvent("bwragnarosemerge")
-			self:TriggerEvent("BigWigs_StopBar", L["emerge_bar"])
-			sonsdead = 0 -- reset counter
-		end
+	elseif sync == "RagnarosSonDeadX" and rest and rest ~= "" then
+        rest = tonumber(rest)
+        if type(rest) == "number" and rest <= 8 and self.sonsdead < rest then
+            self.sonsdead = rest
+            if self.db.profile.adds then
+                self:TriggerEvent("BigWigs_Message", string.format(L["sonsdeadwarn"], self.sonsdead), "Positive")
+            end
+            if self.sonsdead == 8 then
+                self:CancelScheduledEvent("bwragnarosemerge")
+                self:TriggerEvent("BigWigs_StopBar", L["emerge_bar"])
+                self.sonsdead = 0
+            end
+        end
 	elseif sync == "RagnarosKnockback" then
 		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 24, L["knockback_soon_message"], "Urgent", true, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 29, "Interface\\Icons\\Spell_Fire_SoulBurn")

@@ -7,6 +7,7 @@
 - <b>(100%)</b> Lucifron's Curse, changed the regular timer from 20 to 15s
 - <b>(100%)</b> Impending Doom
 - <b>(100%)</b> Dominate Mind, I don't think it's necessary to implement a timer for the next mc and the normal one works fine
+- <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(RREMOVED)</b> Shadow Shock, wasn't accurate - is maybe not possible to do - and isn't worth it
 
 # Magmadar
@@ -17,12 +18,13 @@
 
 ## Gehennas
 - <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
+- <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 3s for that
 - <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s. THE TRIGGER is not working
 - <b>(QA)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
 
 ## Garr
-- <b>(100%)</b> Addcount
+- <b>(100%)</b> Addcount, this counting algorithm seems to already be perfect
 - Magma Shackles and Antimagnetic Pulse are RNG and can not be accurately predicted from my research
 
 ## Baron Geddon
@@ -41,7 +43,7 @@
 - <b>(100%)</b> WarnIcon, Deaden Magic icon appears for players who can purge it
 
 ## Sulfuron Harbringer
-- <b>(100%)</b> Addcount
+- <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(100%)</b> Knockback, increased the timer from 9.5 to 13.5s
 - <b>(QA)</b> Flame Spear, added timer every 13s
 - <b>(TODO)</b> add big healicons
@@ -59,7 +61,7 @@
 - <b>(100%)</b> Knockback, increased the timer from 25s to 28s
 - <b>(100%)</b> Hammer of Ragnaros (Caster Knockback), added timer with 25s
 - <b>(100%)</b> Submerge/Emerge timer
-- <b>(100%)</b> Addcount
+- <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(QA)</b> WarnIcon, Sprint Icon appears 5 seconds prior to Knockback
 
 <br \><br \>

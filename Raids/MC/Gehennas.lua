@@ -15,7 +15,6 @@ L:RegisterTranslations("enUS", function() return {
 	trigger3 = "You are afflicted by Rain of Fire",
 	trigger4 = "Gehennas' Curse was resisted",
 	dead1 = "Flamewaker dies",
-	dead2 = "Gehennas dies",
 	addmsg = "%d/2 Flamewakers dead!",
 	flamewaker_name = "Flamewaker",
 
@@ -48,7 +47,6 @@ L:RegisterTranslations("deDE", function() return {
 	trigger3 = "Ihr seid von Feuerregen betroffen",
 	trigger4 = "Gehennas\' Fluch(.+) widerstanden",
 	dead1 = "Flammensch\195\188rer stirbt",
-	dead2 = "Gehennas stirbt",
 	addmsg = "%d/2 Flammensch\195\188rer tot!",
 	flamewaker_name = "Flammensch\195\188rer",
 
@@ -93,8 +91,8 @@ BigWigsGehennas.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 
 function BigWigsGehennas:OnEnable()
     self.started = false
-	flamewaker = 0
-	gehennasdead = 0
+	self.flamewaker = 0
+	
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -109,9 +107,6 @@ function BigWigsGehennas:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasCurse", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasShadowbolt", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasShadowboltCast", 1)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasAddDead", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasAllDead", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasGehennasDead", 3)
 end
 
 ------------------------------
@@ -121,7 +116,6 @@ end
 function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
-        if sync ~= "GehennasEngaged" then self:TriggerEvent("BigWigs_SendSync", "GehennasEngaged") end
         
 		if self.db.profile.curse then
 			self:ScheduleEvent("messagewarn2", "BigWigs_Message", 7, L["warn1"], "Urgent")
@@ -138,30 +132,12 @@ function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 0.5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
         self:ScheduleEvent("BigWigs_StartBar", 0.5, self, L["bar3text"], 3, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
-	elseif sync == "GehennasAddDead" then
-		flamewaker = flamewaker + 1
-		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], flamewaker), "Positive")
-		end
-		if ((flamewaker == 2) and (gehennasdead == 1)) then
-			self:TriggerEvent("BigWigs_SendSync", "GehennasAllDead")
-		end
-	elseif sync == "GehennasGehennasDead" then
-		self:CancelScheduledEvent("messagewarn1")
-		self:CancelScheduledEvent("messagewarn2")
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar1text"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar2text"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])
-		gehennasdead = 1
-		if self.db.profile.bosskill then
-			self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory")
-		end
-		if ((flamewaker == 2) and (gehennasdead == 1)) then
-			self:TriggerEvent("BigWigs_SendSync", "GehennasAllDead")
-		end
-	elseif sync == "GehennasAllDead" then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		self.core:ToggleModuleActive(self, false)
+	elseif sync == "GehennasAddDead" and rest and rest ~= "" then
+        rest = tonumber(rest)
+        if type(rest) == "number" and rest <= 2 and self.flamewaker < rest then
+            self.flamewaker = rest
+            self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.flamewaker), "Positive")
+        end
 	end
 end
 
@@ -186,8 +162,7 @@ end
 
 function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["dead1"]) then
-		self:TriggerEvent("BigWigs_SendSync", "GehennasAddDead")
-	elseif string.find(msg, L["dead2"]) then
-		self:TriggerEvent("BigWigs_SendSync", "GehennasGehennasDead")
+        self.flamewaker = self.flamewaker + 1;
+		self:TriggerEvent("BigWigs_SendSync", "GehennasAddDead " .. self.flamewaker)
 	end
 end

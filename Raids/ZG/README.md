@@ -7,6 +7,8 @@
 - <b>(99%)</b> Heal (Phase 2), added 'Next' timer with 20s
 
 ## High Priest Venoxis
+- <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
+- <b>(DG)</b> maybe a WarnIcon when standing in a poison cloud in p2 
 
 ## High Priestess Mar'li
 

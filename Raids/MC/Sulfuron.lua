@@ -11,7 +11,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	triggeradddead = "Flamewaker Priest dies",
-	triggerbossdead = "Sulfuron Harbinger dies",
 	triggercast = "begins to cast Dark Mending",
     spear_cast = "begins to perform Flame Spear",
 	healbar = "Dark Mending",
@@ -45,7 +44,6 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	triggeradddead = "Flamewaker Priest stirbt",
-	triggerbossdead = "Sulfuron Harbinger stirbt",
 	triggercast = "beginnt Dunkle Besserung",
     spear_cast = "begins to perform Flame Spear",
 	healbar = "Dunkle Besserung",
@@ -94,8 +92,9 @@ BigWigsSulfuron.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 ------------------------------
 
 function BigWigsSulfuron:OnEnable()
-	deadpriests = 0
-	sulfurondead = 0
+    self.started = nil
+    self.deadpriests = 0
+    
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Events")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Events")
@@ -105,9 +104,6 @@ function BigWigsSulfuron:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronAddHeal", 1)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronAddDead", 1)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronAllDead", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronSulfuronDead", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronKnockback", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SulfuronSpear", 5)
 end
@@ -118,9 +114,8 @@ end
 
 function BigWigsSulfuron:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["triggeradddead"]) then
-		self:TriggerEvent("BigWigs_SendSync", "SulfuronAddDead")
-	elseif string.find(msg, L["triggerbossdead"]) then
-		self:TriggerEvent("BigWigs_SendSync", "SulfuronSulfuronDead")
+        self.deadpriests = self.deadpriests + 1;
+		self:TriggerEvent("BigWigs_SendSync", "SulfuronAddDead " .. self.deadpriests)
 	end
 end
 
@@ -140,39 +135,23 @@ end
 
 function BigWigsSulfuron:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
 		if self.db.profile.knockback then
 			self:ScheduleEvent("BigWigs_Message", 2.8, L["knockbackannounce"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 5.8 , "Interface\\Icons\\Spell_Fire_Fireball")
 		end
-	elseif sync == "SulfuronAddDead" then
-		deadpriests = deadpriests + 1
-        if deadpriests < 5 then
-            if self.db.profile.adds then
-                self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], deadpriests), "Positive")
-            end
-            if ((deadpriests == 4) and (sulfurondead == 1)) then
-                self:TriggerEvent("BigWigs_SendSync", "SulfuronAllDead")
-            end
-		end
-	elseif sync == "SulfuronSulfuronDead" then
-		self:CancelScheduledEvent("messagewarn1")
-		self:TriggerEvent("BigWigs_StopBar", self, L["knockbacktimer"])
-		sulfurondead = 1
-		if self.db.profile.bosskill then
-			self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory")
-		end
-		if ((deadpriests == 4) and (sulfurondead == 1)) then
-			self:TriggerEvent("BigWigs_SendSync", "SulfuronAllDead")
-		end
+	elseif sync == "SulfuronAddDead" and rest and rest ~= "" then
+        rest = tonumber(rest)
+        if type(rest) == "number" and rest <= 4 and self.deadpriests < rest then
+            self.deadpriests = rest
+            self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.deadpriests), "Positive")
+        end
 	elseif sync == "SulfuronAddHeal" and self.db.profile.heal then		
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Attention", true, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["healbar"], 2 , "Interface\\Icons\\Spell_Shadow_ChillTouch")
 	elseif sync == "SulfuronKnockback" and self.db.profile.knockback then
 		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 10.5, L["knockbackannounce"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["knockbacktimer"], 13.5 , "Interface\\Icons\\Spell_Fire_Fireball")
-	elseif sync == "SulfuronAllDead" then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		self.core:ToggleModuleActive(self, false)
     elseif sync == "SulfuronSpear" then
         self:TriggerEvent("BigWigs_StartBar", self, "Flame Spear", 13 , "Interface\\Icons\\Spell_Fire_FlameBlades")
 	end

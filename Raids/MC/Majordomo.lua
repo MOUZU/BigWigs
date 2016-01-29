@@ -107,20 +107,17 @@ BigWigsMajordomo.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 
 function BigWigsMajordomo:OnEnable()
     self.started = nil
-	hdead = 0
-	edead = 0
-	firstshield = 0
+	self.hdead = 0
+	self.edead = 0
+    
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "DomoHealerDead", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DomoEliteDead", 0.7)
 	self:TriggerEvent("BigWigs_ThrottleSync", "DomoAuraDamage", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "DomoAuraMagic", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DomoPull", 20)
 end
 
 function BigWigsMajordomo:VerifyEnable(unit)
@@ -154,29 +151,33 @@ end
 
 function BigWigsMajordomo:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["healdead"]) then
-		self:TriggerEvent("BigWigs_SendSync", "DomoHealerDead")
+        self.hdead = self.hdead + 1;
+		self:TriggerEvent("BigWigs_SendSync", "DomoHealerDead " .. self.hdead)
 	elseif string.find(msg, L["elitedead"]) then
-		self:TriggerEvent("BigWigs_SendSync", "DomoEliteDead")
+        self.edead = self.edead + 1;
+		self:TriggerEvent("BigWigs_SendSync", "DomoEliteDead " .. self.edead)
 	end
 end
 
 function BigWigsMajordomo:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-		if firstshield == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "DomoCombatStart")
-		end
-    elseif sync == "DomoPull" and not self.started then
+	if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "DomoPull")) then
         self.started = true
         if self.db.profile.magic or self.db.profile.dmg then
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
 			self:ScheduleEvent("BigWigs_Message", 27, L["warn3"], "Urgent")
 		end
-	elseif sync == "DomoHealerDead" and self.db.profile.adds then
-		hdead = hdead + 1
-		self:TriggerEvent("BigWigs_Message", string.format(L["hdeadmsg"], hdead), "Positive")
-	elseif sync == "DomoEliteDead" and self.db.profile.adds then
-		edead = edead + 1
-		self:TriggerEvent("BigWigs_Message", string.format(L["edeadmsg"], edead), "Positive")
+	elseif sync == "DomoHealerDead" and self.db.profile.adds and rest and rest ~= "" then
+        rest = tonumber(rest)
+        if type(rest) == "number" and rest <= 4 and self.hdead < rest then
+            self.hdead = rest
+            self:TriggerEvent("BigWigs_Message", string.format(L["hdeadmsg"], self.hdead), "Positive")
+        end
+	elseif sync == "DomoEliteDead" and self.db.profile.adds and rest and rest ~= "" then
+        rest = tonumber(rest)
+        if type(rest) == "number" and rest <= 4 and self.edead < rest then
+            self.edead = rest
+            self:TriggerEvent("BigWigs_Message", string.format(L["edeadmsg"], self.edead), "Positive")
+        end
 	elseif sync == "DomoAuraMagic" then
 		if self.db.profile.magic then
             self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])

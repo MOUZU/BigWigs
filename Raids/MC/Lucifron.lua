@@ -27,7 +27,6 @@ L:RegisterTranslations("enUS", function() return {
 	deathyou_trigger = "You die.",
 	deathother_trigger = "(.*) dies.",
 	deadaddtrigger = "Flamewaker Protector dies",
-	deadbosstrigger = "Lucifron dies",
 	add_name = "Flamewaker Protector",
 	
 	mindcontrol_message = "%s is mindcontrolled!",
@@ -81,7 +80,6 @@ L:RegisterTranslations("deDE", function() return {
 	deathyou_trigger = "Du stirbst.",
 	deathother_trigger = "(.*) stirbt.",
 	deadaddtrigger = "Besch\195\188tzer der Flammensch\195\188rer stirbt.",
-	deadbosstrigger = "Lucifron stirbt",
 	add_name = "Flamewaker Protector",
 	
 	mindcontrol_message = "%s ist ferngesteuert!",
@@ -135,7 +133,6 @@ BigWigsLucifron.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 function BigWigsLucifron:OnEnable()
     self.started = nil
 	self.protector = 0
-	self.lucifrondead = nil
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -157,9 +154,6 @@ function BigWigsLucifron:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronCurseRep", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronShock", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronDoomRep", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronAddDead", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronAllDead", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LucifronLucifronDead", 3)
 end
 
 ------------------------------
@@ -175,7 +169,7 @@ function BigWigsLucifron:Event(msg)
 	elseif ((string.find(msg, L["trigger2"])) or (string.find(msg, L["trigger6"]))) then
 		self:TriggerEvent("BigWigs_SendSync", "LucifronDoomRep")
 	elseif ((string.find(msg, L["trigger3"])) or (string.find(msg, L["trigger4"]))) then
-		--self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
+		self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
 	elseif string.find(msg, L["mindcontrolyou_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "LucifronMC_"..UnitName("player"))
 	elseif string.find(msg, L["mindcontrolyouend_trigger"]) then
@@ -194,7 +188,6 @@ end
 function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
-        if sync ~= "LucifronEngaged" then self:TriggerEvent("BigWigs_SendSync", "LucifronEngaged") end
         
         if self.db.profile.curse then
 			self:ScheduleEvent("messagewarn4", "BigWigs_Message", 10, L["warn1"], "Attention")
@@ -204,7 +197,7 @@ function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("messagewarn3", "BigWigs_Message", 5, L["warn3"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 10, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
 		end
-		--self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
+		self:TriggerEvent("BigWigs_SendSync", "LucifronShock")
 	elseif sync == "LucifronCurseRep" and self.db.profile.curse then
 		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 10, L["warn1"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
@@ -212,7 +205,7 @@ function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("messagewarn2", "BigWigs_Message", 15, L["warn3"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
 	elseif sync == "LucifronShock" and self.db.profile.shock then
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 6, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
+		--self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 6, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
 	elseif string.find(sync, "LucifronMC_") then
 		if self.db.profile.mc then
 			chosenone = string.sub(sync,12)
@@ -229,39 +222,20 @@ function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
 			luckyone = string.sub(sync,15)
 			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["mindcontrol_bar"], luckyone))
 		end
-	elseif sync == "LucifronAddDead" then
-		self.protector = self.protector + 1
-		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.protector), "Positive")
-		end
-		if (self.protector == 2) and self.lucifrondead then
-			self:TriggerEvent("BigWigs_SendSync", "LucifronAllDead")
-		end
-	elseif sync == "LucifronLucifronDead" then
-		self:CancelScheduledEvent("messagewarn1")
-		self:CancelScheduledEvent("messagewarn2")
-		self:CancelScheduledEvent("messagewarn3")
-		self:CancelScheduledEvent("messagewarn4")
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar1text"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar2text"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])
-		self.lucifrondead = true
-		if self.db.profile.bosskill then
-			self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory")
-		end
-		if self.protector == 2 then
-			self:TriggerEvent("BigWigs_SendSync", "LucifronAllDead")
-		end
-	elseif sync == "LucifronAllDead" then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		self.core:ToggleModuleActive(self, false)
+	elseif sync == "LucifronAddDead" and rest and rest ~= "" then
+        rest = tonumber(rest)
+        if type(rest) == "number" and rest <= 4 and self.protector < rest then
+            self.protector = rest
+            if self.db.profile.adds then
+                self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.protector), "Positive")
+            end
+        end
 	end
 end
 
 function BigWigsLucifron:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["deadaddtrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "LucifronAddDead")
-	elseif string.find(msg, L["deadbosstrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "LucifronLucifronDead")
+        self.protector = self.protector +1;
+		self:TriggerEvent("BigWigs_SendSync", "LucifronAddDead " .. self.protector)
 	end
 end
