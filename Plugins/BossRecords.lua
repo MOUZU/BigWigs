@@ -74,7 +74,6 @@ function BigWigsBossRecords:EndBossfight(module)
             -- it's our first kill
             DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN"], c.name, self:FormatTime(timeSpent)))
         end
-        self:TriggerEvent("BigWigs_Message", c.name .. " has been defeated!", "Positive")
     end
 end
 

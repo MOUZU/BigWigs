@@ -845,7 +845,10 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
     elseif sync == "KTM_RESETTED" then
         BigWigs.lastReset = GetTime()
     elseif sync == "Bosskill" and module then
-        self:ToggleModuleActive(module, false)
+        if self:IsModuleActive(module) then
+            self:ToggleModuleActive(module, false)
+            self:TriggerEvent("BigWigs_Message", module:ToString() .. " has been defeated!", "Positive")
+        end
         self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
