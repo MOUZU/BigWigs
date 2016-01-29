@@ -467,7 +467,8 @@ end
 function BigWigs:CheckForBosskill(msg)
     for name, module in BigWigs:IterateModules() do
         if module:IsBossModule() and BigWigs:IsModuleActive(module) then
-            if string.find(msg, module:ToString()) then
+            if msg == string.format(UNITDIESOTHER, module:ToString()) then
+            --if string.find(msg, module:ToString()) then
                 module:SendBosskillSync()
             end
         end
@@ -845,6 +846,7 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
         BigWigs.lastReset = GetTime()
     elseif sync == "Bosskill" and module then
         self:ToggleModuleActive(module, false)
+        self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 
