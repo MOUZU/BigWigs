@@ -54,7 +54,6 @@ L:RegisterTranslations("enUS", function() return {
     fear_next = "Next Fear",
 	deepbreath_cast = "Deep Breath",
 	flamebreath_cast = "Flame Breath",
-	flamebreath_next = "Next Flame Breath",
 	wingbuffet_cast = "Wing Buffet",
 	fireball_cast = "Fireball",
 } end )
@@ -104,7 +103,6 @@ L:RegisterTranslations("deDE", function() return {
     fear_next = "Nächste Furcht",
 	deepbreath_cast = "Tiefer Atem",
 	flamebreath_cast = "Flammenatem",
-	flamebreath_next = "Nächster Flammenatem",
 	wingbuffet_cast = "Fl\195\188gelsto\195\159",
 	fireball_cast = "Feuerball",
 } end )
@@ -195,8 +193,6 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self.started = true
         self.phase = 1
-        self:TriggerEvent("BigWigs_StartBar", self, L["flamebreath_next"], 11, "Interface\\Icons\\Spell_Fire_Fire")
-        self:TriggerEvent("BigWigs_StartBar", self, "Next Wing Buffet", 14, "Interface\\Icons\\INV_Misc_MonsterScales_14")
         self:KTM_SetTarget(boss)
 	elseif sync == "OnyPhaseTwo" and self.phase < 2 then
 		transitioned = true --to stop sending new syncs
@@ -214,13 +210,7 @@ function BigWigsOnyxia:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_cast"], 5, "Interface\\Icons\\Spell_Fire_SelfDestruct", true, "black")
         self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Lavaspawn", 5)
 	elseif sync == "OnyFlameBreath" and self.db.profile.flamebreath then
-        self:TriggerEvent("BigWigs_StopBar", self, L["flamebreath_next"])
 		self:TriggerEvent("BigWigs_StartBar", self, L["flamebreath_cast"], 2, "Interface\\Icons\\Spell_Fire_Fire")
-        if self.phase == 3 then
-            self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 15, "Interface\\Icons\\Spell_Fire_Fire")
-        else
-            self:ScheduleEvent("BigWigs_StartBar", 2, self, L["flamebreath_next"], 10, "Interface\\Icons\\Spell_Fire_Fire")
-        end
 	elseif sync == "OnyFireball" and self.db.profile.fireball then 
 		self:TriggerEvent("BigWigs_StartBar", self, L["fireball_cast"], 3, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "red")
 	elseif sync == "OnyBellowingRoar" and self.db.profile.onyfear then 
