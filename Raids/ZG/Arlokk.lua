@@ -90,7 +90,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsArlokk = BigWigs:NewModule(boss)
 BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsArlokk.enabletrigger = boss
-BigWigsArlokk.bossSync = "Arlokk"
+BigWigsArlokk.bossSync = "High Priestess Arlokk"
 BigWigsArlokk.toggleoptions = {"phase", "whirlwind", "vanish", "mark", "puticon", "bosskill"}
 BigWigsArlokk.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 
@@ -144,7 +144,7 @@ function BigWigsArlokk:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and (rest == self.bossSync or rest == "High Priestess Arlokk") then
+	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
 		self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseTroll")
 	elseif sync == "ArlokkPhaseTroll" then
 		vanished = nil

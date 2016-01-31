@@ -141,7 +141,7 @@ end
 
 function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-		started = true
+		self.started = true
 		if self.db.profile.aoeknock then
 			self:TriggerEvent("BigWigs_SendSync", "RagnarosKnockback")
 		end
@@ -161,6 +161,7 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "RagnarosKnockback" then
 		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 24, L["knockback_soon_message"], "Urgent", true, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 29, "Interface\\Icons\\Spell_Fire_SoulBurn")
+        self:ScheduleEvent("BigWigs_ShowIcon", 24, "Interface\\Icons\\Ability_Rogue_Sprint", 5)
 	end
 end
 

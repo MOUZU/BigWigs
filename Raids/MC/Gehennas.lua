@@ -11,7 +11,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	trigger1 = "afflicted by Gehennas",
-	trigger2 = "Gehennas begins to cast Shadow Bolt",
+	--trigger2 = "Gehennas begins to cast Shadow Bolt",
 	trigger3 = "You are afflicted by Rain of Fire",
 	trigger4 = "Gehennas' Curse was resisted",
 	dead1 = "Flamewaker dies",
@@ -22,8 +22,6 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "Gehennas' Curse - Decurse NOW!",
 
 	bar1text = "Gehennas' Curse",
-	bar2text = "Shadow Bolt cast",
-	bar3text = "Shadow Bolt",
 	firewarn = "Move from FIRE!",
 
 	cmd = "Gehennas",
@@ -31,10 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 	adds_cmd = "adds",
 	adds_name = "Dead adds counter",
 	adds_desc = "Announces dead Flamewakers",
-
-	shadowbolt_cmd = "shadowbolt",
-	shadowbolt_name = "Gehennas' Shadow Bolt alert",
-	shadowbolt_desc = "Warn when Gehennas start casting Shadow Bolt",
 	
 	curse_cmd = "curse",
 	curse_name = "Gehennas' Curse alert",
@@ -43,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "von Gehennas(.+)Fluch betroffen",
-	trigger2 = "Gehennas beginnt Schattenblitz",
+	--trigger2 = "Gehennas beginnt Schattenblitz",
 	trigger3 = "Ihr seid von Feuerregen betroffen",
 	trigger4 = "Gehennas\' Fluch(.+) widerstanden",
 	dead1 = "Flammensch\195\188rer stirbt",
@@ -54,8 +48,6 @@ L:RegisterTranslations("deDE", function() return {
 	warn2 = "Gehennas' Fluch - JETZT Entfluchen!",
 
 	bar1text = "Gehennas' Fluch",
-	bar2text = "wirkt Schattenblitz",
-	bar3text = "Schattenblitz",
 	firewarn = "Raus aus dem Feuer!",
 
 	cmd = "Gehennas",
@@ -63,10 +55,6 @@ L:RegisterTranslations("deDE", function() return {
 	adds_cmd = "adds",
 	adds_name = "Z\195\164hler f\195\188r tote Adds",
 	adds_desc = "Verk\195\188ndet Flammensch\195\188rer Tod",
-
-	shadowbolt_cmd = "shadowbolt",
-	shadowbolt_name = "Alarm f\195\188r Gehennas' Schattenblitz",
-	shadowbolt_desc = "Warnen wenn Gehennas beginnt Schattenblitz zu wirken",
 	
 	curse_cmd = "curse",
 	curse_name = "Alarm f\195\188r Gehennas' Fluch",
@@ -82,7 +70,7 @@ BigWigsGehennas.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGehennas.enabletrigger = boss
 BigWigsGehennas.bossSync = "Gehennas"
 BigWigsGehennas.wipemobs = { L["flamewaker_name"] }
-BigWigsGehennas.toggleoptions = {"adds", "shadowbolt", "curse", "bosskill"}
+BigWigsGehennas.toggleoptions = {"adds", "curse", "bosskill"}
 BigWigsGehennas.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 
 ------------------------------
@@ -105,8 +93,6 @@ function BigWigsGehennas:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasCurse", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasShadowbolt", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasShadowboltCast", 1)
 end
 
 ------------------------------
@@ -121,17 +107,10 @@ function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("messagewarn2", "BigWigs_Message", 7, L["warn1"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 12, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		end
-		if self.db.profile.shadowbolt then
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
-		end
         self:TriggerEvent("BigWigs_StartBar", self, "Next Rain", 10, "Interface\\Icons\\Spell_Shadow_RainOfFire")
 	elseif sync == "GehennasCurse" and self.db.profile.curse then
 		self:ScheduleEvent("messagewarn1", "BigWigs_Message", 26, L["warn1"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 31, "Interface\\Icons\\Spell_Shadow_BlackPlague")
-	elseif sync == "GehennasShadowboltCast" and self.db.profile.shadowbolt then
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar3text"])
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 0.5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
-        self:ScheduleEvent("BigWigs_StartBar", 0.5, self, L["bar3text"], 3, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
 	elseif sync == "GehennasAddDead" and rest and rest ~= "" then
         rest = tonumber(rest)
         if type(rest) == "number" and rest <= 2 and self.flamewaker < rest then
@@ -145,8 +124,6 @@ end
 function BigWigsGehennas:Event(msg)
     if ((string.find(msg, L["trigger1"])) or (string.find(msg, L["trigger4"]))) then
 		self:TriggerEvent("BigWigs_SendSync", "GehennasCurse")
-	elseif (string.find(msg, L["trigger2"])) then
-		self:TriggerEvent("BigWigs_SendSync", "GehennasShadowboltCast")
 	elseif (string.find(msg, L["trigger3"])) then
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
         self:ScheduleEvent("BigWigs_StartBar", 6, self, "Next Rain", 9, "Interface\\Icons\\Spell_Shadow_RainOfFire")

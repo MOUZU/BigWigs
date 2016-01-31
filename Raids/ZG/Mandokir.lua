@@ -154,7 +154,7 @@ end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg, L["engage_trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "MandokirEngaged")
+        self:SendEngageSync()
     else
         local gazetime
         local _,_,watchedplayer,_ = string.find(msg, L["watch_trigger"])
@@ -235,6 +235,6 @@ function BigWigsMandokir:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.puticon then
 			self:TriggerEvent("BigWigs_RemoveRaidIcon", rest)
 		end
-        self:TriggerEvent("BigWigs_StartBar", self, "Next Gaze", 12, "Interface\\Icons\\Spell_Shadow_Charm")
+        self:TriggerEvent("BigWigs_StartBar", self, "Next Gaze", 11, "Interface\\Icons\\Spell_Shadow_Charm")
 	end
 end

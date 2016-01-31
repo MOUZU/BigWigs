@@ -8,7 +8,7 @@
 - <b>(100%)</b> Impending Doom
 - <b>(100%)</b> Dominate Mind, I don't think it's necessary to implement a timer for the next mc and the normal one works fine
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
-- <b>(RREMOVED)</b> Shadow Shock, wasn't accurate - is maybe not possible to do - and isn't worth it
+- <b>(REMOVED)</b> Shadow Shock, wasn't accurate - is maybe not possible to do - and isn't worth it
 
 # Magmadar
 - <b>(100%)</b> Panic, changed timer from 7 to 20s for the first one and from 30 to 35 to the regular ones (do I want to add an WarnIcon for that? few seconds prior and until it's gone)
@@ -19,7 +19,7 @@
 ## Gehennas
 - <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
-- <b>(QA)</b> Shadow Bolt, timer for the next cast and the current will no longer overlap. lowered the time for the next from 4s to 3s for that
+- <b>(REMOVED)</b> Shadow Bolt
 - <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s. THE TRIGGER is not working
 - <b>(QA)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
 
@@ -62,7 +62,7 @@
 - <b>(100%)</b> Hammer of Ragnaros (Caster Knockback), added timer with 25s
 - <b>(100%)</b> Submerge/Emerge timer
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
-- <b>(QA)</b> WarnIcon, Sprint Icon appears 5 seconds prior to Knockback
+- <b>(100%)</b> WarnIcon, Sprint Icon appears 5 seconds prior to Knockback
 
 <br \><br \>
 ##### Prefix legend

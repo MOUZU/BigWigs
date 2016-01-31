@@ -16,7 +16,7 @@
 - <b>(QA)</b> added locale to trigger combat start
 - <b>(100%)</b> added 'Next Whirlwind' bar with 20s
 - <b>(QA)</b> added 'Charge' bar with the first one 15. Need trigger for the ones following that, the following should get +30s
-- <b>(100%)</b> added 'Next Gaze' bar with 12s (should be 20s counting from 'Incoming Gaze')
+- <b>(100%)</b> added 'Next Gaze' bar with 11s (should be 19s counting from 'Incoming Gaze')
 - <b>(100%)</b> added missing locale for 'Incoming Gaze'
 
 ## High Priest Thekal
@@ -33,7 +33,7 @@
 ## Hakkar the Soulflayer
 - <b>(100%)</b> Mind Control, fixed Next timer to only appear after the current was finished and changed the value to 11s.
 - <b>(100%)</b> Blood Siphon, first timer got its timer adjusted by -1s
-- <b>(QA)</b> WarnIcon, WindSerpent icon appears when you've hit the 30s mark to the next Blood Siphon. The icon shall disappear either when you've gained the blood from the Pet or the Blood Siphon starts.
+- <b>(100%)</b> WarnIcon, WindSerpent icon appears when you've hit the 30s mark to the next Blood Siphon. The icon shall disappear either when you've gained the blood from the Pet or the Blood Siphon starts.
 
 ## Edge of Madness
 

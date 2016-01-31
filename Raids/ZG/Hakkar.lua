@@ -251,7 +251,7 @@ function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.siphon then
 			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 89, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 			self:ScheduleEvent("BigWigs_Message", 59, string.format(L["siphon_warning"], 30), "Urgent")
-            self:ScheduleEvent("BigWigs_ShowIcon", 60, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
+            self:ScheduleEvent("BigWigs_ShowIcon", 59, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
 			self:ScheduleEvent("BigWigs_Message", 79, string.format(L["siphon_warning"], 10), "Attention")
 		end
 		if self.db.profile.mc then
