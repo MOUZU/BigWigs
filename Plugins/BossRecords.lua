@@ -53,7 +53,6 @@ function BigWigsBossRecords:StartBossfight(module)
         c.startTime = GetTime()
         
         DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], c.name))
-        self:TriggerEvent("BigWigs_Message", c.name .. " engaged!", "Positive")
     end
 end
     
