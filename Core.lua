@@ -565,13 +565,16 @@ function BigWigs.modulePrototype:KTM_SetTarget(targetName, forceReset)
     end
 end
 
-function BigWigs.modulePrototype:KTM_ClearTarget(forceReset)
+function BigWigs:KTM_ClearTarget(forceReset)
     if IsAddOnLoaded("KLHThreatMeter") and (IsRaidLeader() or IsRaidOfficer()) then
         klhtm.net.clearmastertarget()
         if forceReset then
             self:KTM_Reset()
         end
     end
+end
+function BigWigs.modulePrototype:KTM_ClearTarget(forceReset)
+	BigWigs:KTM_ClearTarget(forceReset)
 end
 
 function BigWigs:PLAYER_TARGET_CHANGED()
@@ -858,6 +861,7 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
             end
         end
         self:TriggerEvent("BigWigs_RemoveRaidIcon")
+        self:KTM_ClearTarget()
 	end
 end
 
