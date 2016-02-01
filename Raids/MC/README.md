@@ -49,6 +49,7 @@
 - <b>(TODO)</b> add big healicons
 
 ## Golemagg the Incinerator
+- <b>(QA)</b> KTM MasterTarget on Golemagg at pull
 - Magma Splash, should I create an alert if the player is reaching x stacks?
 - Pyroblast, seems to be every 4s - should I create a timer for that?
 

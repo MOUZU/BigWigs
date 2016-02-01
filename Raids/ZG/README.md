@@ -5,10 +5,16 @@
 
 ## High Priestess Jeklik
 - <b>(99%)</b> Heal (Phase 2), added 'Next' timer with 20s
+- <b>(QA)</b> fixed Engage Sync
+- <b>(QA)</b> fixed Phase 2 Notifier
+- <b>(DG)</b> Fear, seems not to be timed - maybe just a cooldown
+- <b>(DG)</b> MindFlay, seems not to be timed - just a cooldown
+- <b>(QA)</b> WarnIcon, if you're standing in the fire in Phase 2 - I don't think the normal fire trigger code works though
 
 ## High Priest Venoxis
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
-- <b>(DG)</b> maybe a WarnIcon when standing in a poison cloud in p2 
+- <b>(100%)</b> KTM Reset, on Phase 2
+- <b>(QA)</b> WarnIcon, appears when you're standing in the cloud in P2
 
 ## High Priestess Mar'li
 

@@ -177,11 +177,10 @@ BigWigsJeklik.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 ------------------------------
 
 function BigWigsJeklik:OnEnable()
-    self.started = nil
-	firstfear = 0
-	phase = 0
-	self.lastHeal = 0
-	castingheal = 0
+    self.started        = nil
+    self.phase          = 0
+    self.lastHeal       = 0
+    self.castingheal    = 0
 	
     self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
     self:RegisterEvent("UNIT_HEALTH")
@@ -212,11 +211,8 @@ function BigWigsJeklik:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikFearIni", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikFearRep", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikFearTwoRep", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikPhaseOne", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikPhaseTwo", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikMindFlay", 1.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikMindFlayEnd", 1.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikHeal", 4)
@@ -230,28 +226,18 @@ end
 ------------------------------
 
 function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+	if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "JeklikPhaseOne")) then
         self.started = true
-		if firstfear == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "JeklikFearIni")
-		end
-		if phase == 0 then
-			self:TriggerEvent("BigWigs_SendSync", "JeklikPhaseOne")
-		end
-	elseif sync == "JeklikFearIni" then
-		firstfear = 1
+		self.phase = 1
 		if self.db.profile.fear then
-			self:TriggerEvent("BigWigs_StartBar", self, L["fearinitext"], 13, "Interface\\Icons\\Spell_Shadow_SummonImp")
+			self:TriggerEvent("BigWigs_StartBar", self, L["fearreptext"], 13, "Interface\\Icons\\Spell_Shadow_SummonImp")
 		end
-	elseif sync == "JeklikPhaseOne" then 
-		phase = 1
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["phaseone_message"], "Attention")
 		end
-	elseif sync == "JeklikPhaseTwo" then
-		--[[if IsAddOnLoaded("KLHThreatMeter") and (IsRaidLeader() or IsRaidOfficer()) then --reminder to fix KTM after this. Threat addons with threat addons, boss mod addons with boss mod addons.
-			klhtm.net.clearraidthreat()
-		end]]
+	elseif sync == "JeklikPhaseTwo" and self.phase < 2 then
+        self.phase = 2
+		self:KTM_Reset()
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["phasetwo_message"], "Attention")
 		end
@@ -284,14 +270,14 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StopBar", self, L["mindflaybar"])
 	elseif sync == "JeklikHeal" then
 		self.lastHeal = GetTime()
-		castingheal = 1
+		self.castingheal = 1
 		if self.db.profile.heal then
             self:TriggerEvent("BigWigs_StopBar", self, "Next Heal")
 			self:TriggerEvent("BigWigs_Message", L["greathealtext"], "Important", "Alarm")
 			self:TriggerEvent("BigWigs_StartBar", self, L["greathealbar"], 4, "Interface\\Icons\\Spell_Holy_Heal")
 		end
 	elseif sync == "JeklikHealStop" then
-		castingheal = 0
+		self.castingheal = 0
 		if self.db.profile.heal then
 			self:TriggerEvent("BigWigs_StopBar", self, L["greathealbar"])
             if (self.lastHeal + 20) > GetTime() then
@@ -331,11 +317,11 @@ function BigWigsJeklik:Event(msg)
 	elseif string.find(msg, L["fearrep_trigger4"]) or string.find(msg, L["fearrep_trigger5"]) or string.find(msg, L["fearrep_trigger6"]) then
 		self:TriggerEvent("BigWigs_SendSync", "JeklikFearTwoRep")
 	elseif string.find(msg, L["attack_trigger1"]) or string.find(msg, L["attack_trigger2"]) or string.find(msg, L["attack_trigger3"]) or string.find(msg, L["attack_trigger4"]) then
-		if castingheal == 1 then 
+		if self.castingheal == 1 then 
 			if (GetTime()-self.lastHeal)<4 then
 				self:TriggerEvent("BigWigs_SendSync", "JeklikHealStop")
 			elseif (GetTime()-self.lastHeal)>=4 then
-				castingheal = 0
+				self.castingheal = 0
 			end
 		end
 	elseif msg == L["bomb_trigger"] then
@@ -346,11 +332,8 @@ function BigWigsJeklik:Event(msg)
 		if self.db.profile.announce then
 			if string.find(msg, L["liquidfirehitsyou_trigger"]) then
 				self:TriggerEvent("BigWigs_Message", L["firewarnyou"], "Attention", "Alarm")
-			elseif msg == L["liquidfireresistyou_trigger"] then
-				self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
-			elseif msg == L["liquidfireabsorbyou_trigger"] then
-				self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
-			elseif msg == L["liquidfireimmuneyou_trigger"] then
+                self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Lavaspawn", 2)
+			elseif msg == L["liquidfireresistyou_trigger"] or msg == L["liquidfireabsorbyou_trigger"] or msg == L["liquidfireimmuneyou_trigger"] then
 				self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
 			elseif liquidfirehitsother and liquidfirehitsother~=L["you"] then
 				self:TriggerEvent("BigWigs_SendTell", liquidfirehitsother, L["firewarn"])
@@ -369,8 +352,9 @@ function BigWigsJeklik:UNIT_HEALTH(msg)
     if UnitName(msg) == boss then
         if UnitHealthMax(msg) == 100 then
             -- in the current state of Nostalrius you can only get the HP percentages, this is just in case it changes in the future
-            if not self.phase2 and UnitHealth(msg) < 50 then
-                
+            if self.phase < 2 and UnitHealth(msg) < 50 then
+                self:TriggerEvent("BigWigs_SendSync", "JeklikPhaseTwo")
+                self:UnregisterEvent("UNIT_HEALTH")
             end
         end
     end
