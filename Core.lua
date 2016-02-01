@@ -578,19 +578,24 @@ function BigWigs.modulePrototype:KTM_ClearTarget(forceReset)
 end
 
 function BigWigs:PLAYER_TARGET_CHANGED()
-    if IsAddOnLoaded("KLHThreatMeter") and BigWigs.masterTarget then
+    if IsAddOnLoaded("KLHThreatMeter") and BigWigs.masterTarget and (IsRaidLeader() or IsRaidOfficer()) then
         if klhtm.target.targetismaster(BigWigs.masterTarget) then
+            -- the masterTarget was already setup correctly
             BigWigs:UnregisterEvent("PLAYER_TARGET_CHANGED")
+            BigWigs.masterTarget   	= nil
+            BigWigs.forceReset		= nil
             return
         end
         
-        if (IsRaidLeader() or IsRaidOfficer()) then
+        if UnitName("target") == BigWigs.masterTarget then
+       	    -- our new target is the wanted target, setup masterTarget now
             klhtm.net.sendmessage("target " .. BigWigs.masterTarget)
             if BigWigs.forceReset then
                 BigWigs:KTM_Reset()
                 BigWigs.forceReset = nil
             end
             BigWigs.masterTarget   = nil
+            BigWigs:UnregisterEvent("PLAYER_TARGET_CHANGED")
         end
     else
         BigWigs:UnregisterEvent("PLAYER_TARGET_CHANGED")
