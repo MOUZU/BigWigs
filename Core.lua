@@ -861,8 +861,13 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
     elseif sync == "Bosskill" and module then
         for name, mod in BigWigs:IterateModules() do
             if mod:IsBossModule() and BigWigs:IsModuleActive(mod) and mod.bossSync and mod.bossSync == module then
-                self:ToggleModuleActive(mod, false)
-                self:TriggerEvent("BigWigs_Message", mod:ToString() .. " has been defeated!", "Positive")
+                if module == "High Priest Thekal" and BigWigsThekal.phase < 2 then
+                    -- thekal is an exception
+                    self:ScheduleEvent("ThekalPhase2", BigWigsThekal.PhaseSwitch, 1)
+                else
+                    self:ToggleModuleActive(mod, false)
+                    self:TriggerEvent("BigWigs_Message", mod:ToString() .. " has been defeated!", "Positive")
+                end
             end
         end
         self:TriggerEvent("BigWigs_RemoveRaidIcon")

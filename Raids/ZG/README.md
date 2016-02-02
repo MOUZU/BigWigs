@@ -26,6 +26,10 @@
 - <b>(100%)</b> added missing locale for 'Incoming Gaze'
 
 ## High Priest Thekal
+- <b>(QA)</b> added locale to trigger phase 2
+- <b>(QA)</b> Knockback Phase 2, first one after 5s and the next one after 21s
+- <b>(QA)</b> Bloodlust, Phase 1: first one after 15s. Phase 2: first one after 29s
+- <b>(QA)</b> added a mechanism to the core to reactivate thekal mod after phase 1 ended, added a timer for the next phase
 
 ## High Priestess Arlokk
 - <b>(QA)</b> added locale to trigger combat
@@ -33,6 +37,11 @@
 - <b>(99%)</b> fixed trigger for Vanish, so 'Vanish' bar should display but it can't be 100% accurate. Changed its title to 'Estimated Return'
 
 ## Jin'do the Hexxer
+- <b>(100%)</b> Hex duration, from my research there is no way to predict the next hex accurately. added timer for first hex after 8s
+- <b>(DG)</b> Brain Wash Totem, the trigger doesn't work when it's destroyed. should come every ~21s
+- <b>(DG)</b> Healing Totem, the trigger on spawn doesn't work, idk about the one when it's destroyed. should come every 20s. added timer for the first one
+- <b>(DG)</b> Teleport, I don't have any data on this one
+- <b>(QA)</b> added locale to trigger combat
 
 ## Gahz'ranka
 

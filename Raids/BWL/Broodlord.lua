@@ -113,7 +113,6 @@ function BigWigsBroodlord:Event(msg)
 		if GetTime() - self.lastbw > 5 then
 			self:TriggerEvent("BigWigs_StartBar", self, L["bw_bar"], 8, "Interface\\Icons\\Spell_Holy_Excorcism_02", true, "Red")
 			self:ScheduleEvent("BigWigs_Message", 24, L["bw_warn"], "Urgent", true, "Alert")
-            self:ScheduleEvent("BigWigs_StartBar", 8, self, "Possible Blast Wave", 18, "Interface\\Icons\\Spell_Holy_Excorcism_02")
 		end
 		self.lastbw = GetTime()
 	end

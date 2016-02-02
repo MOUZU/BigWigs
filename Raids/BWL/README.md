@@ -5,15 +5,14 @@
 
 ## Razorgore the Untamed
 - <b>(100%)</b> First Wave, adjusted Bar and its Warning from 29s to 46s
-- <b>(100%)</b> Control Orb
+- <b>(99%)</b> Control Orb, it seems that it will not always trigger the control correctly
 - <b>(DG)</b> Mindcontrol, is the timer correct?
 - <b>(DG)</b> Polymorph, is the timer correct?
-- <b>(DG)</b> Egg Counter, is it counting correctly?
 - <b>(DG)</b> Conflagration, seems to be RNG
 - <b>(DG)</b> Fireball Volley, seems to be RNG
 - <b>(QA)</b> WarnIcon, Fireball Volley cast is announced via Fireball icon
 - <b>(DG)</b> War Stomp, timer
-- <b>(TODO)</b> Egg Counter, rework counting method and perhaps reworking&implementing CounterBars
+- <b>(DG)</b> Egg Counter. The only way I see this getting 100% accurate would be if we could somehow capture on the client controlling razorgore when the cast is being used and I currently have no clue how to get that. At the moment the chance is pretty high that we miss the first 1-3 eggs being destroyed since the position where razorgore spawns and the position the raid is is too far away so that it would be visible in the combat log. maybe hook CastPetAction(id)
 
 ## Vaelastrasz the Corrupt
 - <b>(100%)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 AND adjusted enUS locales to trigger combat
@@ -21,7 +20,7 @@
 - <b>(QA)</b> WarnIcon, Burning Adrenaline icon appears when it's on you
 
 ## Broodlord Lashlayer
-- <b>(99%)</b> Blast Wave, increased the timer for the first one from 12 to 19.5s. Added timer for 'Possible Blast Wave' which runs for 18s after the 8s Blast Wave(Debuff) timer runs out, this is just estimated and can never be accurate but shall give an estimation. The delay between Blast waves ranges between 20 and 40s from my research.
+- <b>(100%)</b> Blast Wave DURATION, increased the timer for the first one from 12 to 19.5s. The delay between Blast waves ranges between 20 and 40s from my research, the timer is for the Debuff duration.
 - <b>(100%)</b> WarnIcon, Mortal Strike icon appears if your target has Mortal Strike active OR if it's up on you
 
 ## Firemaw

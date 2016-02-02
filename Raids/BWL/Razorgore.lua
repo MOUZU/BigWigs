@@ -423,3 +423,5 @@ function BigWigsRazorgore:DestroyEggCheck()
 		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
 	end
 end
+
+

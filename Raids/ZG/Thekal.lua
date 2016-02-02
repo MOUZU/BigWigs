@@ -12,6 +12,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Thekal",
 
+    phase2_trigger = "fill me with your RAGE!",
 	roguename = "Zealot Zath",
 	shamanname = "Zealot Lor\'Khan",
 	phaseone_message = "Troll Phase",
@@ -97,6 +98,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	cmd = "Thekal",
 
+    phase2_trigger = "fill me with your RAGE!",
 	roguename = "Zealot Zath",
 	shamanname = "Zealot Lor\'Khan",
 	phaseone_message = "Troll Phase",
@@ -196,10 +198,12 @@ BigWigsThekal.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsThekal:OnEnable()
-	self.started = nil
+    self.started    = nil
+    self.phase      = 0
 	zathdead = nil
 	lorkhandead = nil
 	thekaldead = nil
+    self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF", "Fades")
@@ -231,6 +235,12 @@ end
 ------------------------------
 --      Events              --
 ------------------------------
+
+function BigWigsThekal:CHAT_MSG_MONSTER_YELL(msg)
+    if string.find(msg, L["phase2_trigger"]) then
+        self:TriggerEvent("BigWigs_SendSync", "ThekalPhaseTwo")
+    end
+end
 
 function BigWigsThekal:Event(msg)
 	local _,_,silenceother_triggerword = string.find(msg, L["silenceother_trigger"])
@@ -326,24 +336,22 @@ function BigWigsThekal:Fades(msg)
 end
 
 function BigWigsThekal:BigWigs_RecvSync(sync, rest, nick)
-	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+	if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "ThekalPhaseOne")) then
         self.started = true
-		self:TriggerEvent("BigWigs_SendSync", "ThekalPhaseOne")
-	elseif sync == "ThekalPhaseOne" then
-		started = true
-		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["phaseone_message"], "Attention")
-		end
-	elseif sync == "ThekalPhaseTwo" then
+        self.phase = 1
+	elseif sync == "ThekalPhaseTwo" and self.phase < 2 then
+        self.phase = 2
 		if self.db.profile.heal then
 			self:TriggerEvent("BigWigs_StopBar", L["heal_bar"])
 		end
 		if self.db.profile.bloodlust then
-			self:TriggerEvent("BigWigs_StopBar", string.format(L["bloodlust_bar"], rest))
+			self:TriggerEvent("BigWigs_StartBar", self, "Next Bloodlust", 29, "Interface\\Icons\\Spell_Nature_BloodLust")
 		end
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["phasetwo_message"], "Attention")
 		end
+        self:TriggerEvent("BigWigs_StartBar", self, "New Adds", 24, "Interface\\Icons\\Ability_Hunter_Pet_Cat")
+        self:TriggerEvent("BigWigs_StartBar", self, "Knockback", 5, "Interface\\Icons\\Ability_WarStomp")
 	elseif sync == "ThekalLorkhanHeal" and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Attention", "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["heal_bar"], 4, "Interface\\Icons\\Spell_Holy_Heal", true, "Black")
@@ -369,4 +377,10 @@ function BigWigsThekal:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "ThekalEnrage" and self.db.profile.enraged then
 		self:TriggerEvent("BigWigs_Message", L["enrage_message"], "Urgent")
 	end
+end
+
+function BigWigsThekal:PhaseSwitch()
+    BigWigs:ToggleModuleActive(BigWigsThekal, true)
+    BigWigsThekal:TriggerEvent("BigWigs_StartBar", BigWigsThekal, "Next Phase", 9, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
+    BigWigsThekal.phase = 1.5;
 end

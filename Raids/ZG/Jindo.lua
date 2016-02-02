@@ -10,6 +10,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
+    engage_trigger      = "Welcome to da great show friends",
 	triggerbrainwash = "afflicted by Brain Wash.$", -- Jin'do the Hexxer casts Summon Brain Wash Totem. stupid workaround
 	triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.", -- NOTHING to detect this totem spawn in combatlog. Not even mana usage from the boss.
 	curseself_trigger = "You are afflicted by Delusions of Jin'do.",
@@ -54,6 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+    engage_trigger      = "Welcome to da great show friends",
 	triggerbrainwash = "von Gehirnw\195\164sche betroffen", -- Jin'do the Hexxer casts Summon Brain Wash Totem. stupid workaround
 	triggerhealing = "Jin'do the Hexxer wirkt M\195\164chtiger Heilungszauberschutz.", -- NOTHING to detect this totem spawn in combatlog. Not even mana usage from the boss.
 	curseself_trigger = "Ihr seid von Irrbilder von Jin'do betroffen.",
@@ -113,6 +115,9 @@ BigWigsJindo.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
 ------------------------------
 
 function BigWigsJindo:OnEnable()
+    self.started = nil
+    
+    self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY", "FadeFrom")
@@ -133,6 +138,12 @@ end
 --      Events              --
 ------------------------------
 
+function BigWigsJindo:CHAT_MSG_MONSTER_YELL(msg)
+    if string.find(msg, L["engage_trigger"]) then
+        self:SendEngageSync()
+    end
+end
+    
 function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	--[[if self.db.profile.brainwash and string.find(msg, L["triggerbrainwash"]) then -------------- seriously WTB fix for combat log events
 		self:TriggerEvent("BigWigs_Message", L["warnbrainwash"], "Urgent")
@@ -143,8 +154,10 @@ function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
-    if sync == "BossEngaged" and rest == "Jin'do" then
-        
+    if not self.started and sync == "BossEngaged" and rest == self.bossSync then
+        self.started = true
+        self:TriggerEvent("BigWigs_StartBar", self, "Next Hex", 8, "Interface\\Icons\\Spell_Nature_Polymorph")
+        self:TriggerEvent("BigWigs_StartBar", self, "Next Healing Ward", 12, "Interface\\Icons\\Spell_Holy_LayOnHands")
 	elseif sync == "JindoCurse" then
 		if self.db.profile.curse then
 			if rest == UnitName("player") then
@@ -158,6 +171,7 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_SetRaidIcon", rest)
 		end
 	elseif sync == "JindoHexStart" and self.db.profile.hex then
+        self:TriggerEvent("BigWigs_StopBar", self, "Next Hex")
 		self:TriggerEvent("BigWigs_Message", string.format(L["hexwarn_warning"], rest), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["hex_bar"], rest), 5, "Interface\\Icons\\Spell_Nature_Polymorph", true, "White")
 	elseif sync == "JindoHexStop" and self.db.profile.hex then
