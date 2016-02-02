@@ -31,8 +31,7 @@ I've included several other BigWigs AddOns in this repository, so you only need 
 </ul>
 
 # Download
-This is currently under development.
-<br>I'll announce it when I finished a release.
+<b><a href="https://github.com/MOUZU/BigWigs/releases">Download the latest Release here</a href></b>
 
 ## How to install
 <b>a)</b> If you choose to download the .rar file all you have to do is extract the archive in your /World of Warcraft/Interface/AddOns/ directory.<br />
