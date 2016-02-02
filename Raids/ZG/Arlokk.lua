@@ -22,7 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	trollphase_message = "Troll Phase",
 	pantherphase_message = "Panther Phase",
 	vanishphase_message = "Vanish!",
-	vanish_bar = "Vanished",
+	vanish_bar = "Estimated Return",
 	vanish_Nextbar = "Next Vanish",
 
 	vanish_cmd = "vanish",
@@ -59,7 +59,7 @@ L:RegisterTranslations("deDE", function() return {
 	trollphase_message = "Troll Phase",
 	pantherphase_message = "Panther Phase",
 	vanishphase_message = "Verschwinden!",
-	vanish_bar = "Verschwunden",
+	vanish_bar = "Ungefähre Rückkehr",
 	vanish_Nextbar = "Nächstes Verschwinden",
 
 	vanish_cmd = "vanish",
