@@ -647,7 +647,6 @@ function BigWigs:AceEvent_FullyInitialized()
 		self:RegisterEvent("BigWigs_RebootModule")
 	
 		self:RegisterEvent("BigWigs_RecvSync")
-		self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5 )
 	else
 		self:ToggleActive(false)
 	end
