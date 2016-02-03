@@ -84,7 +84,7 @@ function BigWigsBossRecords:FormatTime(time)
     --]]
     
     if time < 60 then
-        return ToString(time) .. "s";
+        return tostring(time) .. "s";
     else
         -- really sloppy way of doing this, but I don't know if modulo exists in this lua version and I'm not at home to test atm
         local minutes = 0
@@ -96,6 +96,6 @@ function BigWigsBossRecords:FormatTime(time)
         if time > 0 then
             seconds = time
         end
-        return ToString(minutes) .. "min " .. ToString(seconds) .. "s";
+        return tostring(minutes) .. "min " .. tostring(seconds) .. "s";
     end
 end
