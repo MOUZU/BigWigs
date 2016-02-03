@@ -344,10 +344,8 @@ function BigWigsRazorgore:CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE(msg)
 end
 
 function BigWigsRazorgore:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if self.db.profile.fireballvolley and msg == L["volley_trigger"] then
-		self:TriggerEvent("BigWigs_StartBar", self, L["volley_bar"], 2, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "red")
-		self:TriggerEvent("BigWigs_Message", L["volley_message"], "Urgent")
-        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Flamebolt", 2)
+	if msg == L["volley_trigger"] then
+		self:TriggerEvent("BigWigs_SendSync", "RazorgoreVolleyCast")
 	end
 end
 
@@ -393,6 +391,10 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.eggs then
 			self:TriggerEvent("BigWigs_StopBar", self, L["egg_bar"])
 		end
+    elseif sync == "RazorgoreVolleyCast" and self.db.profile.fireballvolley then
+        self:TriggerEvent("BigWigs_StartBar", self, L["volley_bar"], 2, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "red")
+		self:TriggerEvent("BigWigs_Message", L["volley_message"], "Urgent")
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Flamebolt", 2)
 	end
 end
 
