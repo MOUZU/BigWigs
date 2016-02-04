@@ -208,6 +208,7 @@ function BigWigsRazorgore:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreEgg", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreOrbStart_(.+)", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreOrbStop_(.+)", 5)
+self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreVolleyCast", 3)
 end
 
 ------------------------------
