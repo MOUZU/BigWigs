@@ -147,7 +147,7 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "RagnarosSonDeadX" and rest and rest ~= "" then
         rest = tonumber(rest)
-        if type(rest) == "number" and rest <= 8 and self.sonsdead < rest then
+        if rest <= 8 and self.sonsdead < rest then
             self.sonsdead = rest
             if self.db.profile.adds then
                 self:TriggerEvent("BigWigs_Message", string.format(L["sonsdeadwarn"], self.sonsdead), "Positive")

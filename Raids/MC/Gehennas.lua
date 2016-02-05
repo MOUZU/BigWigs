@@ -113,7 +113,7 @@ function BigWigsGehennas:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 31, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 	elseif sync == "GehennasAddDead" and rest and rest ~= "" then
         rest = tonumber(rest)
-        if type(rest) == "number" and rest <= 2 and self.flamewaker < rest then
+        if rest <= 2 and self.flamewaker < rest then
             self.flamewaker = rest
             self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.flamewaker), "Positive")
         end

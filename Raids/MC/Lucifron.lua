@@ -224,7 +224,7 @@ function BigWigsLucifron:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "LucifronAddDead" and rest and rest ~= "" then
         rest = tonumber(rest)
-        if type(rest) == "number" and rest <= 4 and self.protector < rest then
+        if rest <= 4 and self.protector < rest then
             self.protector = rest
             if self.db.profile.adds then
                 self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.protector), "Positive")

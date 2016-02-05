@@ -301,7 +301,7 @@ function BigWigsVenoxis:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "VenoxisAddDead" and rest and rest ~= "" then
         rest = tonumber(rest)
-        if type(rest) == "number" and rest <= 4 and self.cobra < rest then
+        if rest <= 4 and self.cobra < rest then
             self.cobra = rest
             self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.cobra), "Positive")
         end

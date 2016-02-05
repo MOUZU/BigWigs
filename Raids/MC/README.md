@@ -54,7 +54,7 @@
 - Pyroblast, seems to be every 4s - should I create a timer for that?
 
 ## Majordomo Executus
-- <b>(100%)</b> Addcount
+- <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(100%)</b> Spell/Damage-reflect Shields, changed timer to every 30s. Timers for the next may only appear after the timer of the current shield is gone.
 
 ## Ragnaros

@@ -142,7 +142,7 @@ function BigWigsSulfuron:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "SulfuronAddDead" and rest and rest ~= "" then
         rest = tonumber(rest)
-        if type(rest) == "number" and rest <= 4 and self.deadpriests < rest then
+        if rest <= 4 and self.deadpriests < rest then
             self.deadpriests = rest
             self:TriggerEvent("BigWigs_Message", string.format(L["addmsg"], self.deadpriests), "Positive")
         end

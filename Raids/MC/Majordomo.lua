@@ -168,13 +168,13 @@ function BigWigsMajordomo:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "DomoHealerDead" and self.db.profile.adds and rest and rest ~= "" then
         rest = tonumber(rest)
-        if type(rest) == "number" and rest <= 4 and self.hdead < rest then
+        if rest <= 4 and self.hdead < rest then
             self.hdead = rest
             self:TriggerEvent("BigWigs_Message", string.format(L["hdeadmsg"], self.hdead), "Positive")
         end
 	elseif sync == "DomoEliteDead" and self.db.profile.adds and rest and rest ~= "" then
         rest = tonumber(rest)
-        if type(rest) == "number" and rest <= 4 and self.edead < rest then
+        if rest <= 4 and self.edead < rest then
             self.edead = rest
             self:TriggerEvent("BigWigs_Message", string.format(L["edeadmsg"], self.edead), "Positive")
         end
