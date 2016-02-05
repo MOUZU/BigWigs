@@ -188,9 +188,10 @@ BigWigsRazorgore.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
 ------------------------------
 
 function BigWigsRazorgore:OnEnable()
-    self.started = nil
-	self.previousorb = nil
-	self.eggs = 0
+    self.started        = nil
+    self.phase          = 0
+    self.previousorb    = nil
+    self.eggs           = 0
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF", "Events")
@@ -208,7 +209,7 @@ function BigWigsRazorgore:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreEgg", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreOrbStart_(.+)", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreOrbStop_(.+)", 5)
-self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreVolleyCast", 3)
+    self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreVolleyCast", 3)
 end
 
 ------------------------------
@@ -216,32 +217,10 @@ end
 ------------------------------
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L["start_trigger"]) and not self.started then
-        self.started = true
-		self.eggs = 0
-		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["start_message"], "Attention")
-		end
-		if self.db.profile.mobs then
-			self:TriggerEvent("BigWigs_StartBar", self, L["mobs_bar"], 46, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
-			self:ScheduleEvent("BigWigs_Message", 41, L["mobs_soon"], "Important")
-		end
+	if string.find(msg, L["start_trigger"]) then
         self:SendEngageSync()
 	elseif msg == L["phase2_trigger"] then
-		self:CancelScheduledEvent("destroyegg_check")
-		self:CancelScheduledEvent("orbcontrol_check")
-		if self.previousorb ~= nil and self.db.profile.orb then
-			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], self.previousorb))
-		end
-		if self.db.profile.eggs then
-			self:TriggerEvent("BigWigs_StopBar", self, L["egg_bar"])
-		end
-		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Attention")
-		end
-		if IsAddOnLoaded("KLHThreatMeter") and not self.db.profile.ktm and (IsRaidLeader() or IsRaidOfficer()) then --reminder to fix KTM after this. Threat addons with threat addons, boss mod addons with boss mod addons.
-			klhtm.net.clearraidthreat()
-		end
+		self:TriggerEvent("BigWigs_SendSync", "RazorgorePhaseTwo")
 	elseif msg == L["destroyegg_yell1"] or msg == L["destroyegg_yell2"] or msg == L["destroyegg_yell3"] then
 		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
 	end
@@ -353,6 +332,15 @@ end
 function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
+		self.eggs = 0
+        self.phase = 1
+		if self.db.profile.phase then
+			self:TriggerEvent("BigWigs_Message", L["start_message"], "Attention")
+		end
+		if self.db.profile.mobs then
+			self:TriggerEvent("BigWigs_StartBar", self, L["mobs_bar"], 46, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
+			self:ScheduleEvent("BigWigs_Message", 41, L["mobs_soon"], "Important")
+		end
 	elseif sync == "RazorgoreEgg" then
 		rest = tonumber(rest)
 		if rest == (self.eggs + 1) then
@@ -396,6 +384,20 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
         self:TriggerEvent("BigWigs_StartBar", self, L["volley_bar"], 2, "Interface\\Icons\\Spell_Fire_FlameBolt", true, "red")
 		self:TriggerEvent("BigWigs_Message", L["volley_message"], "Urgent")
         self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Flamebolt", 2)
+    elseif sync == "RazorgorePhaseTwo" and self.phase < 2 then
+        self.phase = 2
+        self:CancelScheduledEvent("destroyegg_check")
+		self:CancelScheduledEvent("orbcontrol_check")
+		if self.previousorb ~= nil and self.db.profile.orb then
+			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["orb_bar"], self.previousorb))
+		end
+		if self.db.profile.eggs then
+			self:TriggerEvent("BigWigs_StopBar", self, L["egg_bar"])
+		end
+		if self.db.profile.phase then
+			self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Attention")
+		end
+		
 	end
 end
 
