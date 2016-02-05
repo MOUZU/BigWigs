@@ -10,7 +10,6 @@ I've included several other BigWigs AddOns in this repository, so you only need 
 <ul>
     <li><b>BigWigs_CommonAuras</b> <br \>  ( keeps track of certain Buffs eg. Fear Ward and Tank cooldowns )</li>
     <li><b>BigWigs_NefCount</b> <i>deactivated for now, needs rework</i> <br \>  ( improved mechanism for Nefarian phase 1, keeps track of the Adds killed since that triggers phase 2 )
-* needs overhaul. Disable it for now!</li>
     <li><b>BigWigs_ZombieFood</b> <i>modified</i> <br>  ( announces if a player is getting dazed )</li>
     <li><b>BigWigs_LoathebTactical</b> <br>  ( Spore and Consumable warnings for Loatheb )</li>
     <li><b>BigWigs_RespawnTimers</b> <br>  ( Trash respawn timers )</li>
