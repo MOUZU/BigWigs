@@ -105,7 +105,7 @@ L:RegisterTranslations("deDE", function() return {
 
 BigWigsJindo = BigWigs:NewModule(boss)
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsJindo.enabletrigger = boss
+BigWigsJindo.enabletrigger = {boss, "Vilebranch Speaker"}
 BigWigsJindo.bossSync = "Jin'do"
 BigWigsJindo.toggleoptions = {"curse", "hex", "brainwash", "healingward", "puticon", "bosskill"}
 BigWigsJindo.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
@@ -158,6 +158,7 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
         self.started = true
         self:TriggerEvent("BigWigs_StartBar", self, "Next Hex", 8, "Interface\\Icons\\Spell_Nature_Polymorph")
         self:TriggerEvent("BigWigs_StartBar", self, "Next Healing Ward", 12, "Interface\\Icons\\Spell_Holy_LayOnHands")
+        self:TriggerEvent("BigWigs_StartBar", self, "Next Brain Wash", 21, "Interface\\Icons\\Spell_Totem_WardOfDraining")
 	elseif sync == "JindoCurse" then
 		if self.db.profile.curse then
 			if rest == UnitName("player") then
