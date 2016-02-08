@@ -20,7 +20,7 @@
 - <b>(99%)</b> Gehennas' Curse, doubt it will get better. The cast ranges between 23s and 38s from my analysis
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(REMOVED)</b> Shadow Bolt
-- <b>(DG)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s. THE TRIGGER is not working
+- <b>(100%)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s. THERE IS NO ACCURATE TRIGGER FOR THE FOLLOWING ONES - REVERTED
 - <b>(QA)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
 
 ## Garr

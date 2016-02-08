@@ -78,21 +78,21 @@ BigWigsGehennas.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsGehennas:OnEnable()
-    self.started = false
+    self.started    = false
 	self.flamewaker = 0
 	
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+    self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE",        "Event")
+    self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE",            "Event")
+    self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_FRIENDLYPLAYER_DAMAGE",  "Event")
+    self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE",              "Event")
+    self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE",     "Event")
+    self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE",               "Event")
     self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasCurse", 10)
+    self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+    self:RegisterEvent("PLAYER_REGEN_ENABLED",      "CheckForWipe")
+    self:RegisterEvent("PLAYER_REGEN_DISABLED",     "CheckForEngage")
+    self:RegisterEvent("BigWigs_RecvSync")
+    self:TriggerEvent("BigWigs_ThrottleSync",       "GehennasCurse",    10)
 end
 
 ------------------------------
@@ -122,9 +122,13 @@ end
 
 
 function BigWigsGehennas:Event(msg)
-    if ((string.find(msg, L["trigger1"])) or (string.find(msg, L["trigger4"]))) then
+    if string.find(msg, "You suffer (%d+) (.+) from "..boss.." 's Rain of Fire.") then
+        -- I found no better way to trigger this, it will autohide after 2s which is the time between Rain of Fire ticks
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_RainOfFire", 2)
+    elseif ((string.find(msg, L["trigger1"])) or (string.find(msg, L["trigger4"]))) then
 		self:TriggerEvent("BigWigs_SendSync", "GehennasCurse")
 	elseif (string.find(msg, L["trigger3"])) then
+        -- this will not trigger, but I will leave it in case they fix this combatlog event/message
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
         self:ScheduleEvent("BigWigs_StartBar", 6, self, "Next Rain", 9, "Interface\\Icons\\Spell_Shadow_RainOfFire")
         self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_RainOfFire", 6)
@@ -133,6 +137,7 @@ end
 
 function BigWigsGehennas:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
     if string.find(msg,"Rain of Fire") then
+        -- this will not trigger, but I will leave it in case they fix this combatlog event/message
         self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Spell_Shadow_RainOfFire")
     end
 end
