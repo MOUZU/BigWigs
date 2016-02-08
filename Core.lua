@@ -468,7 +468,6 @@ function BigWigs:CheckForBosskill(msg)
     for name, module in BigWigs:IterateModules() do
         if module:IsBossModule() and BigWigs:IsModuleActive(module) then
             if msg == string.format(UNITDIESOTHER, module:ToString()) then
-            --if string.find(msg, module:ToString()) then
                 module:SendBosskillSync()
             end
         end
