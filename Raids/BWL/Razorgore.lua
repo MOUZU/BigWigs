@@ -205,6 +205,7 @@ function BigWigsRazorgore:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+    self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreEgg", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreOrbStart_(.+)", 5)
@@ -230,6 +231,17 @@ function BigWigsRazorgore:CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF(msg)
 	if string.find(msg, L["egg_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEggStart")
 	end
+end
+
+function BigWigsRazorgore:CHAT_MSG_MONSTER_EMOTE(msg)
+    if string.find(msg, "Razorgore the Untamed casts Destroy Egg") then
+        -- as of now, this does also fire on finished 'Destroy Egg' cast. 
+        -- but only after a successful one and the range is shitty of this emote.
+        self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
+    elseif string.find(msg, "Nefarian's troops flee as the power") then
+        -- there is a really funny emote text bug on the current version on Nostalris, I'll only use this in case they fix it
+        self:TriggerEvent("BigWigs_SendSync", "RazorgorePhaseTwo")
+    end
 end
 
 function BigWigsRazorgore:Events(msg)
@@ -343,15 +355,15 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "RazorgoreEgg" then
 		rest = tonumber(rest)
-		if rest == (self.eggs + 1) then
+		if rest == (self.eggs + 1) and self.eggs <= 30 then
 			self.eggs = self.eggs + 1
 			if self.db.profile.eggs then
 				self:TriggerEvent("BigWigs_Message", string.format(L["egg_message"], self.eggs), "Positive")
 			end
 		end
 	elseif sync == "RazorgoreEggStart" then
-		self:CancelScheduledEvent("destroyegg_check")
-		self:ScheduleEvent("destroyegg_check", self.DestroyEggCheck, 3, self)
+		--self:CancelScheduledEvent("destroyegg_check")
+		--self:ScheduleEvent("destroyegg_check", self.DestroyEggCheck, 3, self)
 		if self.db.profile.eggs then
 			self:TriggerEvent("BigWigs_StartBar", self, L["egg_bar"], 3, "Interface\\Icons\\INV_Misc_MonsterClaw_02", true, "purple")
 		end
@@ -425,7 +437,7 @@ function BigWigsRazorgore:DestroyEggCheck()
 		end
 	end
 	if bosscontrol then
-		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
+		--self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
 	end
 end
 
