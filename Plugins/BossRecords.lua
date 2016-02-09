@@ -77,7 +77,7 @@ function BigWigsBossRecords:EndBossfight(module)
 end
 
 function BigWigsBossRecords:FormatTime(time)
-    if not type(time) == "number" then return end
+    --if not type(time) == "number" then return end -- removing this to test if that's bugging somehow...
     --[[
         input:  time in seconds
         output: time formated as string (eg. '2min 14s')
