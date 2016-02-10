@@ -12,8 +12,8 @@
 - <b>(DG)</b> Fireball Volley, seems to be RNG
 - <b>(100%)</b> WarnIcon, Fireball Volley cast is announced via Fireball icon
 - <b>(DG)</b> War Stomp, timer
-- <b>(DG)</b> Egg Counter. The only way I see this getting 100% accurate would be if we could somehow capture on the client controlling razorgore when the cast is being used and I currently have no clue how to get that. At the moment the chance is pretty high that we miss the first 1-3 eggs being destroyed since the position where razorgore spawns and the position the raid is is too far away so that it would be visible in the combat log. maybe hook CastPetAction(id). added a trigger, removed a trigger which could lead to counting above 30.
-- <b>(QA)</b> added trigger for Phase 2
+- <b>(99%)</b> Egg Counter. The only way I see this getting 100% accurate would be if we could somehow capture on the client controlling razorgore when the cast is being used and I currently have no clue how to get that. At the moment the chance is pretty high that we miss the first 1-3 eggs being destroyed since the position where razorgore spawns and the position the raid is is too far away so that it would be visible in the combat log. maybe hook CastPetAction(id). added a trigger, removed a trigger which could lead to counting above 30.
+- <b>(100%)</b> added trigger for Phase 2
 
 ## Vaelastrasz the Corrupt
 - <b>(100%)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 AND adjusted enUS locales to trigger combat

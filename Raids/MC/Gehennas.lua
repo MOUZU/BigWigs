@@ -124,7 +124,7 @@ end
 function BigWigsGehennas:Event(msg)
     if string.find(msg, "You suffer (%d+) (.+) from "..boss.." 's Rain of Fire.") then
         -- I found no better way to trigger this, it will autohide after 2s which is the time between Rain of Fire ticks
-        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_RainOfFire", 2)
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_RainOfFire", 1.5)
     elseif ((string.find(msg, L["trigger1"])) or (string.find(msg, L["trigger4"]))) then
 		self:TriggerEvent("BigWigs_SendSync", "GehennasCurse")
 	elseif (string.find(msg, L["trigger3"])) then

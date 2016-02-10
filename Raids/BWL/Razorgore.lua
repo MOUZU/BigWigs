@@ -13,7 +13,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorgore",
 
-	start_trigger = "^Intruders have breached",
+	start_trigger = "Intruders have breached",
 	start_message = "Phase 1",
 	mobs_soon = "First Wave in 5sec!",
 	mobs_bar = "First Wave",
@@ -94,7 +94,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	cmd = "Razorgore",
 
-	start_trigger = "^Intruders have breached",
+	start_trigger = "Intruders have breached",
 	start_message = "Phase 1",
 	mobs_soon = "Erste Welle in 5sec!",
 	mobs_bar = "Erste Welle",

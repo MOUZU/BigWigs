@@ -21,7 +21,7 @@
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(REMOVED)</b> Shadow Bolt
 - <b>(100%)</b> Rain of Fire, added timer for the first rain. every other rain of fire comes about ~9s. THERE IS NO ACCURATE TRIGGER FOR THE FOLLOWING ONES - REVERTED
-- <b>(QA)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
+- <b>(100%)</b> WarnIcon, Rain of Fire appears when you're standing in Rain of Fire
 
 ## Garr
 - <b>(100%)</b> Addcount, this counting algorithm seems to already be perfect
