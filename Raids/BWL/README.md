@@ -18,7 +18,7 @@
 ## Vaelastrasz the Corrupt
 - <b>(100%)</b> Combat Trigger, adjusted timers from 36/26/10 to 38/28/12 AND adjusted enUS locales to trigger combat
 - <b>(100%)</b> Burning Adrenaline, seems to be correct
-- <b>(QA)</b> WarnIcon, Burning Adrenaline icon appears when it's on you
+- <b>(100%)</b> WarnIcon, Burning Adrenaline icon appears when it's on you
 
 ## Broodlord Lashlayer
 - <b>(100%)</b> Blast Wave DURATION, increased the timer for the first one from 12 to 19.5s. The delay between Blast waves ranges between 20 and 40s from my research, the timer is for the Debuff duration.
