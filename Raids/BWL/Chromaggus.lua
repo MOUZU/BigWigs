@@ -174,7 +174,7 @@ function BigWigsChromaggus:OnEnable()
 	self.twenty = nil
 	self.started = nil
 	self.frenzied = nil
-    self.lastVuln = nil
+        self.lastVuln = 0
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
