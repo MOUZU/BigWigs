@@ -113,7 +113,7 @@ L:RegisterTranslations("deDE", function() return {
 
 BigWigsMandokir = BigWigs:NewModule(boss)
 BigWigsMandokir.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsMandokir.enabletrigger = boss
+BigWigsMandokir.enabletrigger = {boss, "Vilebranch Speaker"}
 BigWigsMandokir.bossSync = "Mandokir"
 BigWigsMandokir.wipemobs = { L["ohgan"] }
 BigWigsMandokir.toggleoptions = {"gaze", "announce", "puticon", "whirlwind", "enraged", "bosskill"}
