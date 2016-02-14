@@ -14,7 +14,7 @@
 ## High Priest Venoxis
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
 - <b>(100%)</b> KTM Reset, on Phase 2
-- <b>(QA)</b> WarnIcon, appears when you're standing in the cloud in P2
+- <b>(100%)</b> WarnIcon, appears when you're standing in the cloud in P2
 
 ## High Priestess Mar'li
 
@@ -31,7 +31,7 @@
 - <b>(100%)</b> Knockback Phase 2, first one after 5s and the next one after 20s.
 - <b>(100%)</b> Bloodlust, Phase 2: first one after 29s
 - <b>(100%)</b> New Adds, added Timer on Phase 2 engage.
-- <b>(QA)</b> added a mechanism to the core to reactivate thekal mod after phase 1 ended, added a timer for the next phase
+- <b>(99%)</b> added a mechanism to the core to reactivate thekal mod after phase 1 ended, added a timer for the next phase
 
 ## High Priestess Arlokk
 - <b>(QA)</b> added locale to trigger combat
