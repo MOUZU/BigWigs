@@ -94,7 +94,7 @@ function BigWigsBossRecords:FormatTime(time)
             minutes = minutes + 1;
         end
         if time > 0 then
-            seconds = math.floor(time)
+            seconds = time
         end
         return tostring(minutes) .. "min " .. tostring(seconds) .. "s";
     end
