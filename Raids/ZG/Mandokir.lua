@@ -191,6 +191,7 @@ function BigWigsMandokir:Event(msg)
 	elseif msg == L["gazeafflictyou"] then
 		gazetime = GetTime()
 		self:TriggerEvent("BigWigs_SendSync", "MandokirGazeAfflict "..UnitName("player"))
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_Charm", 5)
 	elseif gazedplayer then
 		gazetime = GetTime()
 		self:TriggerEvent("BigWigs_SendSync", "MandokirGazeAfflict "..gazedplayer)

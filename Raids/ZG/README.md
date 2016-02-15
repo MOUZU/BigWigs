@@ -25,6 +25,7 @@
 - <b>(QA)</b> added 'Charge' bar with the first one 15. Need trigger for the ones following that, the following should get +30s
 - <b>(100%)</b> added 'Next Gaze' bar with 11s (should be 19s counting from 'Incoming Gaze')
 - <b>(100%)</b> added missing locale for 'Incoming Gaze'
+- <b>(QA)</b> added WarnIcon if the player is afflicted by Threatening Gaze.
 
 ## High Priest Thekal
 - <b>(100%)</b> added locale to trigger phase 2
