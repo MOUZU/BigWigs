@@ -82,6 +82,7 @@ function BigWigsBossRecords:FormatTime(time)
         input:  time in seconds
         output: time formated as string (eg. '2min 14s')
     --]]
+    time = math.floor(time)
     
     if time < 60 then
         return tostring(time) .. "s";
