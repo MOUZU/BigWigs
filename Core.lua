@@ -514,13 +514,10 @@ end
 --      KLHThreatMeter      --
 ------------------------------
 
-BigWigs.lastReset = 0;
 function BigWigs:KTM_Reset()
 	if IsAddOnLoaded("KLHThreatMeter") then
-        if (IsRaidLeader() or IsRaidOfficer()) and ((BigWigs.lastReset + 5) < GetTime()) then
+        if IsRaidLeader() then
             klhtm.net.clearraidthreat()
-            -- we want to sync the reset to others so that everyone saves the .lastReset value for our 5seconds reset prevention
-            self:TriggerEvent("BigWigs_SendSync", "KTM_RESETTED")
         end
     end
 end
@@ -550,7 +547,7 @@ function BigWigs.modulePrototype:KTM_SetTarget(targetName, forceReset)
 end
 
 function BigWigs:KTM_ClearTarget(forceReset)
-    if IsAddOnLoaded("KLHThreatMeter") and (IsRaidLeader() or IsRaidOfficer()) then
+    if IsAddOnLoaded("KLHThreatMeter") and IsRaidLeader() then
         klhtm.net.clearmastertarget()
         if forceReset then
             self:KTM_Reset()
@@ -833,8 +830,6 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
 			self:Print(string.format(L["%s has requested forced reboot for the %s module."], nick, module))
 		end
 		self:TriggerEvent("BigWigs_RebootModule", module)
-    elseif sync == "KTM_RESETTED" then
-        BigWigs.lastReset = GetTime()
     elseif sync == "BossEngage" and module then
         for name, mod in BigWigs:IterateModules() do
             if mod:IsBossModule() and mod.bossSync and mod.bossSync == module then
