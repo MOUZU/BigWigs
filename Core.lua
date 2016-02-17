@@ -381,20 +381,6 @@ function BigWigs.modulePrototype:IsBossModule()
 end
 
 
-function BigWigs.modulePrototype:GenericBossDeath(msg)
-	if msg == string.format(UNITDIESOTHER, self:ToString()) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-        self:TriggerEvent("BigWigs_HideIcon", "", true)
-        self:TriggerEvent("BigWigs_BossDeath", self:ToString())
-		if self.core:IsDebugging() then
-			self.core:LevelDebug(1, "Boss dead, disabling module ["..self:ToString().."].")
-		end
-		self.core:ToggleModuleActive(self, false)
-	end
-end
-
-
 function BigWigs.modulePrototype:Scan()
 	local t = self.enabletrigger
 	local a = self.wipemobs
@@ -444,7 +430,6 @@ end
 function BigWigs.modulePrototype:SendBosskillSync()
     if self.bossSync then
         self:TriggerEvent("BigWigs_SendSync", "Bosskill "..self.bossSync)
-        BigWigsBossRecords:EndBossfight(self)
     end
 end
 
@@ -864,11 +849,13 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
                     self:ScheduleEvent("ThekalPhase2", BigWigsThekal.PhaseSwitch, 1)
                 else
                     self:ToggleModuleActive(mod, false)
-                    self:TriggerEvent("BigWigs_Message", mod:ToString() .. " has been defeated!", "Positive")
+                    BigWigsBossRecords:EndBossfight(self)
+                    self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], mod:ToString()), "Bosskill", nil, "Victory")
                 end
             end
         end
         self:TriggerEvent("BigWigs_RemoveRaidIcon")
+        self:TriggerEvent("BigWigs_HideIcon", "", true)
         self:KTM_ClearTarget()
 	end
 end
