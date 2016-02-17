@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -149,7 +149,6 @@ BigWigsMoam.revision = tonumber(string.sub("$Revision: 17083 $", 12, -3))
 function BigWigsMoam:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath" )
 end
 
 function BigWigsMoam:AddsStart()
