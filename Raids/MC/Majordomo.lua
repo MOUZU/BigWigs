@@ -152,10 +152,10 @@ end
 function BigWigsMajordomo:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["healdead"]) then
         self.hdead = self.hdead + 1;
-		self:TriggerEvent("BigWigs_SendSync", "DomoHealerDead " .. self.hdead)
+		self:TriggerEvent("BigWigs_SendSync", "DomoHealerDead " .. tostring(self.hdead))
 	elseif string.find(msg, L["elitedead"]) then
         self.edead = self.edead + 1;
-		self:TriggerEvent("BigWigs_SendSync", "DomoEliteDead " .. self.edead)
+		self:TriggerEvent("BigWigs_SendSync", "DomoEliteDead " .. tostring(self.edead))
 	end
 end
 

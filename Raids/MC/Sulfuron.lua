@@ -115,7 +115,7 @@ end
 function BigWigsSulfuron:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["triggeradddead"]) then
         self.deadpriests = self.deadpriests + 1;
-		self:TriggerEvent("BigWigs_SendSync", "SulfuronAddDead " .. self.deadpriests)
+		self:TriggerEvent("BigWigs_SendSync", "SulfuronAddDead " .. tostring(self.deadpriests))
 	end
 end
 
