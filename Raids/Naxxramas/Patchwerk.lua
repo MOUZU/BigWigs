@@ -48,7 +48,6 @@ BigWigsPatchwerk.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 
 function BigWigsPatchwerk:OnEnable()
     self.started = nil
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end

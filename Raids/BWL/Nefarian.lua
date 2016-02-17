@@ -96,7 +96,6 @@ function BigWigsNefarian:OnEnable()
     self.started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
     self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 
 	self:RegisterEvent("BigWigs_RecvSync")

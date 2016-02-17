@@ -87,7 +87,6 @@ function BigWigsBroodlord:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
     self:RegisterEvent("PLAYER_TARGET_CHANGED")
 	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
 ------------------------------

@@ -83,7 +83,6 @@ BigWigsFankriss.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
 function BigWigsFankriss:OnEnable()
 	worms = 0
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FankrissWormSpawn", .1)

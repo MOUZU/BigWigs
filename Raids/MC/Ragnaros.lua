@@ -133,9 +133,6 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["sonofflame"]) then
         self.sonsdead = self.sonsdead + 1;
 		self:TriggerEvent("BigWigs_SendSync", "RagnarosSonDeadX " .. self.sonsdead)
-	else
-        -- TODO: take a look at this
-		self:GenericBossDeath(msg)
 	end
 end
 

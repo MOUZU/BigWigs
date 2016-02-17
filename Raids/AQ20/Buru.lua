@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -128,7 +128,6 @@ BigWigsBuru.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
 
 function BigWigsBuru:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
 function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )

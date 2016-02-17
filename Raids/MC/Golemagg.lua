@@ -62,7 +62,6 @@ BigWigsGolemagg.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 function BigWigsGolemagg:OnEnable()
     self.started = nil
 	earthquakeon = nil
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

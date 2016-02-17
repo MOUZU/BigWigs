@@ -80,8 +80,6 @@ function BigWigsGrobbulus:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GrobbulusInject", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GrobbulusCloud", 5)

@@ -164,7 +164,6 @@ BigWigsOssirian.revision = tonumber(string.sub("$Revision: 17973 $", 12, -3))
 
 function BigWigsOssirian:OnEnable()
     self.started = nil
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("BigWigs_RecvSync")

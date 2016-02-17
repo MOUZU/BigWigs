@@ -220,7 +220,6 @@ function BigWigsHakkar:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Others")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Others")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync");
 	self:TriggerEvent("BigWigs_ThrottleSync", "HakkarBloodSiphon", 5);
 	self:TriggerEvent("BigWigs_ThrottleSync", "HakkarAspectJeklik", 5);

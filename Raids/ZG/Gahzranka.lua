@@ -60,7 +60,6 @@ BigWigsGahzranka.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 
 function BigWigsGahzranka:OnEnable()	
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
