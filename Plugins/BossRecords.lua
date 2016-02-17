@@ -4,6 +4,13 @@
     
     This is a small plugin which is inspired by later Bossmod versions which included a module to record
     the time in bossfights and displays the time after kill and also a small comparison to your fastest kill.
+
+    DB format:
+    self.db.profile[bossName] = {
+        numBosskills,
+        fastestKill,
+        lastKill,
+    }
 --]]
 
 ------------------------------
@@ -23,7 +30,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossRecords")
 L:RegisterTranslations("enUS", function() return {
     BOSS_ENGAGED    = "%s engaged. Good luck and have fun! :)",
     BOSS_DOWN		= "%s down after %s!",
-    BOSS_DOWN_I		= "%s down! You have %d total victories.",
     BOSS_DOWN_L		= "%s down after %s! Your last kill took %s and your fastest kill took %s. You have %d total victories.",
     BOSS_DOWN_NR	= "%s down after %s! This is a new record! (Old record was %s). You have %d total victories.",
 } end)
@@ -62,22 +68,29 @@ function BigWigsBossRecords:EndBossfight(module)
         local timeSpent = GetTime() - c.startTime
         c.lastKill      = GetTime()
         
-        if false then
-            -- TODO: if we have data already
-            if false then
-                -- TODO if it's a new record
+        if self.db.profile[c.name] then
+            if self.db.profile[c.name][2] > timeSpent then
+                -- It's a new record!
+                DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN_NR"], c.name, self:FormatTime(timeSpent), self:FormatTime(self.db.profile[c.name][2]), self.db.profile[c.name][1] + 1))
+                self.db.profile[c.name][1] = self.db.profile[c.name][1] + 1;
+                self.db.profile[c.name][2] = timeSpent
+                self.db.profile[c.name][3] = timeSpent
             else
-                -- TODO else just display the last and best entry
+                -- We found data but it's not a new record
+                DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN_L"], c.name, self:FormatTime(timeSpent), self:FormatTime(self.db.profile[c.name][3]), self:FormatTime(self.db.profile[c.name][2]), self.db.profile[c.name][1] + 1))
+                self.db.profile[c.name][1] = self.db.profile[c.name][1] + 1;
+                self.db.profile[c.name][3] = timeSpent
             end
         else
-            -- it's our first kill
+            -- It's our first kill
             DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_DOWN"], c.name, self:FormatTime(timeSpent)))
+            self.db.profile[c.name] = {1, timeSpent, timeSpent}
         end
     end
 end
 
 function BigWigsBossRecords:FormatTime(time)
-    --if not type(time) == "number" then return end -- removing this to test if that's bugging somehow...
+    if not type(time) == "number" then return end
     --[[
         input:  time in seconds
         output: time formated as string (eg. '2min 14s')
@@ -87,7 +100,6 @@ function BigWigsBossRecords:FormatTime(time)
     if time < 60 then
         return tostring(time) .. "s";
     else
-        -- really sloppy way of doing this, but I don't know if modulo exists in this lua version and I'm not at home to test atm
         local minutes = 0
         local seconds = 0
         while (time >= 60) do
