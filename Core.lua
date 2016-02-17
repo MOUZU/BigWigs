@@ -423,7 +423,6 @@ end
 function BigWigs.modulePrototype:SendEngageSync()
     if self.bossSync then
         self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self.bossSync)
-        BigWigsBossRecords:StartBossfight(self)
     end
 end
 
@@ -830,10 +829,11 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
 			self:Print(string.format(L["%s has requested forced reboot for the %s module."], nick, module))
 		end
 		self:TriggerEvent("BigWigs_RebootModule", module)
-    elseif sync == "BossEngage" and module then
+    elseif sync == "BossEngaged" and module then
         for name, mod in BigWigs:IterateModules() do
             if mod:IsBossModule() and mod.bossSync and mod.bossSync == module then
                 self:TriggerEvent("BigWigs_Message", mod:ToString() .. " engaged!", "Positive")
+                BigWigsBossRecords:StartBossfight(mod)
             end
         end
     elseif sync == "Bosskill" and module then
@@ -843,8 +843,8 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
                     -- thekal is an exception
                     self:ScheduleEvent("ThekalPhase2", BigWigsThekal.PhaseSwitch, 1)
                 else
+                    BigWigsBossRecords:EndBossfight(mod)
                     self:ToggleModuleActive(mod, false)
-                    BigWigsBossRecords:EndBossfight(self)
                     self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], mod:ToString()), "Bosskill", nil, "Victory")
                 end
             end
