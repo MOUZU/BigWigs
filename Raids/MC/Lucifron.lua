@@ -235,7 +235,6 @@ end
 
 function BigWigsLucifron:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["deadaddtrigger"]) then
-        self.protector = self.protector +1;
-		self:TriggerEvent("BigWigs_SendSync", "LucifronAddDead " .. tostring(self.protector))
+		self:TriggerEvent("BigWigs_SendSync", "LucifronAddDead " .. tostring(self.protector + 1))
 	end
 end

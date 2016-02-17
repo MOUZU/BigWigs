@@ -144,7 +144,6 @@ end
 
 function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["dead1"]) then
-        self.flamewaker = self.flamewaker + 1;
-		self:TriggerEvent("BigWigs_SendSync", "GehennasAddDead " .. tostring(self.flamewaker))
+		self:TriggerEvent("BigWigs_SendSync", "GehennasAddDead " .. tostring(self.flamewaker + 1))
 	end
 end

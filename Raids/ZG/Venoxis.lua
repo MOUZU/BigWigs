@@ -253,8 +253,7 @@ end
 
 function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if string.find(msg, L["deadaddtrigger"]) then
-        self.cobra = self.cobra + 1
-		self:TriggerEvent("BigWigs_SendSync", "VenoxisAddDead " .. tostring(self.cobra))
+		self:TriggerEvent("BigWigs_SendSync", "VenoxisAddDead " .. tostring(self.cobra + 1))
 	elseif string.find(msg, L["deadbosstrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "VenoxisVenoxisDead")
 	end
