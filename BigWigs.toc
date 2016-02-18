@@ -75,6 +75,7 @@ Plugins\RespawnTimers.lua
 Plugins\WarnIcon.lua
 Plugins\BossRecords.lua
 Plugins\ReadyCheck.lua
+Plugins\RaidOfficer.lua
 
 Raids\ZG\Arlokk.lua
 Raids\ZG\Jeklik.lua
