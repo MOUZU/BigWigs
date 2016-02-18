@@ -58,7 +58,8 @@ function BigWigsWarnIcon:BigWigs_ShowIcon(texturePath, duration, force)
     if not type(texturePath) == "string" or not type(duration) == "number" then return end
     
     -- check if there is currently an icon displayed or if the force flags allow to overwrite
-    if c.texture == "" or (force and not c.force) then
+    -- addition: if texturePath is the same as currently displayed then reset the timer to duration
+    if c.texture == "" or (force and not c.force) or c.texture == texturePath then
         c.texture   = texturePath;
         c.endTime   = GetTime() + duration;
         c.force     = force;
