@@ -25,7 +25,7 @@
 - <b>(QA)</b> added 'Charge' bar with the first one 15. Need trigger for the ones following that, the following should get +30s
 - <b>(100%)</b> added 'Next Gaze' bar with 11s (should be 19s counting from 'Incoming Gaze')
 - <b>(100%)</b> added missing locale for 'Incoming Gaze'
-- <b>(QA)</b> added WarnIcon if the player is afflicted by Threatening Gaze.
+- <b>(QA)</b> added WarnIcon when Threatening Gaze is incomming and if the player is afflicted by Threatening Gaze.
 
 ## High Priest Thekal
 - <b>(100%)</b> added locale to trigger phase 2
@@ -35,7 +35,7 @@
 - <b>(99%)</b> added a mechanism to the core to reactivate thekal mod after phase 1 ended, added a timer for the next phase
 
 ## High Priestess Arlokk
-- <b>(QA)</b> added locale to trigger combat
+- <b>(QA)</b> added locale to trigger combat (isn't working since mod isn't enabled when this fires, need to find a exclusive panther trashmob to enable)
 - <b>(100%)</b> added 'Next Vanish' bar with 35s (should be accurate)
 - <b>(99%)</b> fixed trigger for Vanish, so 'Vanish' bar should display but it can't be 100% accurate. Changed its title to 'Estimated Return'
 
