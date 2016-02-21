@@ -64,7 +64,7 @@ end
     
 function BigWigsBossRecords:EndBossfight(module)
     -- just to be sure that we're not calculating/tracking bullshit
-    if c.name == module:ToString() and ((c.lastKill + 5) < GetTime()) then
+    if c.name == module:ToString() and ((c.startTime + 5) < GetTime()) then
         local timeSpent = GetTime() - c.startTime
         c.lastKill      = GetTime()
         
