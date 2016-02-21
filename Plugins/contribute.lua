@@ -73,7 +73,7 @@ end
 function BigWigsContribute:ZONE_CHANGED_NEW_AREA()
     -- this will trigger the donation message once per character if not in Pariah
     if not BigWigsContributeFlag then
-        for i=1, tabel.getn(listOfRaidZones) do
+        for i=1, table.getn(listOfRaidZones) do
             local area = AceLibrary("Babble-Zone-2.2")[listOfRaidZones[i]]
             if area and area == GetRealZoneText() then
                 if not GetGuildInfo("player") == "Pariah" then
