@@ -35,7 +35,8 @@
 - <b>(99%)</b> added a mechanism to the core to reactivate thekal mod after phase 1 ended, added a timer for the next phase
 
 ## High Priestess Arlokk
-- <b>(QA)</b> added locale to trigger combat (isn't working since mod isn't enabled when this fires, need to find a exclusive panther trashmob to enable)
+- <b>(QA)</b> added locale to trigger combat
+- <b>(QA)</b> added 'Hakkari Shadow Hunter' to enable mod to fix the combattrigger
 - <b>(100%)</b> added 'Next Vanish' bar with 35s (should be accurate)
 - <b>(99%)</b> fixed trigger for Vanish, so 'Vanish' bar should display but it can't be 100% accurate. Changed its title to 'Estimated Return'
 
