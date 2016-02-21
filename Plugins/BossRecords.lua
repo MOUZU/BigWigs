@@ -54,7 +54,7 @@ end
 ------------------------------
 
 function BigWigsBossRecords:StartBossfight(module)
-    if module and module.bossSync and not module.started and ((c.startTime + 5) < GetTime()) then
+    if module and module.bossSync and ( (c.name == module:ToString()) and ((c.startTime + 45) < GetTime())) then
         c.name      = module:ToString()
         c.startTime = GetTime()
         
