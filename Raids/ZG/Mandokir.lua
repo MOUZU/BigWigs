@@ -169,6 +169,9 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
             if self.db.profile.puticon then
                 self:TriggerEvent("BigWigs_SetRaidIcon", watchedplayer)
             end
+            if watchedplayer == UnitName("player") then
+                self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_Charm", 7)
+            end
         end
 	end
 end
@@ -190,7 +193,6 @@ function BigWigsMandokir:Event(msg)
 	elseif msg == L["gazeafflictyou"] then
 		gazetime = GetTime()
 		self:TriggerEvent("BigWigs_SendSync", "MandokirGazeAfflict "..UnitName("player"))
-        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_Charm", 5)
 	elseif gazedplayer then
 		gazetime = GetTime()
 		self:TriggerEvent("BigWigs_SendSync", "MandokirGazeAfflict "..gazedplayer)
@@ -226,7 +228,6 @@ function BigWigsMandokir:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "MandokirGazeCast" and self.db.profile.gaze then
 		self:TriggerEvent("BigWigs_StartBar", self, L["gazecast"], 2, "Interface\\Icons\\Spell_Shadow_Charm")
         self:TriggerEvent("BigWigs_StopBar", self, "Next Gaze")
-        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Shadow_Charm", 2)
 	elseif sync == "MandokirGazeAfflict" and self.db.profile.gaze then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["gazewatchedbar"], rest), 5, "Interface\\Icons\\Spell_Shadow_Charm", true, "Black")
 	elseif sync == "MandokirGazeEnd" then
