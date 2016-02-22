@@ -34,7 +34,7 @@ If you want to browse through all the changes and their status regarding each en
     <li><a href="Raids/MC/"><b>(MC)</b> Molten Core</a></li>
     <li><a href="Raids/Onyxia/"><b>(ONY)</b> Onyxia</a></li>
     <li><a href="Raids/BWL/"><b>(BWL)</b> Blackwing Lair</a></li>
-    <li><a href="Raids/ZG/"><b>(MZG)</b> Zul'Gurub</a></li>
+    <li><a href="Raids/ZG/"><b>(ZG)</b> Zul'Gurub</a></li>
     <li><a href="Raids/AQ20/"><b>(AQ20)</b> Ruins of Ahn'Qiraj</a></li>
     <li><a href="Raids/AQ40/"><b>(AQ40)</b> Temple of Ahn'Qiraj</a></li>
     <li><a href="Raids/Naxxramas/"><b>(NAXX)</b> Naxxramas</a></li>
