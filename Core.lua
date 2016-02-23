@@ -844,6 +844,7 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
                     self:ScheduleEvent("ThekalPhase2", BigWigsThekal.PhaseSwitch, 1)
                 else
                     BigWigsBossRecords:EndBossfight(mod)
+                    BigWigsAutoReply:EndBossfight()
                     self:ToggleModuleActive(mod, false)
                     self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], mod:ToString()), "Bosskill", nil, "Victory")
                 end
