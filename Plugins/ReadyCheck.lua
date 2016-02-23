@@ -10,7 +10,7 @@
 ------------------------------
 local c = {
     lastReadyCheck  = 0,    -- do I still need that?
-    list            = {
+    statusList      = {
         -- this list is resetting every finished ready check
         -- it keeps track of the results from the ongoing ready check
         -- [player] = response,
@@ -59,17 +59,36 @@ function BigWigsReadyCheck:BigWigs_RecvSync(sync, rest, nick)
         - a raidmember does have it and denies it(he is not ready but not afk), he will acknowledge and deny
     --]]
     if sync == "ReadyCheckRequest" then
+        -- a RaidOfficer started a ReadyCheck, we acknowledge his request
         self:TriggerEvent("BigWigs_SendSync", "ReadyCheckAcknowledge")
         ReadyCheckFrame:Show()
+        
+        -- we clear the result table
+        for unit=1, GetNumRaidMembers() do
+            local name = GetRaidRosterInfo(unit)
+            c.statusList[name] = nil
+        end
+        -- we clear the ack table because we want to know only the results of this current raid setup
+        for i=1, table.getn(c.ackList) do
+            c.ackList[i] = nil
+        end
+        
         -- TODO: setup OnUpdate to hide the frame after 29s again
         --          if the time runs out and the player did not respond, make a message that the player missed a readycheck
     elseif sync == "ReadyCheckAcknowledge" then
-        tinsert(ackList, nick)
+        -- another raidmember acknowledged the request
+        tinsert(c.ackList, nick)
         
         -- TODO: display a question mark on his raidframe
     elseif sync == "ReadyCheckConfirm" then
+        -- a raidmember confirmed the request
+        c.statusList[nick] = true
+        
         -- TODO: display a green check sign on his raidframe (hide the question mark)
     elseif sync == "ReadyCheckDeny" then
+        -- a raidmember denied the request
+        c.statusList[nick] = false
+        
         -- TODO: display a red cross on his raidframe (hide the question mark)
     end
 end
