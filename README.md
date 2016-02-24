@@ -19,13 +19,15 @@ The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \
 I've included several other BigWigs AddOns in this repository, so you only need to download and use the 'BigWigs' folder from this repository. If you happen to have any of the listed AddOns seperately I suggest removing them - in case I adjusted some of those in this repository as well.
 <ul>
     <li><b>BigWigs_CommonAuras</b> <br \>  ( keeps track of certain Buffs eg. Fear Ward and Tank cooldowns )</li>
-    <li><b>BigWigs_NefCount</b> <i>deactivated for now, needs rework</i> <br \>  ( improved mechanism for Nefarian phase 1, keeps track of the Adds killed since that triggers phase 2 )
+    <li><b>BigWigs_NefCount</b> <i>deactivated atm (NEEDS REWORK)</i> <br \>  ( improved mechanism for Nefarian phase 1, keeps track of the Adds killed since that triggers phase 2 )
     <li><b>BigWigs_ZombieFood</b> <i>modified</i> <br>  ( announces if a player is getting dazed )</li>
     <li><b>BigWigs_LoathebTactical</b> <br>  ( Spore and Consumable warnings for Loatheb )</li>
-    <li><b>BigWigs_RespawnTimers</b> <br>  ( Trash respawn timers )</li>
+    <li><b>BigWigs_RespawnTimers</b> <i>(NEEDS REWORK)</i> <br>  ( Trash respawn timers )</li>
     <li><b>WarnIcon</b>  <i>own development</i> <br> ( Displays important SpellIcons in the center of your screen. Eg. if you're standing in Rain of Fire at Gehennas or if you're a Hunter and Magmadar/Flamegor/Chromaggus is Frenzied and you need to Tranq )</li>
     <li><b>BossRecords</b>  <i>own development</i> <br> ( This Plugin will keep record of your time used in bossfights and compare it to your fastest )</li>
-    <li><b>KLHThreatMeter compatibility</b>  <i>own development</i> <br> ( I enhanced the core so that bossmods are able to either reset the aggro list and/or set the mastertarget of KTM. A RaidOfficer needs to have this BigWigs so that it works properly. ) </li>
+    <li><b>AutoReply</b>  <i>own development (WORK IN PROGRESS)</i> <br> ( This Plugin will answer whispers received during BossFights )</li>
+    <li><b>ReadyCheck</b>  <i>own development (WORK IN PROGRESS)</i> <br> ( This Plugin will implement the needed code for the 'ReadyCheck' button from Blizzward which is in visible in the RaidFrame. Since the missing code was related to missing AddOn communication this Plugin will only work for RaidMembers with one of LYQs BigWigs Version )</li>
+    <li><b>RaidOfficer</b>  <i>own development (WORK IN PROGRESS)</i> <br> ( This Plugin will enable for Raid Assistants dragging Players of one Raid-subgroup to another. This was on vanilla previously only enabled for RaidLeaders but the API allows Assistants to do so too )</li>
 </ul>
 
 ## Raid Adjustments
@@ -44,4 +46,5 @@ If you want to browse through all the changes and their status regarding each en
 ## Core/General Adjustments
 - <b>(100%)</b> Engage Syncs are now working perfectly on every encounter and do allow communication between clients of different language packs.
 - <b>(100%)</b> Bosskill Syncs were added for every encounter dynamically and do also support communication of different language packs.
+- <b>(100%)</b> KTM compatibility - Bossmodules are now able to set the MasterTarget, reset the Threat or Clear the Master Target. RaidOfficers do need to have this version for that.
 - <b>()</b> to be completed later..
