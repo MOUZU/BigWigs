@@ -500,7 +500,9 @@ function BigWigs.modulePrototype:CheckForWipe()
 			self.core:LevelDebug(1, "Rebooting module ["..self:ToString().."].")
 		end
 		self:TriggerEvent("BigWigs_RebootModule", self)
-        self:TriggerEvent("BigWigs_SendSync", "BossWipe")
+        if self.bossSync then
+            self:TriggerEvent("BigWigs_SendSync", "BossWipe "..self.bossSync)
+        end
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2.5, self)
 	end
@@ -808,6 +810,7 @@ function BigWigs:EnableModule(module, nosync)
 		self:ToggleModuleActive(module, true)
 		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Core", true)
 		if not nosync then self:TriggerEvent("BigWigs_SendSync", (m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(module))) end
+        m:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	end
 end
 

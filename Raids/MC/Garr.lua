@@ -82,7 +82,6 @@ BigWigsGarr.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 function BigWigsGarr:OnEnable()
     self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead1", 0.7)

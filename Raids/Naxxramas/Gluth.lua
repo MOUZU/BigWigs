@@ -81,7 +81,6 @@ function BigWigsGluth:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 
 	
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Frenzy")

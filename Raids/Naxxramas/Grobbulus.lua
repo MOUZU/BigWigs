@@ -71,7 +71,6 @@ BigWigsGrobbulus.revision = tonumber(string.sub("$Revision: 15709 $", 12, -3))
 
 function BigWigsGrobbulus:OnEnable()
 	self.started = nil
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "InjectEvent")

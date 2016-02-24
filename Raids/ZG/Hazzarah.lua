@@ -48,7 +48,6 @@ BigWigsHazzarah.revision = tonumber(string.sub("$Revision: 11203 $", 12, -3))
 function BigWigsHazzarah:OnEnable()
     self.started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HazzarahIllusions", 5)

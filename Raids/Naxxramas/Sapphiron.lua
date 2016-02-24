@@ -86,7 +86,6 @@ function BigWigsSapphiron:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "LifeDrain")

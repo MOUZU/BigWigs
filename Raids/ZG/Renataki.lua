@@ -69,7 +69,6 @@ function BigWigsRenataki:OnEnable()
 	self.started = nil
 	vanished = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("BigWigs_RecvSync")

@@ -91,7 +91,6 @@ function BigWigsGothik:OnEnable()
 	self.dknum = 1
 	self.ridernum = 1
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL") 	
 	--self:RegisterEvent("CHAT_MSG_SAY") -- test trigger
