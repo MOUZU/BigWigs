@@ -6,6 +6,7 @@ The adjustments were made by LYQ and for the <b>Pariah</b> Guild initially.<br \
 <b><a href="github.com/MOUZU/BigWigs">Please refer to this repository for more information.</a></b>
 
 # Download
+PLEASE NOTE THIS IS STILL A WORK IN PROGRESS <br>
 <b><a href="https://github.com/MOUZU/BigWigs/releases">Download the latest Release here</a></b>
 
 ## How to install
