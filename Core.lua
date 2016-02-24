@@ -500,6 +500,7 @@ function BigWigs.modulePrototype:CheckForWipe()
 			self.core:LevelDebug(1, "Rebooting module ["..self:ToString().."].")
 		end
 		self:TriggerEvent("BigWigs_RebootModule", self)
+        self:TriggerEvent("BigWigs_SendSync", "BossWipe")
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2.5, self)
 	end
