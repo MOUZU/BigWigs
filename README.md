@@ -16,7 +16,7 @@ PLEASE NOTE THIS IS STILL A WORK IN PROGRESS <br>
 ## Wiki
 <b><a href="https://github.com/MOUZU/BigWigs/wiki">For more information or help please visit the Wiki</a></b>
 
-## Included AddOns
+## Included AddOns/Plugins
 I've included several other BigWigs AddOns in this repository, so you only need to download and use the 'BigWigs' folder from this repository. If you happen to have any of the listed AddOns seperately I suggest removing them - in case I adjusted some of those in this repository as well.
 <ul>
     <li><b>BigWigs_CommonAuras</b> <br \>  ( keeps track of certain Buffs eg. Fear Ward and Tank cooldowns )</li>
@@ -47,5 +47,6 @@ If you want to browse through all the changes and their status regarding each en
 ## Core/General Adjustments
 - <b>(100%)</b> Engage Syncs are now working perfectly on every encounter and do allow communication between clients of different language packs.
 - <b>(100%)</b> Bosskill Syncs were added for every encounter dynamically and do also support communication of different language packs.
+- <b>(QA)</b> BossWipe Syncs were remodelled and added dynamically for every encounter.
 - <b>(100%)</b> KTM compatibility - Bossmodules are now able to set the MasterTarget, reset the Threat or Clear the Master Target. RaidOfficers do need to have this version for that.
 - <b>()</b> to be completed later..
