@@ -29,6 +29,7 @@ I've included several other BigWigs AddOns in this repository, so you only need 
     <li><b>AutoReply</b>  <i>own development (WORK IN PROGRESS)</i> <br> ( This Plugin will answer whispers received during BossFights )</li>
     <li><b>ReadyCheck</b>  <i>own development (WORK IN PROGRESS)</i> <br> ( This Plugin will implement the needed code for the 'ReadyCheck' button from Blizzward which is in visible in the RaidFrame. Since the missing code was related to missing AddOn communication this Plugin will only work for RaidMembers with one of LYQs BigWigs Version )</li>
     <li><b>RaidOfficer</b>  <i>own development (WORK IN PROGRESS)</i> <br> ( This Plugin will enable for Raid Assistants dragging Players of one Raid-subgroup to another. This was on vanilla previously only enabled for RaidLeaders but the API allows Assistants to do so too )</li>
+    <li><b>AFKick</b>  <i>own development (CONCEPT IN PROGRESS)</i> <br> ( The concept of this Plugin is yet not fully made and can still be cancelled entirely. The Idea of this was from Sulfuras/Feenix Mesmerize version which in that version could get abused. The intent is to give RaidLeaders and Officers the possibility to force Raidmembers to logout IF those players are AFK and are basically blocking one raidslot not just in the raidgroup but the raid instance as such. If I reimplement such feature it will have multiple safety measures which should prevent all kinds of abuse. )</li>
 </ul>
 
 ## Raid Adjustments
