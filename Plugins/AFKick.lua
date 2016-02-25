@@ -5,7 +5,7 @@
     This is a small plugin which is inspired by Sulfuras of Mesmerize (Warsong/Feenix).
     It gives the RaidOfficers the opportunity to "disconnect" RaidMembers who are AFK flagged.
 
-    The initial version of Sulfuras could be abused to kick random players in your raidgroup
+    The initial version of Sulfuras could be abused to kick random players in your or other raidgroups
     and therefore this feature was seen as abuse but the intent of it isn't that wrong after all.
 
     I therefore recreated the feature using his idea and implemented it with a couple of
@@ -15,6 +15,7 @@
 ------------------------------
 --      Are you local?      --
 ------------------------------
+local lastAFKickRequest = nil
 
 
 ----------------------------
@@ -41,11 +42,29 @@ end
 ------------------------------
 
 function BigWigsAFKick:BigWigs_RecvSync(sync, rest, nick)
-    if sync == "AFKick" and rest and (nick) then
+    if sync == "AFKick" and rest and rest == UnitName("player") then
+        -- Check the author of this Sync first
+        -- only RaidOfficers are allowed to use this function
+        for i=1, MAX_RAID_MEMBERS do
+            local name, rank = GetRaidRosterInfo(i)
+            if name and name == nick then
+                if rank > 0 then
+                    -- the author is at least assistant
+                    break
+                else
+                    -- the author is a fucktard trying to abuse my system
+                    return
+                end
+            end
+        end
         
+        -- if we're here the authorization check was successful
     end
 end
 
 function BigWigsAFKick:IsAfk()
+    -- how do I determine if the player is really afk?
+    -- simply checking for the afk flag?
+    -- maybe afk flag enables a 30sec timer in which the player can return and cancel the process
     return false
 end
