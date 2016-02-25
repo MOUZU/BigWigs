@@ -9,7 +9,8 @@
 --      Are you local?      --
 ------------------------------
 local c = {
-    lastReadyCheck  = 0,    -- do I still need that?
+    lastReadyCheck  = 0,
+    amReady         = false,
     statusList      = {
         -- this list is resetting every finished ready check
         -- it keeps track of the results from the ongoing ready check
@@ -89,10 +90,11 @@ function BigWigsReadyCheck:BigWigs_RecvSync(sync, rest, nick)
         end
         ReadyCheckFrameText:SetText(format(READY_CHECK_MESSAGE, rest))        
         ReadyCheckFrame:Show()
-        c.lastReadyCheck = GetTime()
+        c.lastReadyCheck    = GetTime()
+        c.amReady           = false
         PlaySound("ReadyCheck")
         
-        
+        f:Show()
         
         
         -- TODO: setup OnUpdate to hide the frame after 29s again
@@ -105,6 +107,10 @@ function BigWigsReadyCheck:BigWigs_RecvSync(sync, rest, nick)
         end
         -- TODO: display a question mark on his raidframe
     elseif sync == "ReadyCheckConfirm" then
+        
+        if nick == UnitName("player") then
+            c.amReady = true
+        end
         
         if rest == "Y" then
             c.statusList[nick] = 1
@@ -147,7 +153,9 @@ function BigWigsReadyCheck:SetupFrames()
                 -- TO RETHINK: option to display AFK players in raidchat or maybe players without the addon?, these options should only be for RL
                 
                 BigWigsReadyCheck:TriggerEvent("BigWigs_SendSync", "ReadyCheckRequest " .. UnitName("player"))
-                c.lastReadyCheck = GetTime()
+                c.lastReadyCheck    = GetTime()
+                c.amReady           = true
+                f:Show()
             end)
         
         ReadyCheckFrameYesButton:SetScript('OnClick', function()
@@ -161,10 +169,15 @@ function BigWigsReadyCheck:SetupFrames()
         -- the following is the popup window update, it was only used to alert the player if he missed a check - this does not suffice in our case
         ReadyCheckFrame:SetScript('OnUpdate', nil)
         f:SetScript('OnUpdate', function()
-                if c.lastReadyCheck < GetTime() then
-                    -- TODO
+                if c.lastReadyCheck > 0 and (c.lastReadyCheck + 30) < GetTime() then
+                    c.lastReadyCheck = 0
+                    ReadyCheckFrame:Hide()
+                    BigWigsReadyCheck:CheckResults()
+                    
+                    f:Hide()
                 end
             end)
+        f:Hide()
         
         BigWigsReadyCheck:UpdateButton()
         
@@ -179,4 +192,8 @@ function BigWigsReadyCheck:UpdateButton()
     else
         RaidFrameReadyCheckButton:Hide()
     end
+end
+
+function BigWigsReadyCheck:CheckResults()
+    
 end
