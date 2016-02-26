@@ -65,6 +65,8 @@ end
 function BigWigsAFKick:IsAfk()
     -- how do I determine if the player is really afk?
     -- simply checking for the afk flag?
-    -- maybe afk flag enables a 30sec timer in which the player can return and cancel the process
+    -- maybe afk flag enables a 40sec timer in which the player can return and cancel the process
+    -- so after 40s the Logout window shall appear which again has a 20s timer so that the player
+    -- has 1min in total to react and cancel the process of logging out
     return false
 end
