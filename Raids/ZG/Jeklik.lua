@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	attack_trigger3 = "High Priestess Jeklik hits",
 	attack_trigger4 = "High Priestess Jeklik crits",
 	liquidfire_trigger = "Liquid Fire",
-	liquidfirehitsyou_trigger = "Liquid Fire 's Blaze hits you for",
+	liquidfirehitsyou_trigger = "Throw Liquid Fire hits you for",
 	liquidfirehitsother_trigger = "Liquid Fire 's Blaze hits (.+) for",
 	liquidfireabsorbyou_trigger = "You absorb Liquid Fire 's Blaze\.",
 	liquidfireabsorb_trigger = "Liquid Fire 's Blaze is absorbed by (.+)\.",
@@ -233,6 +233,7 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["phaseone_message"], "Attention")
 		end
+        self:TriggerEvent("BigWigs_StartBar", self, "First Silence", 12, "Interface\\Icons\\Spell_Frost_Iceshock")
 	elseif sync == "JeklikPhaseTwo" and self.phase < 2 then
         self.phase = 2
 		self:KTM_Reset()
@@ -243,6 +244,7 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_StopBar", self, L["fearreptext"])
 			self:TriggerEvent("BigWigs_StartBar", self, L["fearreptext"], 39.5, "Interface\\Icons\\Spell_Shadow_PsychicScream")
 		end
+        self:TriggerEvent("BigWigs_StartBar", self, "Fire Bombs", 10, "Interface\\Icons\\Spell_Fire_Fire")
 	elseif sync == "JeklikFearRep" and self.db.profile.fear then
 		self:TriggerEvent("BigWigs_StartBar", self, L["fearreptext"], 18, "Interface\\Icons\\Spell_Shadow_SummonImp")
 	elseif sync == "JeklikFearTwoRep" then
@@ -298,7 +300,11 @@ function BigWigsJeklik:Event(msg)
 	local _,_,liquidfireresist,_ = string.find(msg, L["liquidfireresist_trigger"])
 	local _,_,liquidfireabsorb,_ = string.find(msg, L["liquidfireabsorb_trigger"])
 	local _,_,liquidfireimmune,_ = string.find(msg, L["liquidfireimmune_trigger"])
-	if string.find(msg, L["heal_trigger"]) then
+    if string.find(msg, "Your Flames hits you") then
+        -- Your Flames hits you for %d Fire damage.
+        self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Lavaspawn", 2)
+        self:TriggerEvent("BigWigs_Message", L["firewarnyou"], "Attention", "Alarm")
+	elseif string.find(msg, L["heal_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "JeklikHeal")
 	elseif string.find(msg, L["phasetwo_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "JeklikPhaseTwo")
@@ -329,8 +335,9 @@ function BigWigsJeklik:Event(msg)
 	elseif string.find(msg, L["liquidfire_trigger"]) then
 		if self.db.profile.announce then
 			if string.find(msg, L["liquidfirehitsyou_trigger"]) then
-				self:TriggerEvent("BigWigs_Message", L["firewarnyou"], "Attention", "Alarm")
-                self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Lavaspawn", 2)
+                -- do I still need this?
+				--self:TriggerEvent("BigWigs_Message", L["firewarnyou"], "Attention", "Alarm")
+                --self:TriggerEvent("BigWigs_ShowIcon", "Interface\\Icons\\Spell_Fire_Lavaspawn", 2)
 			elseif msg == L["liquidfireresistyou_trigger"] or msg == L["liquidfireabsorbyou_trigger"] or msg == L["liquidfireimmuneyou_trigger"] then
 				self:TriggerEvent("BigWigs_Message", L["firewarn"], "Attention", "Alarm")
 			elseif liquidfirehitsother and liquidfirehitsother~=L["you"] then

@@ -9,7 +9,9 @@
 - <b>(100%)</b> fixed Phase 2 Notifier
 - <b>(DG)</b> Fear, seems not to be timed - maybe just a cooldown
 - <b>(DG)</b> MindFlay, seems not to be timed - just a cooldown
-- <b>(QA)</b> WarnIcon, if you're standing in the fire in Phase 2 - I don't think the normal fire trigger code works though
+- <b>(QA)</b> WarnIcon, if you're standing in the fire in Phase 2. changed fire triggers
+- <b>(QA)</b> Silence, added timer for first Silence after 12s in Phase 1
+- <b>(QA)</b> Fire Bombs, added a timer on phase Switch. Those Bombs start 10s in Phase 2
 
 ## High Priest Venoxis
 - <b>(QA)</b> Addcounter, new Counting algorithm (only compatible with users of LYQs BigWigs). Users with older versions may receive the sync but can not send.
