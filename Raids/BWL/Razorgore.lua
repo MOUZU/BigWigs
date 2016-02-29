@@ -182,6 +182,7 @@ BigWigsRazorgore.enabletrigger = { boss, controller }
 BigWigsRazorgore.bossSync = "Razorgore"
 BigWigsRazorgore.toggleoptions = { "phase", "mobs", "eggs", "polymorph", "mc", "icon", "orb", "fireballvolley", "conflagration", "ktm", "bosskill" }
 BigWigsRazorgore.revision = tonumber(string.sub("$Revision: 11212 $", 12, -3))
+BigWigsRazorgore:RegisterYellEngage(L["start_trigger"])
 
 ------------------------------
 --      Initialization      --
@@ -218,7 +219,7 @@ end
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["start_trigger"]) then
-        self:SendEngageSync()
+        --self:SendEngageSync()
 	elseif msg == L["phase2_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "RazorgorePhaseTwo")
 	elseif msg == L["destroyegg_yell1"] or msg == L["destroyegg_yell2"] or msg == L["destroyegg_yell3"] then

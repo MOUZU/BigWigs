@@ -71,6 +71,7 @@ BigWigsBroodlord.enabletrigger = boss
 BigWigsBroodlord.bossSync = "Broodlord"
 BigWigsBroodlord.toggleoptions = {"ms", "bw", "bosskill"}
 BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
+BigWigsBroodlord:RegisterYellEngage(L["engage_trigger"])
 
 ------------------------------
 --      Initialization      --

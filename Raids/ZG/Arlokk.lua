@@ -93,6 +93,7 @@ BigWigsArlokk.enabletrigger = boss
 BigWigsArlokk.bossSync = "High Priestess Arlokk"
 BigWigsArlokk.toggleoptions = {"phase", "whirlwind", "vanish", "mark", "puticon", "bosskill"}
 BigWigsArlokk.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
+BigWigsArlokk:RegisterYellEngage(L["engage_trigger"])
 
 ------------------------------
 --      Initialization      --
@@ -116,7 +117,7 @@ end
 
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg,L["engage_trigger"]) then
-        self:SendEngageSync()
+        --self:SendEngageSync()
     else
         local _,_, n = string.find(msg, L["mark_trigger"])
         if n then

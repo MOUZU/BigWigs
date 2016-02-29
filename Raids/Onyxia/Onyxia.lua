@@ -117,6 +117,7 @@ BigWigsOnyxia.enabletrigger = boss
 BigWigsOnyxia.bossSync = "Onyxia"
 BigWigsOnyxia.toggleoptions = { "flamebreath", "deepbreath", "wingbuffet", "fireball", "phase", "onyfear", "bosskill"}
 BigWigsOnyxia.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
+BigWigsOnyxia:RegisterYellEngage(L["engage_trigger"])
 
 ------------------------------
 --      Initialization      --
@@ -153,7 +154,7 @@ end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg, L["engage_trigger"]) then
-        self:SendEngageSync()
+        --self:SendEngageSync()
 	elseif (string.find(msg, L["phase2_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "OnyPhaseTwo")
 	elseif (string.find(msg, L["phase3_trigger"])) then

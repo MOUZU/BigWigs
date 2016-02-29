@@ -100,6 +100,7 @@ BigWigsMajordomo.bossSync = "Majordomo"
 BigWigsMajordomo.wipemobs = { L["elitename"], L["healername"] }
 BigWigsMajordomo.toggleoptions = {"magic", "dmg", "adds", "bosskill"}
 BigWigsMajordomo.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
+BigWigsMajordomo:RegisterYellEngage(L["trigger"])
 
 ------------------------------
 --      Initialization      --
@@ -136,7 +137,7 @@ function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self.core:ToggleModuleActive(self, false)
     elseif string.find(msg, L["trigger"]) then
-        self:TriggerEvent("BigWigs_SendSync", "DomoPull")
+        --self:TriggerEvent("BigWigs_SendSync", "DomoPull")
 	end
 end
 

@@ -118,6 +118,7 @@ BigWigsMandokir.bossSync = "Mandokir"
 BigWigsMandokir.wipemobs = { L["ohgan"] }
 BigWigsMandokir.toggleoptions = {"gaze", "announce", "puticon", "whirlwind", "enraged", "bosskill"}
 BigWigsMandokir.revision = tonumber(string.sub("$Revision: 11206 $", 12, -3))
+BigWigsMandokir:RegisterYellEngage(L["engage_trigger"])
 
 ------------------------------
 --      Initialization      --
@@ -152,7 +153,7 @@ end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
     if string.find(msg, L["engage_trigger"]) then
-        self:SendEngageSync()
+        --self:SendEngageSync()
     else
         local gazetime
         local _,_,watchedplayer,_ = string.find(msg, L["watch_trigger"])

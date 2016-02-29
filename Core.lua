@@ -415,6 +415,24 @@ function BigWigs.modulePrototype:Scan()
 	return false
 end
 
+local yellTriggers = {} -- [i] = {yell, bossmod}
+function BigWigs.modulePrototype:RegisterYellEngage(yell)
+    -- Bosses with Yells as Engagetrigger should go through even when the bossmod isn't active yet.
+    tinsert(yellTriggers, {yell, self})
+end
+
+function BigWigs:CHAT_MSG_MONSTER_YELL(msg)
+    for i=1, table.getn(yellTriggers) do
+        local yell  = yellTriggers[1]
+        local mod   = yellTriggers[2]
+        if string.find(msg, yell) then
+            -- enable and engage
+            self:EnableModule(mod:ToString())
+            mod:SendEngageSync()
+        end
+    end
+end
+BigWigs:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 function BigWigs.modulePrototype:GetEngageSync()
 	return "BossEngaged"

@@ -87,6 +87,7 @@ BigWigsNefarian.enabletrigger = { boss, victor }
 BigWigsNefarian.bossSync = "Nefarian"
 BigWigsNefarian.toggleoptions = {"shadowflame", "fear", "classcall", "otherwarn", "bosskill"}
 BigWigsNefarian.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
+BigWigsNefarian:RegisterYellEngage(L["landing_soon_trigger"])
 
 ------------------------------
 --      Initialization      --
@@ -138,7 +139,7 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 				end
 			else
 				if string.find(msg, L["landing_soon_trigger"]) then 
-                    self:SendEngageSync()
+                    --self:SendEngageSync()
 				elseif self.db.profile.otherwarn and string.find(msg, L["landing_trigger"]) then 
 					--self:TriggerEvent("BigWigs_Message", v[1], "Important", true, "Long")
 				elseif self.db.profile.otherwarn and string.find(msg, L["zerg_trigger"]) then 
