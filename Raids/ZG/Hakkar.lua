@@ -239,23 +239,7 @@ end
 
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["engage_trigger"]) then
-		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-			self:ScheduleEvent("BigWigs_Message", 300, L["enrage5minutes_message"], "Urgent")
-			self:ScheduleEvent("BigWigs_Message", 540, L["enrage1minute_message"], "Urgent")
-			self:ScheduleEvent("BigWigs_Message", 570, string.format(L["enrageseconds_message"], 30), "Urgent")
-			self:ScheduleEvent("BigWigs_Message", 590, string.format(L["enrageseconds_message"], 10), "Attention")
-            self:SendEngageSync()
-		end
-		if self.db.profile.siphon then
-			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 89, "Interface\\Icons\\Spell_Shadow_LifeDrain")
-			self:ScheduleEvent("BigWigs_Message", 59, string.format(L["siphon_warning"], 30), "Urgent")
-            self:ScheduleEvent("BigWigs_ShowIcon", 59, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
-			self:ScheduleEvent("BigWigs_Message", 79, string.format(L["siphon_warning"], 10), "Attention")
-		end
-		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_StartBar", self, L["firstmc_bar"], 17, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
-		end
+        self:SendEngageSync()
 	elseif msg == L["flee_trigger"] then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self:TriggerEvent("BigWigs_RebootModule", self)
@@ -348,6 +332,22 @@ end
 function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
+        if self.db.profile.enrage then
+			self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:ScheduleEvent("BigWigs_Message", 300, L["enrage5minutes_message"], "Urgent")
+			self:ScheduleEvent("BigWigs_Message", 540, L["enrage1minute_message"], "Urgent")
+			self:ScheduleEvent("BigWigs_Message", 570, string.format(L["enrageseconds_message"], 30), "Urgent")
+			self:ScheduleEvent("BigWigs_Message", 590, string.format(L["enrageseconds_message"], 10), "Attention")
+		end
+		if self.db.profile.siphon then
+			self:TriggerEvent("BigWigs_StartBar", self, L["siphon_bar"], 89, "Interface\\Icons\\Spell_Shadow_LifeDrain")
+			self:ScheduleEvent("BigWigs_Message", 59, string.format(L["siphon_warning"], 30), "Urgent")
+            self:ScheduleEvent("BigWigs_ShowIcon", 59, "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent", 30)
+			self:ScheduleEvent("BigWigs_Message", 79, string.format(L["siphon_warning"], 10), "Attention")
+		end
+		if self.db.profile.mc then
+			self:TriggerEvent("BigWigs_StartBar", self, L["firstmc_bar"], 17, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+		end
 	elseif sync == "HakkarBloodSiphon" then
         self:TriggerEvent("BigWigs_HideIcon", "Interface\\Icons\\Ability_Hunter_Pet_WindSerpent")   -- just to be safe, shouldn't be needed
 		if self.db.profile.siphon then
