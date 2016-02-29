@@ -423,8 +423,8 @@ end
 
 function BigWigs:CHAT_MSG_MONSTER_YELL(msg)
     for i=1, table.getn(yellTriggers) do
-        local yell  = yellTriggers[1]
-        local mod   = yellTriggers[2]
+        local yell  = yellTriggers[i][1]
+        local mod   = yellTriggers[i][2]
         if string.find(msg, yell) then
             -- enable and engage
             self:EnableModule(mod:ToString())
