@@ -76,7 +76,7 @@ end
 
 function BigWigsGolemagg:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-        self.started = true
+        self:StartFight()
         self:KTM_SetTarget(boss)
 	elseif sync == "GolemaggEarthquake" and self.db.profile.earthquake then
 		self:TriggerEvent("BigWigs_Message", L["earthquakesoonwarn"], "Attention", "Alarm")

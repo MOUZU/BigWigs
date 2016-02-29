@@ -331,7 +331,7 @@ end
 
 function BigWigsHakkar:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-        self.started = true
+        self:StartFight()
         if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 			self:ScheduleEvent("BigWigs_Message", 300, L["enrage5minutes_message"], "Urgent")

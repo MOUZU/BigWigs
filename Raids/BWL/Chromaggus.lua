@@ -218,7 +218,7 @@ end
 
 function BigWigsChromaggus:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and ((sync == "BossEngaged" and rest == "Chromaggus") or (sync == "ChromaggusEngage") ) then
-		self.started = true
+		self:StartFight()
         if sync ~= "ChromaggusEngage" then self:TriggerEvent("BigWigs_SendSync", "ChromaggusEngage") end
         
 		if self.db.profile.breath then

@@ -234,7 +234,7 @@ end
 
 function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-        self.started = true
+        self:StartFight()
 		if self.db.profile.inferno then
 			self:ScheduleEvent("BigWigs_Message", 11.5, L["nextinferno_message"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["inferno_bar"], 14.5, "Interface\\Icons\\Spell_Fire_Incinerate")

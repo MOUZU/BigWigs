@@ -121,7 +121,7 @@ end
 
 function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-        self.started = true
+        self:StartFight()
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		self:BigWigs_RecvSync("MaexxnaWebspray", nil, nil)
 	elseif sync == "MaexxnaWebspray" then

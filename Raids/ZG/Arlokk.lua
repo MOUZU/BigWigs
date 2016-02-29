@@ -144,13 +144,8 @@ end
 
 function BigWigsArlokk:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-		self:TriggerEvent("BigWigs_SendSync", "ArlokkPhaseTroll")
-	elseif sync == "ArlokkPhaseTroll" then
-		vanished = nil
+        self:StartFight()
 		self:CancelScheduledEvent("checkvanish")
-		if started == nil then
-			started = true
-		end
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["trollphase_message"], "Attention")
 		end

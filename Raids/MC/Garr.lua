@@ -93,7 +93,7 @@ end
 
 function BigWigsGarr:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-        self.started = true
+        self:StartFight()
     elseif self.started and string.find(sync, "GarrAddDead%d") then
         local newCount = tonumber(string.sub(sync, 12))
         

@@ -343,7 +343,7 @@ end
 
 function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and sync == "BossEngaged" and rest == self.bossSync then
-        self.started = true
+        self:StartFight()
 		self.eggs = 0
         self.phase = 1
 		if self.db.profile.phase then

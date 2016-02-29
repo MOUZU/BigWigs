@@ -180,7 +180,7 @@ end
 
 function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "VaelStart")) then
-        self.started = true
+        self:StartFight()
 		if self.db.profile.tankburn then
             self:TriggerEvent("BigWigs_StartBar", self, L["tankburn_bar"], 44.9, "Interface\\Icons\\INV_Gauntlets_03", true, "Black")
             self:ScheduleEvent("BigWigs_Message", 39.9, L["tankburnsoon"], "Urgent")
@@ -265,7 +265,7 @@ function BigWigsVaelastrasz:Event(msg)
 			self:TriggerEvent("BigWigs_StartBar", self, L["tankburn_bar"], 45, "Interface\\Icons\\INV_Gauntlets_03", true, "Black")
 			self:ScheduleEvent("BigWigs_Message", 40, L["tankburnsoon"], "Urgent")
 		end
-		self.started = true
+		self:StartFight()
 		self:TriggerEvent("BigWigs_SendSync", "VaelStart")
 	end
 end

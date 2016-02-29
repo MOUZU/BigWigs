@@ -335,7 +335,7 @@ end
 
 function BigWigsThekal:BigWigs_RecvSync(sync, rest, nick)
 	if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "ThekalPhaseOne")) then
-        self.started = true
+        self:StartFight()
         self.phase = 1
 	elseif sync == "ThekalPhaseTwo" and self.phase < 2 then
         self.phase = 2

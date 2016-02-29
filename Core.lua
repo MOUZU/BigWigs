@@ -444,6 +444,14 @@ function BigWigs.modulePrototype:SendEngageSync()
     end
 end
 
+function BigWigs.modulePrototype:StartFight()
+    if self.bossSync and not self.started then
+        self.started = true
+        self:TriggerEvent("BigWigs_Message", self:ToString() .. " engaged!", "Positive")
+        BigWigsBossRecords:StartBossfight(self)
+    end
+end
+
 function BigWigs.modulePrototype:SendBosskillSync()
     if self.bossSync then
         self:TriggerEvent("BigWigs_SendSync", "Bosskill "..self.bossSync)
@@ -826,7 +834,7 @@ function BigWigs:EnableModule(module, nosync)
 	local m = self:GetModule(module)
 	if m and m:IsBossModule() and not self:IsModuleActive(module) then
 		self:ToggleModuleActive(module, true)
-		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Core", true)
+		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Core")
 		if not nosync then self:TriggerEvent("BigWigs_SendSync", (m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(module))) end
         m:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	end
@@ -851,13 +859,6 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
 			self:Print(string.format(L["%s has requested forced reboot for the %s module."], nick, module))
 		end
 		self:TriggerEvent("BigWigs_RebootModule", module)
-    elseif sync == "BossEngaged" and module then
-        for name, mod in BigWigs:IterateModules() do
-            if mod:IsBossModule() and mod.bossSync and mod.bossSync == module and not mod.started then
-                self:TriggerEvent("BigWigs_Message", mod:ToString() .. " engaged!", "Positive")
-                BigWigsBossRecords:StartBossfight(mod)
-            end
-        end
     elseif sync == "Bosskill" and module then
         for name, mod in BigWigs:IterateModules() do
             if mod:IsBossModule() and BigWigs:IsModuleActive(mod) and mod.bossSync and mod.bossSync == module then

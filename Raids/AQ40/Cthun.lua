@@ -168,7 +168,7 @@ end
 
 function BigWigsCThun:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and ((sync == "BossEngaged" and rest == self.bossSync) or (sync == "CThunStart")) then
-        self.started = true
+        self:StartFight()
 		self:CThunStart()
 	elseif sync == "CThunP2Start" then
 		self:CThunP2Start()
