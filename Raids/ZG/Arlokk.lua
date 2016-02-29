@@ -89,7 +89,7 @@ L:RegisterTranslations("deDE", function() return {
 
 BigWigsArlokk = BigWigs:NewModule(boss)
 BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsArlokk.enabletrigger = {boss, "Hakkari Shadow Hunter"}
+BigWigsArlokk.enabletrigger = boss
 BigWigsArlokk.bossSync = "High Priestess Arlokk"
 BigWigsArlokk.toggleoptions = {"phase", "whirlwind", "vanish", "mark", "puticon", "bosskill"}
 BigWigsArlokk.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
@@ -99,7 +99,7 @@ BigWigsArlokk.revision = tonumber(string.sub("$Revision: 11205 $", 12, -3))
 ------------------------------
 
 function BigWigsArlokk:OnEnable()
-	started = nil
+	self.started = nil
 	vanished = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
