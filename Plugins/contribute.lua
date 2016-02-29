@@ -47,7 +47,7 @@ local unsupportedRaids  = {
     "Ahn'Qiraj",
     "Naxxramas"
 }
-local footageRequest    = false
+local footageRequested  = false
 local prefix            = "|cf75DE52f[BigWigs]|r - ";
 
 ----------------------------------
@@ -65,8 +65,8 @@ function BigWigsContribute:OnEnable()
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
     
     -- this will deactivate the footage Request on unsupported content
-    if not self.db.profile.footage then
-        footageRequest = true
+    if self.db.profile.footage == false then
+        footageRequested = true
     end
 end
 
@@ -76,8 +76,8 @@ function BigWigsContribute:ZONE_CHANGED_NEW_AREA()
         for i=1, table.getn(listOfRaidZones) do
             local area = AceLibrary("Babble-Zone-2.2")[listOfRaidZones[i]]
             if area and area == GetRealZoneText() then
-                if not GetGuildInfo("player") == "Pariah" then
-                    DEFAULT_CHAT_FRAME:AddMessage(prefix .. "You are using the BigWigs version adjusted and enhanced for Nostalrius. This version was made by LYQ for <Pariah>. For continued support of future content and/or plugins you can donate Gold to the Author to LYQ(Horde) or Virose(Alliance). Thank you.")
+                if (GetGuildInfo("player") == nil) or (not GetGuildInfo("player") == "Pariah") then
+                    DEFAULT_CHAT_FRAME:AddMessage(prefix .. "This |cf75DE52fNostalrius|r Version was made by |cff7f7fffLYQ|r for <Pariah>. You can support the Author for future development by sending a couple of Gold to LYQ(Horde) or Virose(Alliance). Thank you.")
                 end
                 BigWigsContributeFlag = true
             end
@@ -85,14 +85,12 @@ function BigWigsContribute:ZONE_CHANGED_NEW_AREA()
     end
     
     -- check for unsupported raids
-    if not footageRequest then
+    if not footageRequested then
         for i=1, table.getn(unsupportedRaids) do
             local area = AceLibrary("Babble-Zone-2.2")[unsupportedRaids[i]]
             if area and area == GetRealZoneText() then
-                DEFAULT_CHAT_FRAME:AddMessage(prefix .. "This content is not yet adjusted for Nostalrius. Please Check for new Updates on LYQs GitHub page(github.com/MOUZU)")
-                DEFAULT_CHAT_FRAME:AddMessage("If there is no Update available you can help the process by contributing footage(eg. from twitch) to help analyzing Boss mechanics on Nostalrius.")
-                DEFAULT_CHAT_FRAME:AddMessage("You can deactivate these Messages in the option menu.")
-                footageRequest = true
+                DEFAULT_CHAT_FRAME:AddMessage(prefix .. "This content is not yet adjusted by |cff7f7fffLYQ|r. Check for Updates or help by providing twitch/youtube footage on github.com/MOUZU.")
+                footageRequested = true
             end
         end
     end
