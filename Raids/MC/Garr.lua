@@ -80,18 +80,11 @@ BigWigsGarr.revision = tonumber(string.sub("$Revision: 11204 $", 12, -3))
 ------------------------------
 
 function BigWigsGarr:OnEnable()
-    self.started = nil
+    self.started    = nil
+    self.adds       = 0
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead1", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead2", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead3", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead4", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead5", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead6", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead7", 0.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead8", 0.7)
 end
 
 ------------------------------
@@ -101,23 +94,15 @@ end
 function BigWigsGarr:BigWigs_RecvSync(sync, rest, nick)
     if not self.started and sync == "BossEngaged" and rest == self.bossSync then
         self.started = true
-	elseif sync == "GarrAddDead1" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg1"], "Positive")
-	elseif sync == "GarrAddDead2" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg2"], "Positive")
-	elseif sync == "GarrAddDead3" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg3"], "Positive")
-	elseif sync == "GarrAddDead4" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg4"], "Positive")
-	elseif sync == "GarrAddDead5" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg5"], "Positive")
-	elseif sync == "GarrAddDead6" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg6"], "Positive")
-	elseif sync == "GarrAddDead7" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg7"], "Positive")
-	elseif sync == "GarrAddDead8" then
-		self:TriggerEvent("BigWigs_Message", L["addmsg8"], "Positive")
-	end
+    elseif self.started and string.find(sync, "GarrAddDead%d") then
+        local newCount = tonumber(string.sub(sync, 12))
+        
+        
+        if self.adds < newCount then
+            self.adds = newCount
+            self:TriggerEvent("BigWigs_Message", L["addmsg"..newCount], "Positive")
+        end
+    end
 end
 
 function BigWigsGarr:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
