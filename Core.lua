@@ -865,6 +865,11 @@ function BigWigs:BigWigs_TargetSeen(mobname, unit)
 	for name,module in self:IterateModules() do
 		if module:IsBossModule() and self:ZoneIsTrigger(module, GetRealZoneText()) and self:MobIsTrigger(module, mobname) and (not module.VerifyEnable or module:VerifyEnable(unit)) then
 			self:EnableModule(name)
+            if UnitExists(unit.."target") then
+                -- if this is true the boss is apparantely already in combat!
+                -- this situation can happen on bosses which spawn the same time they enter combat (Arlokk/Mandokir) or when a player without BigWigs engages the boss
+                module:SendEngageSync()
+            end
 		end
 	end
 end
