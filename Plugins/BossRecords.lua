@@ -55,29 +55,10 @@ end
 function BigWigsBossRecords:StartBossfight(module)
     -- checking if module is actually a bossmod
     if module and module.bossSync then
-        local startConfirmed = true
-        --[[
-            this is supposed to prevent that the BossStart is getting triggered by multiple
-            BossEngaged syncs, a user with an older BigWigs version might fire a BossEngaged
-            pretty delayed and fuck up our statistics.
-            Only after 45 seconds a new recording can be started, meaning if the very unlikely
-            case happens that your raid "wipes" or resets the boss and your new pull happens
-            <45seconds after the first one BossRecords will still take the time of your first
-            pull to calculate with.
-            Maybe there is a better way in the future to trigger wipes/resets but that
-            should suffice for most cases.
-        --]]
-        if c.name == module:ToString() and not ((c.startTime + 45) < GetTime()) then
-            -- if c.name = moduleName then the last or current recording was for the same boss
-            startConfirmed = false
-        end
-        
-        if startConfirmed then
-            c.name      = module:ToString()
-            c.startTime = GetTime()
+        c.name      = module:ToString()
+        c.startTime = GetTime()
 
-            DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], c.name))
-        end
+        DEFAULT_CHAT_FRAME:AddMessage(prefix .. string.format(L["BOSS_ENGAGED"], c.name))
     end
 end
     

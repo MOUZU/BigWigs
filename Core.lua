@@ -835,7 +835,7 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
 		self:TriggerEvent("BigWigs_RebootModule", module)
     elseif sync == "BossEngaged" and module then
         for name, mod in BigWigs:IterateModules() do
-            if mod:IsBossModule() and mod.bossSync and mod.bossSync == module then
+            if mod:IsBossModule() and mod.bossSync and mod.bossSync == module and not mod.started then
                 self:TriggerEvent("BigWigs_Message", mod:ToString() .. " engaged!", "Positive")
                 BigWigsBossRecords:StartBossfight(mod)
             end
