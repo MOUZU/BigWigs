@@ -143,6 +143,7 @@ end
 function BigWigsReadyCheck:SetupFrames()
     -- I'm overwriting the related Button scripts to use my sync
     if not c.initialized then
+        -- lol this button below fired a nil value, I guess it's only being setup when joining a raid or opening raid frame
         RaidFrameReadyCheckButton:SetScript('OnClick', function()
                 
                 -- init onupdate and possibly enable readycheck for raid assistants too, need to make the button for them visible beforehand too
