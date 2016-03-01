@@ -336,19 +336,22 @@ function BigWigsBars:BigWigs_StopBar(module, text)
 	module:UnregisterCandyBar("BigWigsBar "..text)
 end
 
+local counterBarCache = {
+    -- [i] = {text, module}
+}
 function BigWigsBars:BigWigs_StartCounterBar(module, text, max, icon, bar, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
 	if not text then return end
 	local id = "BigWigsBar "..text
 	BigWigsBars:BigWigs_StartBar(module, text, max, icon, bar, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
 	module:PauseCandyBar(id)
 	module:SetCandyBarTimeFormat(id, function(t) return string.format("%d", t) end)
+    tinsert(counterBarCache,{text, module})
 end
 
 function BigWigsBars:BigWigs_StopCounterBar(module, text)
 	if not text then return end
 	BigWigsBars:BigWigs_StopBar(module, text)
 end
-
 
 function BigWigsBars:BigWigs_SetCounterBar(module, text, value)
 	if (not text) or (value == nil) or (value < 0) then return end
@@ -360,6 +363,17 @@ function BigWigsBars:BigWigs_SetCounterBar(module, text, value)
 	if bar.time <= value then
 		BigWigsBars:BigWigs_StopBar(module, text)
 	end
+end
+
+function BigWigsBars:BigWigs_HideCounterBars()
+    -- forces to hide all counter bars cached, used on bosskills
+    for i=1, table.getn(counterBarCache) do
+        BigWigsBars:BigWigs_StopCounterBar(counterBarCache[i][2], counterBarCache[i][1])
+    end
+    
+    for j=1, table.getn(counterBarCache) do
+        counterBarCache[j] = nil
+    end
 end
 
 function BigWigsBars:BigWigs_StartHPBar(module, text, max, bar, icon, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)

@@ -869,6 +869,7 @@ function BigWigs:BigWigs_RecvSync(sync, module, nick)
                     BigWigsBossRecords:EndBossfight(mod)
                     BigWigsAutoReply:EndBossfight()
                     self:ToggleModuleActive(mod, false)
+                    BigWigsBars:BigWigs_HideCounterBars()
                     self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], mod:ToString()), "Bosskill", nil, "Victory")
                 end
             end
