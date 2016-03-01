@@ -164,17 +164,23 @@ function BigWigsMajordomo:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
 			self:ScheduleEvent("BigWigs_Message", 27, L["warn3"], "Urgent")
 		end
+        self:TriggerEvent("BigWigs_StartCounterBar", self, "Priests dead", 4, "Interface\\Icons\\Spell_Holy_BlessedRecovery")
+        self:TriggerEvent("BigWigs_SetCounterBar", self, "Priests dead", (4 - 0.1))
+        self:TriggerEvent("BigWigs_StartCounterBar", self, "Elites dead", 4, "Interface\\Icons\\Ability_Hunter_Harass")
+        self:TriggerEvent("BigWigs_SetCounterBar", self, "Elites dead", (4 - 0.1))
 	elseif sync == "DomoHealerDead" and self.db.profile.adds and rest and rest ~= "" then
         rest = tonumber(rest)
         if rest <= 4 and self.hdead < rest then
             self.hdead = rest
             self:TriggerEvent("BigWigs_Message", string.format(L["hdeadmsg"], self.hdead), "Positive")
+            self:TriggerEvent("BigWigs_SetCounterBar", self, "Priests dead", (4 - self.hdead))
         end
 	elseif sync == "DomoEliteDead" and self.db.profile.adds and rest and rest ~= "" then
         rest = tonumber(rest)
         if rest <= 4 and self.edead < rest then
             self.edead = rest
             self:TriggerEvent("BigWigs_Message", string.format(L["edeadmsg"], self.edead), "Positive")
+            self:TriggerEvent("BigWigs_SetCounterBar", self, "Elites dead", (4 - self.edead))
         end
 	elseif sync == "DomoAuraMagic" then
 		if self.db.profile.magic then

@@ -353,6 +353,8 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_StartBar", self, L["mobs_bar"], 46, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
 			self:ScheduleEvent("BigWigs_Message", 41, L["mobs_soon"], "Important")
 		end
+        self:TriggerEvent("BigWigs_StartCounterBar", self, "Eggs destroyed", 30, "Interface\\Icons\\inv_egg_01")
+        self:TriggerEvent("BigWigs_SetCounterBar", self, "Eggs destroyed", (30 - 0.1))
 	elseif sync == "RazorgoreEgg" then
 		rest = tonumber(rest)
 		if rest == (self.eggs + 1) and self.eggs <= 30 then
@@ -360,6 +362,7 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest, nick)
 			if self.db.profile.eggs then
 				self:TriggerEvent("BigWigs_Message", string.format(L["egg_message"], self.eggs), "Positive")
 			end
+            self:TriggerEvent("BigWigs_SetCounterBar", self, "Eggs destroyed", (30 - self.eggs))
 		end
 	elseif sync == "RazorgoreEggStart" then
 		--self:CancelScheduledEvent("destroyegg_check")

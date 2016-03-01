@@ -152,6 +152,7 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
                 self:TriggerEvent("BigWigs_StopBar", L["emerge_bar"])
                 self.sonsdead = 0
             end
+            self:TriggerEvent("BigWigs_SetCounterBar", self, "Sons dead", (8 - self.sonsdead))
         end
 	elseif sync == "RagnarosKnockback" then
 		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 24, L["knockback_soon_message"], "Urgent", true, "Alarm")
@@ -189,6 +190,8 @@ function BigWigsRagnaros:Submerge()
 	end
 	self:ScheduleRepeatingEvent("bwragnarosemergecheck", self.EmergeCheck, 2, self)
 	self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
+    self:TriggerEvent("BigWigs_StartCounterBar", self, "Sons dead", 8, "Interface\\Icons\\spell_fire_fire")
+    self:TriggerEvent("BigWigs_SetCounterBar", self, "Sons dead", (8 - 0.1))
 end
 
 function BigWigsRagnaros:EmergeCheck()
@@ -229,4 +232,5 @@ function BigWigsRagnaros:Emerge()
 		self:TriggerEvent("BigWigs_StartBar", self, L["submerge_bar"], 180, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	    self:ScheduleEvent("bwragnarossubmerge", self.Submerge, 180, self)
 	end
+    self:TriggerEvent("BigWigs_StopCounterBar", self, "Sons dead")
 end
