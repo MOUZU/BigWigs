@@ -371,9 +371,7 @@ function BigWigsBars:BigWigs_HideCounterBars()
         BigWigsBars:BigWigs_StopCounterBar(counterBarCache[i][2], counterBarCache[i][1])
     end
     
-    for j=1, table.getn(counterBarCache) do
-        counterBarCache[j] = nil
-    end
+    counterBarCache = {}
 end
 
 function BigWigsBars:BigWigs_StartHPBar(module, text, max, bar, icon, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
