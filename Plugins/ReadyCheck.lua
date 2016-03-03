@@ -51,7 +51,7 @@ function BigWigsReadyCheck:OnEnable()
     self:RegisterEvent("BigWigs_RecvSync")
     self:RegisterEvent("RAID_ROSTER_UPDATE", "UpdateButton")
     self:RegisterEvent("PARTY_CONVERTED_TO_RAID", "UpdateButton")
-    self:ScheduleEvent("ReadyCheckSetup", BigWigsReadyCheck.SetupFrames, 2)
+    self:ScheduleEvent(self.SetupFrames,2)
 end
 
 ------------------------------
@@ -180,6 +180,36 @@ function BigWigsReadyCheck:SetupFrames()
             end)
         f:Hide()
         
+        for i=1, 40 do
+            -- setup the readycheck result textures now
+            local this      = getglobal("RaidGroupButton"..i)
+            this.ReadyCheck = CreateFrame("Frame", nil, this)
+            this.ReadyCheck:SetWidth(11)
+            this.ReadyCheck:SetHeight(11)
+            this.ReadyCheckTex = this.ReadyCheck:CreateTexture(nil, "ARTWORK")
+            this.ReadyCheckTex:SetAllPoints(this.ReadyCheck)
+            this.ReadyCheck:SetPoint("CENTER", this)
+            
+            --[[
+            BigWigsWarnIcon.frame = CreateFrame("Frame", nil, UIParent)
+            BigWigsWarnIcon.frame:SetFrameStrata("MEDIUM")
+            BigWigsWarnIcon.frame:SetWidth(100) 
+            BigWigsWarnIcon.frame:SetHeight(100)
+            BigWigsWarnIcon.texture = BigWigsWarnIcon.frame:CreateTexture(nil, "BACKGROUND")
+            BigWigsWarnIcon.texture:SetAllPoints(BigWigsWarnIcon.frame)
+            BigWigsWarnIcon.frame:SetAlpha(0.8)
+            BigWigsWarnIcon.frame:SetPoint("CENTER", 0, 250)
+            BigWigsWarnIcon.frame:Hide()
+            
+            /run RaidGroupButton2.ReadyCheckTex:SetTexture("Interface\\AddOns\\BigWigs\\Icons\\ReadyCheck-Ready")
+/run RaidGroupButton2.ReadyCheckTex:SetTexture("Interface\\Icons\\Spell_Fire_Fireball")
+
+/run RaidGroupButton2.ReadyCheckTex:SetBlendMode("BLEND")
+
+/run RaidGroupButton2.ReadyCheck:SetPoint("CENTER", UIParent)
+            ]]
+        end
+        
         BigWigsReadyCheck:UpdateButton()
         
         c.initialized = true
@@ -197,4 +227,19 @@ end
 
 function BigWigsReadyCheck:CheckResults()
     
+end
+
+function BigWigsReadyCheck:DisplayResult(raidIndex, response)
+    --[[
+        -1  Acknowledge received, but no result yet
+        0   not ready
+        1   ready
+    --]]
+    if response == -1 then
+        --Interface\\AddOns\\BigWigs\\Icons\\ReadyCheck-Waiting
+    elseif response == 0 then
+        --Interface\\AddOns\\BigWigs\\Icons\\ReadyCheck-NotReady
+    elseif response == 1 then
+        --Interface\\AddOns\\BigWigs\\Icons\\ReadyCheck-Ready
+    end
 end
