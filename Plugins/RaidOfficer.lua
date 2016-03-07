@@ -70,10 +70,14 @@ function BigWigs_RaidGroupButton_OnDragStop(raidButton)
 end
 
 function BigWigsRaidOfficer:SetupFrames()
-    -- backup the old ones just in case
-    ORIGINAL_RaidGroupButton_OnDragStart = RaidGroupButton_OnDragStart
-    ORIGINAL_RaidGroupButton_OnDragStop = RaidGroupButton_OnDragStop
-    -- overwrite them
-    RaidGroupButton_OnDragStart = BigWigs_RaidGroupButton_OnDragStart
-    RaidGroupButton_OnDragStop = BigWigs_RaidGroupButton_OnDragStop
+    -- I know someone else did a similar AddOn, my BigWigs might get in conflict with the other one
+    -- but I don't know what the name of the other AddOn is. TODO: Change 'unknownyet'
+    if not IsAddOnLoaded("unknownyet") then
+        -- backup the old ones just in case
+        ORIGINAL_RaidGroupButton_OnDragStart = RaidGroupButton_OnDragStart
+        ORIGINAL_RaidGroupButton_OnDragStop = RaidGroupButton_OnDragStop
+        -- overwrite them
+        RaidGroupButton_OnDragStart = BigWigs_RaidGroupButton_OnDragStart
+        RaidGroupButton_OnDragStop = BigWigs_RaidGroupButton_OnDragStop
+    end
 end
