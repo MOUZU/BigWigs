@@ -14,7 +14,7 @@
     I'd appreciate you leaving this.
 
     This plugin is displaying a message once per character, if the
-    character is not a member of Pariah to contribute gold to
+    character is not a member of Endurance to contribute gold to
     the Author of the Nostalrius edit which is me, LYQ.
 
     In addition to that, this plugin will notify the player on
@@ -71,7 +71,7 @@ function BigWigsContribute:OnEnable()
 end
 
 function BigWigsContribute:ZONE_CHANGED_NEW_AREA()
-    -- this will trigger the donation message once per character if not in Pariah
+    -- this will trigger the donation message once per character if not in Endurance
     if not BigWigsContributeFlag then
         for i=1, table.getn(listOfRaidZones) do
             local area = AceLibrary("Babble-Zone-2.2")[listOfRaidZones[i]]
