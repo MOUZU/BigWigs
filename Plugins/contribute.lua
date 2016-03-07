@@ -76,8 +76,8 @@ function BigWigsContribute:ZONE_CHANGED_NEW_AREA()
         for i=1, table.getn(listOfRaidZones) do
             local area = AceLibrary("Babble-Zone-2.2")[listOfRaidZones[i]]
             if area and area == GetRealZoneText() then
-                if (GetGuildInfo("player") == nil) or (not GetGuildInfo("player") == "Pariah") then
-                    DEFAULT_CHAT_FRAME:AddMessage(prefix .. "This |cf75DE52fNostalrius|r Version was made by |cff7f7fffLYQ|r for <Pariah>. You can support the Author for future development by sending a couple of Gold to LYQ(Horde) or Virose(Alliance). Thank you.")
+                if (GetGuildInfo("player") == nil) or (not GetGuildInfo("player") == "Endurance") then
+                    DEFAULT_CHAT_FRAME:AddMessage(prefix .. "This |cf75DE52fNostalrius|r Version was made by |cff7f7fffLYQ|r. You can support the Author for future development by sending a couple of Gold to LYQ(Horde) or Virose(Alliance). Thank you.")
                 end
                 BigWigsContributeFlag = true
             end
