@@ -127,7 +127,7 @@ function BigWigsOnyxia:OnEnable()
 	transitioned = false
 	self.started = false
     self.phase   = 0
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -146,7 +146,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
+function BigWigsOnyxia:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if string.find(msg, L["deepbreath_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OnyDeepBreath")
 	end
